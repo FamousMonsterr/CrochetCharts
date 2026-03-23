@@ -23,6 +23,7 @@
 
 #include <QDebug>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include "settings.h"
 #include <QPainter>
@@ -84,6 +85,7 @@ void SettingsUi::buttonClicked(QAbstractButton *button)
 
 int SettingsUi::exec()
 {
+    QString oldLanguage = Settings::inst()->value("uiLanguage").toString();
     int retValue = QDialog::exec();
 
     if(retValue != QDialog::Accepted)
@@ -96,6 +98,15 @@ int SettingsUi::exec()
         }
     }
     saveDialogWidgets();
+
+    QString newLanguage = Settings::inst()->value("uiLanguage").toString();
+    if(oldLanguage != newLanguage) {
+        QMessageBox::information(this,
+                                 tr("Restart Required"),
+                                 tr("Language changes will take effect after restarting %1.")
+                                     .arg(qApp->applicationName()),
+                                 QMessageBox::Ok);
+    }
 
     return retValue;
 }
@@ -112,7 +123,11 @@ void SettingsUi::load(QObject *w)
         qobject_cast<QSpinBox*>(w)->setValue(value.toInt());
     } else if (w->inherits("QComboBox")) {
         QComboBox *cb = qobject_cast<QComboBox*>(w);
-        int index = cb->findText(value.toString());
+        int index;
+        if(w->objectName() == "uiLanguage")
+            index = cb->findData(value.toString());
+        else
+            index = cb->findText(value.toString());
         cb->setCurrentIndex(index);
     } else {
         qWarning() << "Trying to load unknown settings type";
@@ -132,7 +147,11 @@ void SettingsUi::loadDefualt(QObject *w)
         qobject_cast<QSpinBox*>(w)->setValue(value.toInt());
     } else if (w->inherits("QComboBox")) {
         QComboBox *cb = qobject_cast<QComboBox*>(w);
-        int index = cb->findText(value.toString());
+        int index;
+        if(w->objectName() == "uiLanguage")
+            index = cb->findData(value.toString());
+        else
+            index = cb->findText(value.toString());
         cb->setCurrentIndex(index);
     } else {
         qWarning() << "Trying to load unknown settings type";
@@ -149,7 +168,11 @@ void SettingsUi::save(QObject *w)
     } else if (w->inherits("QSpinBox")) {
         value = QVariant(qobject_cast<QSpinBox*>(w)->value());
     } else if (w->inherits("QComboBox")) {
-        value = QVariant(qobject_cast<QComboBox*>(w)->currentText());
+        QComboBox *cb = qobject_cast<QComboBox*>(w);
+        if(w->objectName() == "uiLanguage")
+            value = cb->itemData(cb->currentIndex());
+        else
+            value = QVariant(cb->currentText());
     } else {
         qWarning() << "Trying to save unknown settings type";
     }
@@ -226,6 +249,10 @@ void SettingsUi::setupDialogWidgets()
     //Application
     //TODO: use auto completer to help fill in the default file location field.
     connect(ui->folderSelector, SIGNAL(clicked()), SLOT(selectFolder()));
+    ui->uiLanguage->clear();
+    ui->uiLanguage->addItem(tr("System Default"), "system");
+    ui->uiLanguage->addItem(tr("English"), "en");
+    ui->uiLanguage->addItem(tr("Russian"), "ru");
 
     //Charts
     connect(ui->primaryColorBttn, SIGNAL(clicked()), SLOT(setColor()));

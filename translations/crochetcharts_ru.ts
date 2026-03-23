@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="ru_RU">
 <context>
     <name>AlignDock</name>
@@ -1913,12 +1914,12 @@ p, li { white-space: pre-wrap; }
         <translation>Изменить текст индикатора</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="50" />
+        <location filename="../src/main.cpp" line="74" />
         <source>Loading...</source>
         <translation>Загрузка...</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="58" />
+        <location filename="../src/main.cpp" line="82" />
         <source>Loading Ui...</source>
         <translation>Загрузка интерфейса...</translation>
     </message>
@@ -2225,22 +2226,22 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../src/settings.cpp" line="106" />
+        <location filename="../src/settings.cpp" line="107" />
         <source>On mouse cursor</source>
         <translation>На курсоре мыши</translation>
     </message>
     <message>
-        <location filename="../src/settings.cpp" line="114" />
+        <location filename="../src/settings.cpp" line="115" />
         <source>Blank</source>
         <translation>Пустая</translation>
     </message>
     <message>
-        <location filename="../src/settings.cpp" line="121" />
+        <location filename="../src/settings.cpp" line="122" />
         <source>Dots and Text</source>
         <translation>Точки и текст</translation>
     </message>
     <message>
-        <location filename="../src/settings.cpp" line="142" />
+        <location filename="../src/settings.cpp" line="143" />
         <source>Age</source>
         <translation>Возраст</translation>
     </message>
@@ -2263,107 +2264,112 @@ p, li { white-space: pre-wrap; }
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="93" />
+        <location filename="../src/settings.ui" line="80" />
+        <source>Language:</source>
+        <translation>Язык:</translation>
+    </message>
+    <message>
+        <location filename="../src/settings.ui" line="109" />
         <source>Ma&amp;ximum Recent Files:</source>
         <translation>Максимальное количество последних файлов:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="106" />
+        <location filename="../src/settings.ui" line="122" />
         <source>File Location:</source>
         <translation>Местоположение файла:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="119" />
+        <location filename="../src/settings.ui" line="135" />
         <source>Check for Updates on Startup:</source>
         <translation>Проверьте наличие обновлений при запуске:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="132" />
+        <location filename="../src/settings.ui" line="148" />
         <source>Offset the pasted selection from the original location</source>
         <translation>Сместить вставленное выделение от исходного местоположения</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="135" />
+        <location filename="../src/settings.ui" line="151" />
         <source>Paste Offset:</source>
         <translation>Вставить смещение:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="152" />
+        <location filename="../src/settings.ui" line="168" />
         <source>On mouse cursor</source>
         <translation>На курсоре мыши</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="157" />
+        <location filename="../src/settings.ui" line="173" />
         <source>None</source>
         <translation>Никто</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="162" />
+        <location filename="../src/settings.ui" line="178" />
         <source>Up and Right</source>
         <translation>Вверх и вправо</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="167" />
+        <location filename="../src/settings.ui" line="183" />
         <source>Up and Left</source>
         <translation>Вверх и влево</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="172" />
+        <location filename="../src/settings.ui" line="188" />
         <source>Down and Right</source>
         <translation>Вниз и вправо</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="177" />
+        <location filename="../src/settings.ui" line="193" />
         <source>Down and Left</source>
         <translation>Вниз и влево</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="186" />
+        <location filename="../src/settings.ui" line="202" />
         <source>Charts</source>
         <translation>Схемы</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="193" />
+        <location filename="../src/settings.ui" line="209" />
         <source>Blank</source>
         <translation>Пустая</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="198" />
+        <location filename="../src/settings.ui" line="214" />
         <source>Rows</source>
         <translation>Ряды</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="203" />
+        <location filename="../src/settings.ui" line="219" />
         <source>Rounds</source>
         <translation>По кругу</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="211" />
+        <location filename="../src/settings.ui" line="227" />
         <source>Alternate Row Colors:</source>
         <translation>Альтернативные цвета строк:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="246" />
+        <location filename="../src/settings.ui" line="262" />
         <source>Primary</source>
         <translation>Начальный</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="265" />
+        <location filename="../src/settings.ui" line="281" />
         <source>Alternate</source>
         <translation>Альтернативный</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="278" />
+        <location filename="../src/settings.ui" line="294" />
         <source>Stitches:</source>
         <translation>Петли:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="311" />
+        <location filename="../src/settings.ui" line="327" />
         <source>Show Chart Center:</source>
         <translation>Показывать центр схемы:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="330" />
+        <location filename="../src/settings.ui" line="346" />
         <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
@@ -2376,62 +2382,62 @@ p, li { white-space: pre-wrap; }
 &lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:12pt; font-weight:600;"&gt;Схема&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="342" />
+        <location filename="../src/settings.ui" line="358" />
         <source>Dots and Text</source>
         <translation>Точки и текст</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="347" />
+        <location filename="../src/settings.ui" line="363" />
         <source>Dots</source>
         <translation>Точки</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="352" />
+        <location filename="../src/settings.ui" line="368" />
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="360" />
+        <location filename="../src/settings.ui" line="376" />
         <source>St&amp;yle:</source>
         <translation>Стиль:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="380" />
+        <location filename="../src/settings.ui" line="396" />
         <source>Show Outline:</source>
         <translation>Показать схему:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="409" />
+        <location filename="../src/settings.ui" line="425" />
         <source>Style:</source>
         <translation>Стиль:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="432" />
+        <location filename="../src/settings.ui" line="448" />
         <source>Rows:</source>
         <translation>Ряды:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="445" />
+        <location filename="../src/settings.ui" line="461" />
         <source>Default Stitch:</source>
         <translation>Петля по умолчанию:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="484" />
+        <location filename="../src/settings.ui" line="500" />
         <source>I&amp;ncrease By:</source>
         <translation>Увеличение на:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="497" />
+        <location filename="../src/settings.ui" line="513" />
         <source>Cell Height:</source>
         <translation>Высота ячейки:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="510" />
+        <location filename="../src/settings.ui" line="526" />
         <source>Cell Width:</source>
         <translation>Ширина ячейки:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="523" />
+        <location filename="../src/settings.ui" line="539" />
         <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
@@ -2444,22 +2450,22 @@ p, li { white-space: pre-wrap; }
 &lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:12pt; font-weight:600;"&gt;Маркеры&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="540" />
+        <location filename="../src/settings.ui" line="556" />
         <source>Indicator Color</source>
         <translation>Цвет индикатора</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="561" />
+        <location filename="../src/settings.ui" line="577" />
         <source>Legends</source>
         <translation>Легенды</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="587" />
+        <location filename="../src/settings.ui" line="603" />
         <source>Colu&amp;mn Count:</source>
         <translation>Количество &amp;столбцов:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="619" />
+        <location filename="../src/settings.ui" line="635" />
         <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
@@ -2472,54 +2478,54 @@ p, li { white-space: pre-wrap; }
 &lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:12pt; font-weight:600;"&gt;Легенда цветов&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="630" />
+        <location filename="../src/settings.ui" line="646" />
         <source>Color Prefi&amp;x:</source>
         <translation>Префи&amp;кс цвета:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="650" />
+        <location filename="../src/settings.ui" line="666" />
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="657" />
-        <location filename="../src/settings.ui" line="725" />
+        <location filename="../src/settings.ui" line="673" />
+        <location filename="../src/settings.ui" line="741" />
         <source>Show Border:</source>
         <translation>Показывать рамку:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="673" />
+        <location filename="../src/settings.ui" line="689" />
         <source>Column Count:</source>
         <translation>Количество столбцов:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="699" />
+        <location filename="../src/settings.ui" line="715" />
         <source>Sort B&amp;y:</source>
         <translation>Сортировать по:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="751" />
-        <location filename="../src/settings.ui" line="784" />
+        <location filename="../src/settings.ui" line="767" />
+        <location filename="../src/settings.ui" line="800" />
         <source>Show Title:</source>
         <translation>Показывать заголовок:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="771" />
+        <location filename="../src/settings.ui" line="787" />
         <source>Show Hex &amp;Value:</source>
         <translation>Показывать HEX-&amp;код:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="797" />
+        <location filename="../src/settings.ui" line="813" />
         <source>Show Wrong Side:</source>
         <translation>Показывать изнанку:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="823" />
+        <location filename="../src/settings.ui" line="839" />
         <source>Show Description:</source>
         <translation>Показывать описание:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="842" />
+        <location filename="../src/settings.ui" line="858" />
         <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
@@ -2532,66 +2538,90 @@ p, li { white-space: pre-wrap; }
 &lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:12pt; font-weight:600;"&gt;Легенда петель&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="854" />
+        <location filename="../src/settings.ui" line="870" />
         <source>Tools</source>
         <translation>Инструменты</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="879" />
+        <location filename="../src/settings.ui" line="895" />
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Arial'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Ubuntu'; font-size:12pt; font-weight:600;"&gt;Stitch Tool&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <location filename="../src/settings.ui" line="919" />
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Arial'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Ubuntu'; font-size:12pt; font-weight:600;"&gt;Angle Tool&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <location filename="../src/settings.ui" line="985" />
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Arial'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Ubuntu'; font-size:12pt; font-weight:600;"&gt;Scale Tool&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
 &lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Ubuntu'; font-size:12pt; font-weight:600;"&gt;Stitch Tool&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
 &lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Ubuntu'; font-size:12pt; font-weight:600;"&gt;Инструмент петель&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="903" />
         <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
 &lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Ubuntu'; font-size:12pt; font-weight:600;"&gt;Angle Tool&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
 &lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Ubuntu'; font-size:12pt; font-weight:600;"&gt;Инструмент поворота&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="914" />
+        <location filename="../src/settings.ui" line="930" />
         <source>Click to change stitch:</source>
         <translation>Щелчок для замены петли:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="927" />
+        <location filename="../src/settings.ui" line="943" />
         <source>Scale around center:</source>
         <translation>Масштабировать вокруг центра:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="937" />
+        <location filename="../src/settings.ui" line="953" />
         <source>Rotate around center:</source>
         <translation>Поворот вокруг центра:</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="969" />
         <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
 &lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Ubuntu'; font-size:12pt; font-weight:600;"&gt;Scale Tool&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
 &lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Ubuntu'; font-size:12pt; font-weight:600;"&gt;Инструмент масштаба&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="983" />
+        <location filename="../src/settings.ui" line="999" />
         <source>Center stitches on mouse:</source>
         <translation>Центрировать петли по курсору:</translation>
     </message>
@@ -2599,37 +2629,62 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SettingsUi</name>
     <message>
-        <location filename="../src/settingsui.cpp" line="43" />
+        <location filename="../src/settingsui.cpp" line="44" />
         <source>Preferences</source>
         <translation>Параметры</translation>
     </message>
     <message>
-        <location filename="../src/settingsui.cpp" line="45" />
+        <location filename="../src/settingsui.cpp" line="46" />
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/settingsui.cpp" line="179" />
+        <location filename="../src/settingsui.cpp" line="105" />
+        <source>Restart Required</source>
+        <translation>Требуется перезапуск</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsui.cpp" line="106" />
+        <source>Language changes will take effect after restarting %1.</source>
+        <translation>Изменение языка вступит в силу после перезапуска %1.</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsui.cpp" line="202" />
         <source>Select Default Folder</source>
         <translation>Выбрать папку по умолчанию</translation>
     </message>
     <message>
-        <location filename="../src/settingsui.cpp" line="202" />
+        <location filename="../src/settingsui.cpp" line="225" />
         <source>Select Color</source>
         <translation>Выбрать цвет</translation>
     </message>
     <message>
-        <location filename="../src/settingsui.cpp" line="251" />
+        <location filename="../src/settingsui.cpp" line="253" />
+        <source>System Default</source>
+        <translation>По умолчанию в системе</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsui.cpp" line="254" />
+        <source>English</source>
+        <translation>Английский</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsui.cpp" line="255" />
+        <source>Russian</source>
+        <translation>Русский</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsui.cpp" line="278" />
         <source>Age</source>
         <translation>Возраст</translation>
     </message>
     <message>
-        <location filename="../src/settingsui.cpp" line="251" />
+        <location filename="../src/settingsui.cpp" line="278" />
         <source>Color</source>
         <translation>Цвет</translation>
     </message>
     <message>
-        <location filename="../src/settingsui.cpp" line="251" />
+        <location filename="../src/settingsui.cpp" line="278" />
         <source>Quantity</source>
         <translation>Количество</translation>
     </message>

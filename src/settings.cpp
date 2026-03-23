@@ -92,6 +92,7 @@ void Settings::setupValueList() {
     
     //general application options
     mValueList["checkForUpdates"] = QVariant(true);
+    mValueList["uiLanguage"] = QVariant("system");
     mValueList["fileLocation"] = QVariant(userDocs);
 
     mValueList["maxRecentFiles"] = QVariant(5);

@@ -44,8 +44,18 @@ int main(int argc, char *argv[])
 
     QTranslator translator;
     QByteArray languageOverride = qgetenv("CROCHETCHARTS_LANG").toLower();
-    bool useRussian = languageOverride.startsWith("ru");
-    if(languageOverride.isEmpty())
+    QString languageSetting = Settings::inst()->value("uiLanguage").toString().toLower();
+    bool useRussian = false;
+
+    if(languageOverride == "ru" || languageOverride == "russian")
+        useRussian = true;
+    else if(languageOverride == "en" || languageOverride == "english")
+        useRussian = false;
+    else if(languageSetting == "ru" || languageSetting == "russian")
+        useRussian = true;
+    else if(languageSetting == "en" || languageSetting == "english")
+        useRussian = false;
+    else
         useRussian = (QLocale::system().language() == QLocale::Russian);
 
     if(useRussian && translator.load(":/translations/crochetcharts_ru.qm"))
