@@ -88,6 +88,7 @@ protected slots:
     
     void newChartUpdateStyle(QString style);
     void newChartUpdateTemplate(int templateIndex);
+    void newGrannyPresetChanged(int presetIndex);
 
     void propertiesUpdate(QString property, QVariant newValue);
     
@@ -219,7 +220,11 @@ private:
 
     void setApplicationTitle();
     QString currentChartTemplateKey() const;
+    QString currentGrannyPresetKey() const;
+    QString currentGrannyStartTypeKey() const;
+    void setGrannyTemplateControlsVisible(bool visible);
     void applyChartTemplatePreset(const QString& templateKey);
+    void applyGrannyPreset(const QString& presetKey);
     void applyChartTemplateToTab(CrochetTab* tab, const QString& templateKey,
                                  int rows, int cols, qreal rowHeight);
 

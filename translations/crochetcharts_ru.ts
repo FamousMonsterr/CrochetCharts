@@ -510,7 +510,7 @@
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="51"/>
-        <location filename="../src/mainwindow.cpp" line="300"/>
+        <location filename="../src/mainwindow.cpp" line="312"/>
         <source>Stitches:</source>
         <translation>Петли:</translation>
     </message>
@@ -521,22 +521,22 @@
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="103"/>
-        <location filename="../src/mainwindow.cpp" line="266"/>
-        <location filename="../src/mainwindow.cpp" line="1399"/>
+        <location filename="../src/mainwindow.cpp" line="278"/>
+        <location filename="../src/mainwindow.cpp" line="1418"/>
         <source>Blank</source>
         <translation>Пустая</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="108"/>
-        <location filename="../src/mainwindow.cpp" line="290"/>
+        <location filename="../src/mainwindow.cpp" line="302"/>
         <source>Rows</source>
         <translation>Ряды</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="113"/>
-        <location filename="../src/mainwindow.cpp" line="277"/>
-        <location filename="../src/mainwindow.cpp" line="1401"/>
-        <location filename="../src/mainwindow.cpp" line="1474"/>
+        <location filename="../src/mainwindow.cpp" line="289"/>
+        <location filename="../src/mainwindow.cpp" line="1420"/>
+        <location filename="../src/mainwindow.cpp" line="1520"/>
         <source>Rounds</source>
         <translation>По кругу</translation>
     </message>
@@ -547,44 +547,46 @@
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="141"/>
-        <location filename="../src/mainwindow.cpp" line="1420"/>
+        <location filename="../src/mainwindow.cpp" line="1439"/>
         <source>1 Chain</source>
         <translation>1 цепочка</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="146"/>
-        <location filename="../src/mainwindow.cpp" line="1422"/>
+        <location filename="../src/mainwindow.cpp" line="1441"/>
+        <location filename="../src/mainwindow.cpp" line="1545"/>
         <source>2 Chains</source>
         <translation>2 цепи</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="151"/>
-        <location filename="../src/mainwindow.cpp" line="1424"/>
-        <location filename="../src/mainwindow.cpp" line="1483"/>
+        <location filename="../src/mainwindow.cpp" line="1443"/>
+        <location filename="../src/mainwindow.cpp" line="1535"/>
+        <location filename="../src/mainwindow.cpp" line="1555"/>
         <source>3 Chains</source>
         <translation>3 цепи</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="156"/>
-        <location filename="../src/mainwindow.cpp" line="1426"/>
+        <location filename="../src/mainwindow.cpp" line="1445"/>
         <source>4 Chains</source>
         <translation>4 цепи</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="161"/>
-        <location filename="../src/mainwindow.cpp" line="1428"/>
+        <location filename="../src/mainwindow.cpp" line="1447"/>
         <source>5 Chains</source>
         <translation>5 цепей</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="166"/>
-        <location filename="../src/mainwindow.cpp" line="1430"/>
+        <location filename="../src/mainwindow.cpp" line="1449"/>
         <source>6 Chains</source>
         <translation>6 цепей</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="174"/>
-        <location filename="../src/mainwindow.cpp" line="299"/>
+        <location filename="../src/mainwindow.cpp" line="311"/>
         <source>Rows:</source>
         <translation>Ряды:</translation>
     </message>
@@ -599,682 +601,697 @@
         <translation>Шаблон:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="248"/>
+        <location filename="../src/mainwindow.ui" line="238"/>
+        <source>Preset:</source>
+        <translation>Пресет:</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="254"/>
+        <source>Start:</source>
+        <translation>Старт:</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="270"/>
+        <source>Corner Arches:</source>
+        <translation>Угловые арки:</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="306"/>
         <location filename="../src/mainwindow.h" line="72"/>
         <source>Chart</source>
         <translation>Схема</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="255"/>
+        <location filename="../src/mainwindow.ui" line="313"/>
         <source>Chart Title:</source>
         <translation>Название схемы:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="278"/>
+        <location filename="../src/mainwindow.ui" line="336"/>
         <source>Increase By:</source>
         <translation>Прибавлять на:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="322"/>
+        <location filename="../src/mainwindow.ui" line="380"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="326"/>
+        <location filename="../src/mainwindow.ui" line="384"/>
         <source>Open &amp;Recent</source>
         <translation>&amp;Недавние</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="344"/>
+        <location filename="../src/mainwindow.ui" line="402"/>
         <source>&amp;Edit</source>
         <translation>&amp;Правка</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="348"/>
+        <location filename="../src/mainwindow.ui" line="406"/>
         <source>&amp;Insert</source>
         <translation>&amp;Вставка</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="359"/>
+        <location filename="../src/mainwindow.ui" line="417"/>
         <source>&amp;View</source>
         <translation>&amp;Вид</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="380"/>
+        <location filename="../src/mainwindow.ui" line="438"/>
         <source>&amp;Charts</source>
         <translation>&amp;Схемы</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="384"/>
+        <location filename="../src/mainwindow.ui" line="442"/>
         <source>Grid</source>
         <translation>Сетка</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="402"/>
+        <location filename="../src/mainwindow.ui" line="460"/>
         <source>&amp;Tools</source>
         <translation>&amp;Инструменты</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="411"/>
+        <location filename="../src/mainwindow.ui" line="469"/>
         <source>&amp;Help</source>
         <translation>&amp;Справка</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="419"/>
+        <location filename="../src/mainwindow.ui" line="477"/>
         <source>&amp;Modes</source>
         <translation>&amp;Режимы</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="434"/>
+        <location filename="../src/mainwindow.ui" line="492"/>
         <source>&amp;Stitches</source>
         <translation>&amp;Петли</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="456"/>
+        <location filename="../src/mainwindow.ui" line="514"/>
         <source>Main Toolbar</source>
         <translation>Главная панель инструментов</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="472"/>
+        <location filename="../src/mainwindow.ui" line="530"/>
         <source>Pattern Stitches</source>
         <translation>Петли схемы</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="533"/>
+        <location filename="../src/mainwindow.ui" line="591"/>
         <source>Pattern Colors</source>
         <translation>Цвета схемы</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="563"/>
+        <location filename="../src/mainwindow.ui" line="621"/>
         <source>Stitch</source>
         <translation>Петля</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="579"/>
+        <location filename="../src/mainwindow.ui" line="637"/>
         <source>Background</source>
         <translation>Фон</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="645"/>
+        <location filename="../src/mainwindow.ui" line="703"/>
         <source>Stitches</source>
         <translation>Петли</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="666"/>
+        <location filename="../src/mainwindow.ui" line="724"/>
         <source>Filter</source>
         <translation>Фильтр</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="673"/>
+        <location filename="../src/mainwindow.ui" line="731"/>
         <source>Clear text</source>
         <translation>Очистить текст</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="676"/>
-        <location filename="../src/mainwindow.ui" line="789"/>
-        <location filename="../src/mainwindow.ui" line="803"/>
+        <location filename="../src/mainwindow.ui" line="734"/>
+        <location filename="../src/mainwindow.ui" line="847"/>
+        <location filename="../src/mainwindow.ui" line="861"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="731"/>
+        <location filename="../src/mainwindow.ui" line="789"/>
         <source>Edit Mode Toolbar</source>
         <translation>Панель режимов редактирования</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="761"/>
+        <location filename="../src/mainwindow.ui" line="819"/>
         <source>Layers</source>
         <translation>Слои</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="782"/>
+        <location filename="../src/mainwindow.ui" line="840"/>
         <source>New Layer</source>
         <translation>Новый слой</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="858"/>
+        <location filename="../src/mainwindow.ui" line="916"/>
         <source>&amp;New</source>
         <translation>&amp;Создать</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="861"/>
+        <location filename="../src/mainwindow.ui" line="919"/>
         <source>Create a new pattern</source>
         <translation>Создайте новый схема</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="864"/>
+        <location filename="../src/mainwindow.ui" line="922"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="873"/>
+        <location filename="../src/mainwindow.ui" line="931"/>
         <source>&amp;Open...</source>
         <translation>&amp;Открыть...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="876"/>
+        <location filename="../src/mainwindow.ui" line="934"/>
         <source>Open an existing pattern</source>
         <translation>Открыть существующий схема</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="879"/>
+        <location filename="../src/mainwindow.ui" line="937"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="888"/>
+        <location filename="../src/mainwindow.ui" line="946"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="891"/>
+        <location filename="../src/mainwindow.ui" line="949"/>
         <source>Save the current pattern</source>
         <translation>Сохранить текущий схема</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="894"/>
+        <location filename="../src/mainwindow.ui" line="952"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="899"/>
+        <location filename="../src/mainwindow.ui" line="957"/>
         <source>Save &amp;As</source>
         <translation>Сохранить &amp;как</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="902"/>
+        <location filename="../src/mainwindow.ui" line="960"/>
         <source>Save the current pattern under another name</source>
         <translation>Сохраните текущий схема под другим именем.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="905"/>
+        <location filename="../src/mainwindow.ui" line="963"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="914"/>
+        <location filename="../src/mainwindow.ui" line="972"/>
         <source>E&amp;xport...</source>
         <translation>&amp;Экспорт...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="917"/>
+        <location filename="../src/mainwindow.ui" line="975"/>
         <source>Export parts of the pattern to other file types</source>
         <translation>Экспортируйте части схемаа в файлы других типов.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="920"/>
+        <location filename="../src/mainwindow.ui" line="978"/>
         <source>Ctrl+Shift+X</source>
         <translation>Ctrl+Shift+X</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="925"/>
+        <location filename="../src/mainwindow.ui" line="983"/>
         <source>&amp;Quit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="928"/>
+        <location filename="../src/mainwindow.ui" line="986"/>
         <source>Close this pattern</source>
         <translation>Закрыть этот схема</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="931"/>
+        <location filename="../src/mainwindow.ui" line="989"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="936"/>
+        <location filename="../src/mainwindow.ui" line="994"/>
         <source>Cu&amp;t</source>
         <translation>Вырезат&amp;ь</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="939"/>
+        <location filename="../src/mainwindow.ui" line="997"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="944"/>
+        <location filename="../src/mainwindow.ui" line="1002"/>
         <source>&amp;Copy</source>
         <translation>&amp;Копировать</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="947"/>
+        <location filename="../src/mainwindow.ui" line="1005"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="952"/>
+        <location filename="../src/mainwindow.ui" line="1010"/>
         <source>&amp;Paste</source>
         <translation>&amp;Вставить</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="955"/>
+        <location filename="../src/mainwindow.ui" line="1013"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="960"/>
+        <location filename="../src/mainwindow.ui" line="1018"/>
         <source>&amp;About Crochet Charts</source>
         <translation>&amp;О программе Crochet Charts</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="965"/>
+        <location filename="../src/mainwindow.ui" line="1023"/>
         <source>&amp;Options...</source>
         <translation>&amp;Настройки...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="968"/>
+        <location filename="../src/mainwindow.ui" line="1026"/>
         <source>Alt+O</source>
         <translation>Alt+O</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="977"/>
+        <location filename="../src/mainwindow.ui" line="1035"/>
         <source>&amp;Add Chart</source>
         <translation>&amp;Добавить схему</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="980"/>
+        <location filename="../src/mainwindow.ui" line="1038"/>
         <source>Add a chart to the current pattern</source>
         <translation>Добавить схему в текущий документ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="983"/>
+        <location filename="../src/mainwindow.ui" line="1041"/>
         <source>Ctrl+Shift+N</source>
         <translation>Ctrl+Shift+N</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="988"/>
+        <location filename="../src/mainwindow.ui" line="1046"/>
         <source>Zoom &amp;In</source>
         <translation>Увеличить масштаб</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="991"/>
+        <location filename="../src/mainwindow.ui" line="1049"/>
         <source>Ctrl+=</source>
         <translation>Ctrl+=</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="996"/>
+        <location filename="../src/mainwindow.ui" line="1054"/>
         <source>Zoom &amp;Out</source>
         <translation>Уменьшить масштаб</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="999"/>
+        <location filename="../src/mainwindow.ui" line="1057"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1004"/>
+        <location filename="../src/mainwindow.ui" line="1062"/>
         <source>&amp;Stitch Library</source>
         <translation>&amp;Библиотека петель</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1007"/>
+        <location filename="../src/mainwindow.ui" line="1065"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1015"/>
+        <location filename="../src/mainwindow.ui" line="1073"/>
         <source>S&amp;how All Stitches</source>
         <translation>Показать все петли</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1018"/>
+        <location filename="../src/mainwindow.ui" line="1076"/>
         <source>Show the complete list of stitches</source>
         <translation>Показать полный список петель</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1023"/>
+        <location filename="../src/mainwindow.ui" line="1081"/>
         <source>&amp;Crochet Charts Help</source>
         <translation>&amp;Справка Crochet Charts</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1026"/>
+        <location filename="../src/mainwindow.ui" line="1084"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1034"/>
+        <location filename="../src/mainwindow.ui" line="1092"/>
         <source>&amp;Full Screen Mode</source>
         <translation>&amp;Полноэкранный режим</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1037"/>
+        <location filename="../src/mainwindow.ui" line="1095"/>
         <source>Make the application use the entire screen</source>
         <translation>Заставьте приложение использовать весь экран</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1040"/>
+        <location filename="../src/mainwindow.ui" line="1098"/>
         <source>F11</source>
         <translation>F11</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1048"/>
+        <location filename="../src/mainwindow.ui" line="1106"/>
         <source>Show &amp;Pattern Stitches</source>
         <translation>Показать &amp;петли схемы</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1051"/>
+        <location filename="../src/mainwindow.ui" line="1109"/>
         <source>Show the stitches used in this pattern</source>
         <translation>Покажите петли, использованные в этом схемае.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1059"/>
+        <location filename="../src/mainwindow.ui" line="1117"/>
         <source>Show Pattern &amp;Colors</source>
         <translation>Показать цвета схемаа</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1062"/>
+        <location filename="../src/mainwindow.ui" line="1120"/>
         <source>Show the colors used in this pattern</source>
         <translation>Покажите цвета, использованные в этом схемае.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1067"/>
+        <location filename="../src/mainwindow.ui" line="1125"/>
         <source>&amp;Edit Name...</source>
         <translation>&amp;Переименовать...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1070"/>
+        <location filename="../src/mainwindow.ui" line="1128"/>
         <source>Edit the name of the current chart</source>
         <translation>Редактировать имя текущего графика</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1075"/>
+        <location filename="../src/mainwindow.ui" line="1133"/>
         <source>&amp;Print...</source>
         <translation>&amp;Печать...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1078"/>
+        <location filename="../src/mainwindow.ui" line="1136"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1083"/>
+        <location filename="../src/mainwindow.ui" line="1141"/>
         <source>Pr&amp;int Preview...</source>
         <translation>П&amp;редпросмотр печати...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1086"/>
+        <location filename="../src/mainwindow.ui" line="1144"/>
         <source>Ctrl+Shift+P</source>
         <translation>Ctrl+Shift+P</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1091"/>
+        <location filename="../src/mainwindow.ui" line="1149"/>
         <source>&amp;Check for Updates</source>
         <translation>&amp;Проверить обновления</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1096"/>
+        <location filename="../src/mainwindow.ui" line="1154"/>
         <source>&amp;Remove Chart</source>
         <translation>&amp;Удалить схему</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1099"/>
+        <location filename="../src/mainwindow.ui" line="1157"/>
         <source>Remove chart from this document</source>
         <translation>Удалить схему из этого документа</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1111"/>
+        <location filename="../src/mainwindow.ui" line="1169"/>
         <source>Stitch Edit</source>
         <translation>Редактирование петель</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1114"/>
+        <location filename="../src/mainwindow.ui" line="1172"/>
         <source>Add or edit the stitches used on the chart</source>
         <translation>Добавление и редактирование петель на схеме</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1117"/>
+        <location filename="../src/mainwindow.ui" line="1175"/>
         <source>D</source>
         <translation>D</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1125"/>
+        <location filename="../src/mainwindow.ui" line="1183"/>
         <source>Show &amp;Main Toolbar</source>
         <translation>Показать главную панель инструментов</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1133"/>
+        <location filename="../src/mainwindow.ui" line="1191"/>
         <source>Show &amp;Edit Mode Toolbar</source>
         <translation>Показать панель инструментов режима редактирования</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1141"/>
+        <location filename="../src/mainwindow.ui" line="1199"/>
         <source>Show &amp;Undo History</source>
         <translation>Показать историю отмены</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1153"/>
+        <location filename="../src/mainwindow.ui" line="1211"/>
         <source>Rotation Edit</source>
         <translation>Редактирование поворота</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1156"/>
+        <location filename="../src/mainwindow.ui" line="1214"/>
         <source>Change the angle of stitches on the chart</source>
         <translation>Изменение угла петель на схеме</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1159"/>
+        <location filename="../src/mainwindow.ui" line="1217"/>
         <source>R</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1171"/>
+        <location filename="../src/mainwindow.ui" line="1229"/>
         <source>Scale Edit</source>
         <translation>Редактирование масштаба</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1174"/>
+        <location filename="../src/mainwindow.ui" line="1232"/>
         <source>Edit the scale of the stitches on the chart</source>
         <translation>Изменение масштаба петель на схеме</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1177"/>
+        <location filename="../src/mainwindow.ui" line="1235"/>
         <source>S</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1189"/>
+        <location filename="../src/mainwindow.ui" line="1247"/>
         <source>Indicator Edit</source>
         <translation>Редактирование маркеров</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1192"/>
+        <location filename="../src/mainwindow.ui" line="1250"/>
         <source>Add indicators to the chart</source>
         <translation>Добавляем индикаторы на график</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1195"/>
+        <location filename="../src/mainwindow.ui" line="1253"/>
         <source>I</source>
         <translation>I</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1207"/>
+        <location filename="../src/mainwindow.ui" line="1265"/>
         <source>Row Edit</source>
         <translation>Редактирование рядов</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1210"/>
+        <location filename="../src/mainwindow.ui" line="1268"/>
         <source>Add and edit rows</source>
         <translation>Добавляйте и редактируйте строки</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1213"/>
+        <location filename="../src/mainwindow.ui" line="1271"/>
         <source>W</source>
         <translation>W</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1225"/>
+        <location filename="../src/mainwindow.ui" line="1283"/>
         <source>&amp;Show Align and Distribute</source>
         <translation>&amp;Показать выравнивание и распределение</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1228"/>
+        <location filename="../src/mainwindow.ui" line="1286"/>
         <source>Show Align and Distribute</source>
         <translation>Показать выравнивание и распределение</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1231"/>
+        <location filename="../src/mainwindow.ui" line="1289"/>
         <source>Shift+F7</source>
         <translation>Shift+F7</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1243"/>
-        <location filename="../src/mainwindow.ui" line="1246"/>
+        <location filename="../src/mainwindow.ui" line="1301"/>
+        <location filename="../src/mainwindow.ui" line="1304"/>
         <source>Show Rows and Stitches</source>
         <translation>Показать ряды и петли</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1258"/>
+        <location filename="../src/mainwindow.ui" line="1316"/>
         <source>Show &amp;Mirror and Rotate</source>
         <translation>Показать &amp;зеркалирование и поворот</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1261"/>
+        <location filename="../src/mainwindow.ui" line="1319"/>
         <source>Shift+F8</source>
         <translation>Shift+F8</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1270"/>
+        <location filename="../src/mainwindow.ui" line="1328"/>
         <source>&amp;Group</source>
         <translation>&amp;Группировать</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1273"/>
+        <location filename="../src/mainwindow.ui" line="1331"/>
         <source>Ctrl+G</source>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1282"/>
+        <location filename="../src/mainwindow.ui" line="1340"/>
         <source>&amp;Ungroup</source>
         <translation>&amp;Разгруппировать</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1285"/>
+        <location filename="../src/mainwindow.ui" line="1343"/>
         <source>Ctrl+Shift+G</source>
         <translation>Ctrl+Shift+G</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1293"/>
+        <location filename="../src/mainwindow.ui" line="1351"/>
         <source>&amp;Show Chart Center</source>
         <translation>&amp;Показать центр схемы</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1301"/>
+        <location filename="../src/mainwindow.ui" line="1359"/>
         <source>&amp;Show Properties</source>
         <translation>Показать &amp;свойства</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1304"/>
+        <location filename="../src/mainwindow.ui" line="1362"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1309"/>
+        <location filename="../src/mainwindow.ui" line="1367"/>
         <source>&amp;Replace stitches...</source>
         <translation>Заменить швы...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1314"/>
+        <location filename="../src/mainwindow.ui" line="1372"/>
         <source>Replace a &amp;color...</source>
         <translation>Заменить цвет...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1317"/>
+        <location filename="../src/mainwindow.ui" line="1375"/>
         <source>Replace one color with another</source>
         <translation>Замените один цвет другим</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1329"/>
+        <location filename="../src/mainwindow.ui" line="1387"/>
         <source>Color Edit</source>
         <translation>Редактирование цветов</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1332"/>
+        <location filename="../src/mainwindow.ui" line="1390"/>
         <source>Edit the colors used on the chart</source>
         <translation>Редактирование цветов на схеме</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1335"/>
+        <location filename="../src/mainwindow.ui" line="1393"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1347"/>
+        <location filename="../src/mainwindow.ui" line="1405"/>
         <source>Resi&amp;ze</source>
         <translation>Изменить размер</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1355"/>
+        <location filename="../src/mainwindow.ui" line="1413"/>
         <source>Show &amp;Layers</source>
         <translation>Показать слои</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1358"/>
+        <location filename="../src/mainwindow.ui" line="1416"/>
         <source>Shows the layers dock</source>
         <translation>Показывает док-станцию ​​слоев</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1363"/>
+        <location filename="../src/mainwindow.ui" line="1421"/>
         <source>&amp;Image</source>
         <translation>Изображение</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1366"/>
+        <location filename="../src/mainwindow.ui" line="1424"/>
         <source>Insert an image</source>
         <translation>Вставить изображение</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1378"/>
+        <location filename="../src/mainwindow.ui" line="1436"/>
         <source>&amp;Box select</source>
         <translation>Выбор поля</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1390"/>
+        <location filename="../src/mainwindow.ui" line="1448"/>
         <source>Lass&amp;o select</source>
         <translation>Выбор лассо</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1402"/>
+        <location filename="../src/mainwindow.ui" line="1460"/>
         <source>Line select</source>
         <translation>Выбор линии</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1414"/>
-        <location filename="../src/mainwindow.ui" line="1417"/>
+        <location filename="../src/mainwindow.ui" line="1472"/>
+        <location filename="../src/mainwindow.ui" line="1475"/>
         <source>No grid</source>
         <translation>Нет сетки</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1429"/>
+        <location filename="../src/mainwindow.ui" line="1487"/>
         <source>Square grid</source>
         <translation>Квадратная сетка</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1441"/>
+        <location filename="../src/mainwindow.ui" line="1499"/>
         <source>Round grid</source>
         <translation>Круглая сетка</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1453"/>
+        <location filename="../src/mainwindow.ui" line="1511"/>
         <source>Triangular gid</source>
         <translation>Треугольный гид</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1458"/>
+        <location filename="../src/mainwindow.ui" line="1516"/>
         <source>actionNextSelectMode</source>
         <translation>действиеNextSelectMode</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1461"/>
+        <location filename="../src/mainwindow.ui" line="1519"/>
         <source>B</source>
         <translation>B</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1466"/>
+        <location filename="../src/mainwindow.ui" line="1524"/>
         <source>actionNextGridMode</source>
         <translation>действиеNextGridMode</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1469"/>
+        <location filename="../src/mainwindow.ui" line="1527"/>
         <source>G</source>
         <translation>G</translation>
     </message>
@@ -1295,162 +1312,193 @@
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="248"/>
-        <location filename="../src/mainwindow.cpp" line="1478"/>
+        <location filename="../src/mainwindow.cpp" line="1549"/>
         <source>Granny Square</source>
         <translation>Бабушкин квадрат</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="286"/>
+        <location filename="../src/mainwindow.cpp" line="250"/>
+        <source>4-Round Granny Square</source>
+        <translation>Бабушкин квадрат на 4 круга</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="251"/>
+        <source>6-Round Granny Square</source>
+        <translation>Бабушкин квадрат на 6 кругов</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="252"/>
+        <location filename="../src/mainwindow.cpp" line="1539"/>
+        <source>Solid Granny Square</source>
+        <translation>Плотный бабушкин квадрат</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="254"/>
+        <source>Magic Ring</source>
+        <translation>Магическое кольцо</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="255"/>
+        <source>Chain Ring</source>
+        <translation>Кольцо из воздушных петель</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="298"/>
         <source>Rounds:</source>
         <translation>Раунды:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="287"/>
+        <location filename="../src/mainwindow.cpp" line="299"/>
         <source>Starting Stitches:</source>
         <translation>Начальные петли:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="429"/>
+        <location filename="../src/mainwindow.cpp" line="448"/>
         <source>Undo History</source>
         <translation>История отмен</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="495"/>
+        <location filename="../src/mainwindow.cpp" line="514"/>
         <source>Undo</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="496"/>
+        <location filename="../src/mainwindow.cpp" line="515"/>
         <source>Redo</source>
         <translation>Повторить</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="682"/>
+        <location filename="../src/mainwindow.cpp" line="701"/>
         <source>&amp;%1 %2</source>
         <translation>%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="891"/>
+        <location filename="../src/mainwindow.cpp" line="910"/>
         <source>&lt;h1&gt;%1&lt;/h1&gt;&lt;p&gt;Version: %2 (built on %3)&lt;/p&gt;&lt;p&gt;Copyright (c) %4 %5&lt;/p&gt;&lt;p&gt;This software is for creating crochet charts that can be exported in many different file types.&lt;/p&gt;</source>
         <translation>&lt;h1&gt;%1&lt;/h1&gt;&lt;p&gt;Версия: %2 (на основе %3)&lt;/p&gt;&lt;p&gt;Авторские права (c) %4 %5&lt;/p&gt;&lt;p&gt;Это программное обеспечение предназначено для создания схем вязания крючком, которые можно экспортировать в файлы различных типов.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="907"/>
+        <location filename="../src/mainwindow.cpp" line="926"/>
         <source>&lt;p&gt;This version is dedicated to:&lt;br /&gt; My Grandmother (Aug 20, 1926 - Jan 8, 2013)&lt;/p&gt;</source>
         <translation>&lt;p&gt;Эта версия посвящена:&lt;br /&gt;Моей бабушке (20 августа 1926 г. – 8 января 2013 г.)&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="912"/>
+        <location filename="../src/mainwindow.cpp" line="931"/>
         <source>&lt;p&gt;This version is released under the GPLv3 open source license.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Эта версия выпущена под лицензией с открытым исходным кодом GPLv3.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="915"/>
+        <location filename="../src/mainwindow.cpp" line="934"/>
         <source>About Crochet Charts</source>
         <translation>О программе Crochet Charts</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="956"/>
+        <location filename="../src/mainwindow.cpp" line="975"/>
         <source>The document &apos;%1&apos; has unsaved changes.</source>
         <translation>В документе «%1» есть несохраненные изменения.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="957"/>
+        <location filename="../src/mainwindow.cpp" line="976"/>
         <source>Do you want to save the changes?</source>
         <translation>Хотите сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1087"/>
+        <location filename="../src/mainwindow.cpp" line="1106"/>
         <source>Open Pattern File</source>
         <translation>Открыть файл схемы</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1087"/>
+        <location filename="../src/mainwindow.cpp" line="1106"/>
         <source>Pattern File (*.pattern);; All files (*.*)</source>
         <translation>Файл схемы (*.pattern);; Все файлы (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1145"/>
+        <location filename="../src/mainwindow.cpp" line="1164"/>
         <source>%1 cannot save a document without at least one (1) chart.</source>
         <translation>%1 не может сохранить документ без хотя бы одной (1) схемы.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1158"/>
+        <location filename="../src/mainwindow.cpp" line="1177"/>
         <source>There was an error saving the file.</source>
         <translation>Произошла ошибка при сохранении файла.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1172"/>
+        <location filename="../src/mainwindow.cpp" line="1191"/>
         <source>Save Pattern File</source>
         <translation>Сохранить файл схемы</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1173"/>
+        <location filename="../src/mainwindow.cpp" line="1192"/>
         <source>Pattern v1.2 (*.pattern);;Pattern v1.0/v1.1 (*.pattern)</source>
         <translation>Схема v1.2 (*.pattern);;Схема v1.0/v1.1 (*.pattern)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1222"/>
+        <location filename="../src/mainwindow.cpp" line="1241"/>
         <source>There was an error loading the file %1.</source>
         <translation>Произошла ошибка при загрузке файла %1.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1225"/>
+        <location filename="../src/mainwindow.cpp" line="1244"/>
         <source>It appears to have been created with a newer version of %1.</source>
         <translation>Похоже, он был создан с использованием более новой версии %1.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1228"/>
+        <location filename="../src/mainwindow.cpp" line="1247"/>
         <source>This file does not appear to be a %1 file.</source>
         <translation>Этот файл не похож на файл %1.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1754"/>
+        <location filename="../src/mainwindow.cpp" line="1529"/>
+        <source>Granny Square 4-Round</source>
+        <translation>Бабушкин квадрат 4 круга</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1829"/>
         <source>Set Chart Name</source>
         <translation>Задать название схемы</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1754"/>
+        <location filename="../src/mainwindow.cpp" line="1829"/>
         <source>Chart name:</source>
         <translation>Название схемы:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1842"/>
+        <location filename="../src/mainwindow.cpp" line="1917"/>
         <source>A document must have at least one (1) chart.</source>
         <translation>В документе должна быть хотя бы одна (1) схема.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1848"/>
+        <location filename="../src/mainwindow.cpp" line="1923"/>
         <source>Delete Chart</source>
         <translation>Удалить схему</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1849"/>
+        <location filename="../src/mainwindow.cpp" line="1924"/>
         <source>Are you sure you want to delete this chart from the document?</source>
         <translation>Вы уверены, что хотите удалить эту схему из документа?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1850"/>
+        <location filename="../src/mainwindow.cpp" line="1925"/>
         <source>Deleting a chart from the document is a permanent procedure.</source>
         <translation>Удаление графика из документа является постоянной процедурой.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1852"/>
+        <location filename="../src/mainwindow.cpp" line="1927"/>
         <source>Delete the chart</source>
         <translation>Удалить схему</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1853"/>
+        <location filename="../src/mainwindow.cpp" line="1928"/>
         <source>Keep the chart</source>
         <translation>Оставить схему</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2099"/>
+        <location filename="../src/mainwindow.cpp" line="2174"/>
         <source>Open Image</source>
         <translation>Открыть изображение</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2100"/>
+        <location filename="../src/mainwindow.cpp" line="2175"/>
         <source>Image Files (*.png *.jpg *.bmp *.tga *.gif)</source>
         <translation>Файлы изображений (*.png *.jpg *.bmp *.tga *.gif)</translation>
     </message>
@@ -1941,12 +1989,12 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Загрузка интерфейса...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="343"/>
+        <location filename="../src/mainwindow.cpp" line="362"/>
         <source>Visible</source>
         <translation>Видимость</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="344"/>
+        <location filename="../src/mainwindow.cpp" line="363"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>

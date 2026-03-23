@@ -246,6 +246,17 @@ void MainWindow::setupNewTabDialog()
     ui->chartTemplate->clear();
     ui->chartTemplate->addItem(tr("Custom"), "custom");
     ui->chartTemplate->addItem(tr("Granny Square"), "granny_square");
+    ui->grannyPreset->clear();
+    ui->grannyPreset->addItem(tr("4-Round Granny Square"), "granny_4_round");
+    ui->grannyPreset->addItem(tr("6-Round Granny Square"), "granny_6_round");
+    ui->grannyPreset->addItem(tr("Solid Granny Square"), "solid_granny_square");
+    ui->grannyStartType->clear();
+    ui->grannyStartType->addItem(tr("Magic Ring"), "magic_ring");
+    ui->grannyStartType->addItem(tr("Chain Ring"), "chain_ring");
+    ui->grannyPreset->setCurrentIndex(1);
+    ui->grannyStartType->setCurrentIndex(0);
+    ui->grannyCornerArches->setValue(1);
+    setGrannyTemplateControlsVisible(false);
     
     ui->defaultStitch->addItems(StitchLibrary::inst()->stitchList());
     ui->defaultStitch->setCurrentIndex(ui->defaultStitch->findText(defSt));
@@ -255,6 +266,7 @@ void MainWindow::setupNewTabDialog()
     newChartUpdateStyle(defStyle);
     connect(ui->chartStyle, SIGNAL(currentIndexChanged(QString)), SLOT(newChartUpdateStyle(QString)));
     connect(ui->chartTemplate, SIGNAL(currentIndexChanged(int)), SLOT(newChartUpdateTemplate(int)));
+    connect(ui->grannyPreset, SIGNAL(currentIndexChanged(int)), SLOT(newGrannyPresetChanged(int)));
     
     connect(ui->newDocBttnBox, SIGNAL(accepted()), this, SLOT(newChart()));
     connect(ui->newDocBttnBox, SIGNAL(rejected()), ui->newDocument, SLOT(hide()));   
@@ -307,6 +319,13 @@ void MainWindow::newChartUpdateTemplate(int templateIndex)
 {
     Q_UNUSED(templateIndex);
     applyChartTemplatePreset(currentChartTemplateKey());
+}
+
+void MainWindow::newGrannyPresetChanged(int presetIndex)
+{
+    Q_UNUSED(presetIndex);
+    if(currentChartTemplateKey() == "granny_square")
+        applyGrannyPreset(currentGrannyPresetKey());
 }
 
 void MainWindow::propertiesUpdate(QString property, QVariant newValue)
@@ -1449,9 +1468,30 @@ QString MainWindow::currentChartTemplateKey() const
     return ui->chartTemplate->itemData(ui->chartTemplate->currentIndex()).toString();
 }
 
+QString MainWindow::currentGrannyPresetKey() const
+{
+    return ui->grannyPreset->itemData(ui->grannyPreset->currentIndex()).toString();
+}
+
+QString MainWindow::currentGrannyStartTypeKey() const
+{
+    return ui->grannyStartType->itemData(ui->grannyStartType->currentIndex()).toString();
+}
+
+void MainWindow::setGrannyTemplateControlsVisible(bool visible)
+{
+    ui->grannyPresetLbl->setVisible(visible);
+    ui->grannyPreset->setVisible(visible);
+    ui->grannyStartLbl->setVisible(visible);
+    ui->grannyStartType->setVisible(visible);
+    ui->grannyCornerArchesLbl->setVisible(visible);
+    ui->grannyCornerArches->setVisible(visible);
+}
+
 void MainWindow::applyChartTemplatePreset(const QString& templateKey)
 {
     if(templateKey == "custom") {
+        setGrannyTemplateControlsVisible(false);
         ui->chartTitle->setText(nextChartName());
         ui->rows->setValue(Settings::inst()->value("rowCount").toInt());
         ui->stitches->setValue(Settings::inst()->value("stitchCount").toInt());
@@ -1471,22 +1511,51 @@ void MainWindow::applyChartTemplatePreset(const QString& templateKey)
     if(templateKey != "granny_square")
         return;
 
+    setGrannyTemplateControlsVisible(true);
+    applyGrannyPreset(currentGrannyPresetKey());
+}
+
+void MainWindow::applyGrannyPreset(const QString& presetKey)
+{
     const int roundsIndex = ui->chartStyle->findText(tr("Rounds"));
     if(roundsIndex >= 0)
         ui->chartStyle->setCurrentIndex(roundsIndex);
 
-    ui->chartTitle->setText(tr("Granny Square"));
-    ui->rows->setValue(6);
-    ui->stitches->setValue(4);
-    ui->increaseBy->setValue(4);
-
-    const int spacingIndex = ui->rowSpacing->findText(tr("3 Chains"));
-    if(spacingIndex >= 0)
-        ui->rowSpacing->setCurrentIndex(spacingIndex);
-
     const int stitchIndex = ui->defaultStitch->findText("dc");
     if(stitchIndex >= 0)
         ui->defaultStitch->setCurrentIndex(stitchIndex);
+
+    if(presetKey == "granny_4_round") {
+        ui->chartTitle->setText(tr("Granny Square 4-Round"));
+        ui->rows->setValue(4);
+        ui->stitches->setValue(4);
+        ui->increaseBy->setValue(4);
+        ui->grannyCornerArches->setValue(1);
+
+        const int spacingIndex = ui->rowSpacing->findText(tr("3 Chains"));
+        if(spacingIndex >= 0)
+            ui->rowSpacing->setCurrentIndex(spacingIndex);
+    } else if(presetKey == "solid_granny_square") {
+        ui->chartTitle->setText(tr("Solid Granny Square"));
+        ui->rows->setValue(6);
+        ui->stitches->setValue(4);
+        ui->increaseBy->setValue(4);
+        ui->grannyCornerArches->setValue(0);
+
+        const int spacingIndex = ui->rowSpacing->findText(tr("2 Chains"));
+        if(spacingIndex >= 0)
+            ui->rowSpacing->setCurrentIndex(spacingIndex);
+    } else {
+        ui->chartTitle->setText(tr("Granny Square"));
+        ui->rows->setValue(6);
+        ui->stitches->setValue(4);
+        ui->increaseBy->setValue(4);
+        ui->grannyCornerArches->setValue(1);
+
+        const int spacingIndex = ui->rowSpacing->findText(tr("3 Chains"));
+        if(spacingIndex >= 0)
+            ui->rowSpacing->setCurrentIndex(spacingIndex);
+    }
 }
 
 void MainWindow::applyChartTemplateToTab(CrochetTab* tab, const QString& templateKey,
@@ -1495,13 +1564,19 @@ void MainWindow::applyChartTemplateToTab(CrochetTab* tab, const QString& templat
     if(!tab || templateKey != "granny_square")
         return;
 
+    const QString grannyStartType = currentGrannyStartTypeKey();
+    const int cornerArches = ui->grannyCornerArches->value();
+    int guidelineColumns = qMax(4, qMax(1, cornerArches) * 4);
+    if(grannyStartType == "chain_ring")
+        guidelineColumns += 4;
+
     tab->setChartCenter(true);
     ui->actionShowChartCenter->setChecked(true);
 
     Guidelines guidelines;
     guidelines.setType("Rounds");
     guidelines.setRows(rows);
-    guidelines.setColumns(cols);
+    guidelines.setColumns(guidelineColumns);
     guidelines.setCellHeight(static_cast<int>(rowHeight));
     guidelines.setCellWidth(32);
 
