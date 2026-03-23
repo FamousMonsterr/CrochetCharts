@@ -61,25 +61,29 @@ int main(int argc, char *argv[])
     if(useRussian && translator.load(":/translations/crochetcharts_ru.qm"))
         a.installTranslator(&translator);
 
+    SplashScreen splash;
+    splash.show();
+    splash.showMessage(QObject::tr("Loading stitch library..."));
+    qApp->processEvents();
+
     a.loadStitchLibrary();
 
     QStringList arguments = QCoreApplication::arguments();
     arguments.removeFirst(); // remove the application name from the list.
 
+    splash.showMessage(QObject::tr("Preparing main window..."));
+    qApp->processEvents();
+
     MainWindow w(arguments);
     a.setMainWindow(&w);
-
-    SplashScreen splash;
-    splash.show();
-    splash.showMessage(QObject::tr("Loading..."));
-    qApp->processEvents();
    
     QString curVersion = AppInfo::inst()->appVersion;
     QString lastUsed = Settings::inst()->value("lastUsed").toString();
     updateFunction(lastUsed);
     Settings::inst()->setValue("version", curVersion);
 
-    splash.showMessage(QObject::tr("Loading Ui..."));
+    splash.showMessage(QObject::tr("Opening workspace..."));
+    qApp->processEvents();
 
     w.showMaximized();
     splash.finish(&w);

@@ -242,6 +242,10 @@ void MainWindow::setupNewTabDialog()
     ui->rows->setValue(rows);
     ui->stitches->setValue(stitches);
     ui->increaseBy->setValue(incBy);
+
+    ui->chartTemplate->clear();
+    ui->chartTemplate->addItem(tr("Custom"), "custom");
+    ui->chartTemplate->addItem(tr("Granny Square"), "granny_square");
     
     ui->defaultStitch->addItems(StitchLibrary::inst()->stitchList());
     ui->defaultStitch->setCurrentIndex(ui->defaultStitch->findText(defSt));
@@ -250,6 +254,7 @@ void MainWindow::setupNewTabDialog()
 
     newChartUpdateStyle(defStyle);
     connect(ui->chartStyle, SIGNAL(currentIndexChanged(QString)), SLOT(newChartUpdateStyle(QString)));
+    connect(ui->chartTemplate, SIGNAL(currentIndexChanged(int)), SLOT(newChartUpdateTemplate(int)));
     
     connect(ui->newDocBttnBox, SIGNAL(accepted()), this, SLOT(newChart()));
     connect(ui->newDocBttnBox, SIGNAL(rejected()), ui->newDocument, SLOT(hide()));   
@@ -296,6 +301,12 @@ void MainWindow::newChartUpdateStyle(QString style)
         ui->increaseBy->setVisible(false);
         ui->increaseByLbl->setVisible(false);
     }
+}
+
+void MainWindow::newChartUpdateTemplate(int templateIndex)
+{
+    Q_UNUSED(templateIndex);
+    applyChartTemplatePreset(currentChartTemplateKey());
 }
 
 void MainWindow::propertiesUpdate(QString property, QVariant newValue)
@@ -839,6 +850,7 @@ void MainWindow::documentNewChart()
     ui->increaseBy->setValue(incBy);
     
     ui->chartTitle->setText(nextChartName());
+    applyChartTemplatePreset(currentChartTemplateKey());
 
     if(ui->newDocument->isVisible()) {
         QPalette pal = ui->newDocument->palette();
@@ -1378,6 +1390,7 @@ void MainWindow::newChart()
     QString defStitch = ui->defaultStitch->currentText();
     QString name = ui->chartTitle->text();
     int incBy = ui->increaseBy->text().toInt();
+    QString templateKey = currentChartTemplateKey();
     
     QString style = ui->chartStyle->currentText();
 
@@ -1418,6 +1431,7 @@ void MainWindow::newChart()
         rowHeight = 182;
 
     tab->createChart(st, rows, cols, defStitch, QSizeF(32, rowHeight), incBy);
+    applyChartTemplateToTab(tab, templateKey, rows, cols, rowHeight);
 
     tab->setEditFgColor(ui->fgColor->color());
     tab->setEditBgColor(ui->bgColor->color());
@@ -1428,6 +1442,77 @@ void MainWindow::newChart()
     //Only mark a document as modified if we're adding another tab to it.
     if(ui->tabWidget->count() > 1)
         documentIsModified(true);
+}
+
+QString MainWindow::currentChartTemplateKey() const
+{
+    return ui->chartTemplate->itemData(ui->chartTemplate->currentIndex()).toString();
+}
+
+void MainWindow::applyChartTemplatePreset(const QString& templateKey)
+{
+    if(templateKey == "custom") {
+        ui->chartTitle->setText(nextChartName());
+        ui->rows->setValue(Settings::inst()->value("rowCount").toInt());
+        ui->stitches->setValue(Settings::inst()->value("stitchCount").toInt());
+        ui->increaseBy->setValue(Settings::inst()->value("increaseBy").toInt());
+
+        const int styleIndex = ui->chartStyle->findText(Settings::inst()->value("chartStyle").toString());
+        if(styleIndex >= 0)
+            ui->chartStyle->setCurrentIndex(styleIndex);
+
+        const int defaultStitchIndex = ui->defaultStitch->findText(Settings::inst()->value("defaultStitch").toString());
+        if(defaultStitchIndex >= 0)
+            ui->defaultStitch->setCurrentIndex(defaultStitchIndex);
+
+        return;
+    }
+
+    if(templateKey != "granny_square")
+        return;
+
+    const int roundsIndex = ui->chartStyle->findText(tr("Rounds"));
+    if(roundsIndex >= 0)
+        ui->chartStyle->setCurrentIndex(roundsIndex);
+
+    ui->chartTitle->setText(tr("Granny Square"));
+    ui->rows->setValue(6);
+    ui->stitches->setValue(4);
+    ui->increaseBy->setValue(4);
+
+    const int spacingIndex = ui->rowSpacing->findText(tr("3 Chains"));
+    if(spacingIndex >= 0)
+        ui->rowSpacing->setCurrentIndex(spacingIndex);
+
+    const int stitchIndex = ui->defaultStitch->findText("dc");
+    if(stitchIndex >= 0)
+        ui->defaultStitch->setCurrentIndex(stitchIndex);
+}
+
+void MainWindow::applyChartTemplateToTab(CrochetTab* tab, const QString& templateKey,
+                                         int rows, int cols, qreal rowHeight)
+{
+    if(!tab || templateKey != "granny_square")
+        return;
+
+    tab->setChartCenter(true);
+    ui->actionShowChartCenter->setChecked(true);
+
+    Guidelines guidelines;
+    guidelines.setType("Rounds");
+    guidelines.setRows(rows);
+    guidelines.setColumns(cols);
+    guidelines.setCellHeight(static_cast<int>(rowHeight));
+    guidelines.setCellWidth(32);
+
+    QVariant value;
+    value.setValue(guidelines);
+    tab->propertiesUpdate("Guidelines", value);
+    tab->propertiesUpdate("AlignAngle", QVariant(true));
+
+    setSelectedGridMode("Rounds");
+    updateGuidelines(guidelines);
+    mPropertiesDock->propertyUpdated();
 }
 
 CrochetTab* MainWindow::createTab(Scene::ChartStyle style)

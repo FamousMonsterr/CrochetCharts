@@ -87,6 +87,7 @@ protected slots:
     void tabChanged(int newTab);
     
     void newChartUpdateStyle(QString style);
+    void newChartUpdateTemplate(int templateIndex);
 
     void propertiesUpdate(QString property, QVariant newValue);
     
@@ -217,6 +218,10 @@ private:
     void setEditMode(int mode);
 
     void setApplicationTitle();
+    QString currentChartTemplateKey() const;
+    void applyChartTemplatePreset(const QString& templateKey);
+    void applyChartTemplateToTab(CrochetTab* tab, const QString& templateKey,
+                                 int rows, int cols, qreal rowHeight);
 
     CrochetTab* curCrochetTab();
 

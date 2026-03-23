@@ -35,32 +35,34 @@ SplashScreen::SplashScreen()
 
 void SplashScreen::drawContents (QPainter* painter)
 {
-    QRect rect = QRect(QPoint(0,0), this->pixmap().size());
+    const QRect rect(QPoint(0,0), this->pixmap().size());
     painter->drawPixmap(rect, this->pixmap());
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    painter->setRenderHint(QPainter::TextAntialiasing, true);
 
-    QFont origFont = painter->font();
-/*
-    QFont titleFont = QFont(origFont.family());
-    titleFont.setPointSize(50);    
+    const QRect panelRect(28, rect.height() - 88, rect.width() - 56, 54);
+    painter->setPen(Qt::NoPen);
+    painter->setBrush(QColor(255, 255, 255, 222));
+    painter->drawRoundedRect(panelRect, 10, 10);
 
-    painter->setFont(titleFont);
-    painter->drawText(QRect(25, 200, 400, 100), AppInfo::inst()->appName);
+    QFont versionFont = painter->font();
+    versionFont.setPointSize(versionFont.pointSize() + 1);
+    painter->setFont(versionFont);
+    painter->setPen(QColor(58, 66, 82));
+    const QString version = tr("Version: %1").arg(AppInfo::inst()->appVersionShort);
+    painter->drawText(panelRect.adjusted(14, 6, -14, -26), Qt::AlignLeft | Qt::AlignVCenter, version);
 
-    QFont byFont = QFont(origFont.family());
-    byFont.setPointSize(30);
-    painter->setFont(byFont);
-    painter->drawText(QRect(25, 125, 400, 100), AppInfo::inst()->appOrg);
- */   
-    painter->setFont(origFont);
-    QString version = QString("Version: %1").arg(AppInfo::inst()->appVersionShort);
-    painter->drawText(QRectF(75, 280, 250, 50), version);
-    painter->drawText(QRectF(75, 295, 250, 50), mMessage);
+    QFont messageFont = versionFont;
+    messageFont.setBold(true);
+    painter->setFont(messageFont);
+    painter->setPen(QColor(24, 31, 45));
+    painter->drawText(panelRect.adjusted(14, 22, -14, -4), Qt::AlignLeft | Qt::AlignVCenter, mMessage);
 }
 
 void SplashScreen::showMessage (const QString &message)
 {
     if(message != mMessage) {
         mMessage = message;
-        this->repaint();
+        this->update();
     }
 }

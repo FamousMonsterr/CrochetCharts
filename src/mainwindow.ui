@@ -216,7 +216,23 @@
          <item row="2" column="3">
           <widget class="QComboBox" name="defaultStitch"/>
          </item>
-         <item row="3" column="0" colspan="6">
+         <item row="3" column="0">
+          <widget class="QLabel" name="chartTemplateLbl">
+           <property name="text">
+            <string>Template:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="buddy">
+            <cstring>chartTemplate</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1" colspan="5">
+          <widget class="QComboBox" name="chartTemplate"/>
+         </item>
+         <item row="4" column="0" colspan="6">
           <widget class="QDialogButtonBox" name="newDocBttnBox">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
