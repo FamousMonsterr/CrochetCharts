@@ -21,20 +21,26 @@
 #ifndef ERRORHANDLER_H
 #define ERRORHANDLER_H
 
-void errorHandler(QtMsgType type, const char *msg)
+void errorHandler(QtMsgType type, const QMessageLogContext &, const QString &msg)
 {
+    QByteArray localMsg = msg.toLocal8Bit();
+    const char *message = localMsg.constData();
+
     switch (type) {
         case QtDebugMsg:
-            fprintf(stderr, "%s\n", msg);
+            fprintf(stderr, "%s\n", message);
+            break;
+        case QtInfoMsg:
+            fprintf(stderr, "%s\n", message);
             break;
         case QtWarningMsg:
-            fprintf(stderr, "\033[1;33mWarning\033[0m: %s\n", msg);
+            fprintf(stderr, "\033[1;33mWarning\033[0m: %s\n", message);
             break;
         case QtCriticalMsg:
-            fprintf(stderr, "\033[31mCritical\033[0m: %s\n", msg);
+            fprintf(stderr, "\033[31mCritical\033[0m: %s\n", message);
             break;
         case QtFatalMsg:
-            fprintf(stderr, "\033[31mFatal\033[0m: %s\n", msg);
+            fprintf(stderr, "\033[31mFatal\033[0m: %s\n", message);
             abort();
     }
 }

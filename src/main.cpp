@@ -24,6 +24,8 @@
 
 #include <QDebug>
 #include <QDir>
+#include <QLocale>
+#include <QTranslator>
 
 #include "settings.h"
 
@@ -34,16 +36,28 @@
 
 int main(int argc, char *argv[])
 {
-    qInstallMsgHandler(errorHandler);
+    qInstallMessageHandler(errorHandler);
     Application a(argc, argv);
+
+    Q_INIT_RESOURCE(crochet);
+    Q_INIT_RESOURCE(translations);
+
+    QTranslator translator;
+    QByteArray languageOverride = qgetenv("CROCHETCHARTS_LANG").toLower();
+    bool useRussian = languageOverride.startsWith("ru");
+    if(languageOverride.isEmpty())
+        useRussian = (QLocale::system().language() == QLocale::Russian);
+
+    if(useRussian && translator.load(":/translations/crochetcharts_ru.qm"))
+        a.installTranslator(&translator);
+
+    a.loadStitchLibrary();
 
     QStringList arguments = QCoreApplication::arguments();
     arguments.removeFirst(); // remove the application name from the list.
 
     MainWindow w(arguments);
     a.setMainWindow(&w);
-
-    Q_INIT_RESOURCE(crochet);
 
     SplashScreen splash;
     splash.show();

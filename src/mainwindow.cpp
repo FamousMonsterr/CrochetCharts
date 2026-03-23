@@ -58,6 +58,7 @@
 
 #include <QSortFilterProxyModel>
 #include <QDesktopServices>
+#include <QMimeData>
 
 MainWindow::MainWindow(QStringList fileNames, QWidget* parent)
     : QMainWindow(parent),
@@ -107,7 +108,7 @@ MainWindow::MainWindow(QStringList fileNames, QWidget* parent)
     setupMenus();
     readSettings();
 
-#ifdef Q_OS_MACX
+#ifdef Q_OS_MAC
     //File icon for titlebar
     fileIcon = QIcon(":/images/stitchworks-pattern.svg");
 #else
@@ -208,7 +209,7 @@ void MainWindow::setApplicationTitle()
             shownName = "my design.pattern[*]";
         } else {
             shownName = QFileInfo(curFile).fileName() + "[*]";
-#ifdef Q_OS_MACX
+#ifdef Q_OS_MAC
             icon = fileIcon;
 #else
             icon = QIcon(":/images/CrochetCharts.png");
@@ -218,7 +219,7 @@ void MainWindow::setApplicationTitle()
     }
     QString title;
 
-#ifdef Q_OS_MACX
+#ifdef Q_OS_MAC
     title = tr("%1%3%2").arg(shownName).arg(qApp->applicationName()).arg(join);
 #else
     title = tr("%2%3%1").arg(shownName).arg(qApp->applicationName()).arg(join);
@@ -356,7 +357,7 @@ void MainWindow::reloadLayerContent(QList<ChartLayer*>& layers, ChartLayer* sele
 		else
 			item->setCheckState(Qt::Unchecked);
 		
-		item->setData(qVariantFromValue((void*)layer), Qt::UserRole+5);
+		item->setData(QVariant::fromValue(static_cast<void*>(layer)), Qt::UserRole+5);
 		
 		if (layer == selected)
 			selecteditem = item;
@@ -854,20 +855,20 @@ void MainWindow::helpCrochetHelp()
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     QString path = QApplication::applicationDirPath();
     QString file ="";
-#ifdef Q_WS_WIN
-    file= QString("file://%1/Crochet_Charts_User_Guide_%2.pdf").arg(path).arg(AppInfo::inst()->appVersionShort);
-    bool r = QDesktopServices::openUrl(QUrl::fromLocalFile(file));
-#endif
-
-#ifdef Q_WS_MAC
-    file = QString("file://%1/Crochet Charts_User_Guide_%2.pdf").arg(path).arg(AppInfo::inst()->appVersionShort);
+#ifdef Q_OS_WIN
+    file = QString("%1/Crochet_Charts_User_Guide_%2.pdf").arg(path).arg(AppInfo::inst()->appVersionShort);
     QDesktopServices::openUrl(QUrl::fromLocalFile(file));
 #endif
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_MAC
+    file = QString("%1/CrochetCharts_User_Guide_%2.pdf").arg(path).arg(AppInfo::inst()->appVersionShort);
+    QDesktopServices::openUrl(QUrl::fromLocalFile(file));
+#endif
+
+#ifdef Q_OS_LINUX
     file = QString("%1/../share/CrochetCharts/CrochetCharts_User_Guide_%2.pdf").arg(path).arg(AppInfo::inst()->appVersionShort);
     QDesktopServices::openUrl(QUrl::fromLocalFile(file));
-#endif //Q_WS_WIN
+#endif //Q_OS_WIN
 
     QApplication::restoreOverrideCursor();
 
@@ -1918,7 +1919,7 @@ void MainWindow::updatePatternColors()
 
 void MainWindow::documentIsModified(bool isModified)
 {
-#ifdef Q_OS_MACX
+#ifdef Q_OS_MAC
     QString curFile = mFile->fileName;
 
     if (!curFile.isEmpty()) {

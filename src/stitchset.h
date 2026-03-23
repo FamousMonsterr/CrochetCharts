@@ -23,16 +23,11 @@
 
 #include <QList>
 #include <QAbstractItemModel>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 #include "stitch.h"
 
 class QDomElement;
-#ifdef Q_WS_MAC
-#include <QXmlStreamWriter>
-#include <QXmlStreamReader>
-#else
-class QXmlStreamWriter;
-class QXmlStreamReader;
-#endif //Q_WS_MAC
     
 class StitchSet : public QAbstractItemModel
 {

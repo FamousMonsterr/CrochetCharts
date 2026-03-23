@@ -20,7 +20,6 @@
  \****************************************************************************/
 #include "updater.h"
 
-#include <QtNetwork/QHttp>
 #include <QtNetwork/QNetworkRequest>
 
 #include <QDesktopServices>
@@ -31,6 +30,7 @@
 #include <QPushButton>
 
 #include <QProcess>
+#include <QStandardPaths>
 
 #include "appinfo.h"
 #include <QApplication>
@@ -98,11 +98,11 @@ void Updater::httpFinished()
     QString data = QString(mData);
 
     if (reply->error()) {
-        //TODO: add a warning.
-        qWarning() << "Failed to connect to server.";
+        if(!mSilent)
+            qWarning() << "Failed to connect to server.";
     } else {
 
-        QStringList urls = data.split("::", QString::SkipEmptyParts);
+        QStringList urls = data.split("::", Qt::SkipEmptyParts);
         if(urls.count() == 2) {
             QMessageBox msgbox(this);
             msgbox.setIcon(QMessageBox::Information);
@@ -139,7 +139,7 @@ void Updater::httpReadyRead()
 void Updater::downloadInstaller(QUrl url)
 {   
     QString fName = url.path().split("/").last();
-    QString path = QDesktopServices::storageLocation(QDesktopServices::TempLocation);
+    QString path = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
     installer = new QFile(path + "/" + fName);
     
     if (!installer->open(QIODevice::WriteOnly)){
@@ -226,17 +226,13 @@ void Updater::launchInstaller()
         return;
     }
         
-#if defined(Q_OS_WIN32)
-    QDesktopServices::openUrl(installer->fileName());
+#if defined(Q_OS_WIN)
+    QDesktopServices::openUrl(QUrl::fromLocalFile(installer->fileName()));
 
 #elif defined(Q_OS_LINUX)
-    QDesktopServices::openUrl(installer->fileName());
-#elif defined(Q_OS_DARWIN)
-    QProcess* installProc = new QProcess(this);
-    QString program = "open " + installer->fileName();
-
-    installProc->startDetached(program);
-    installProc->waitForStarted();
+    QDesktopServices::openUrl(QUrl::fromLocalFile(installer->fileName()));
+#elif defined(Q_OS_MAC)
+    QProcess::startDetached("open", QStringList() << installer->fileName());
 #endif
     
     qApp->quit();

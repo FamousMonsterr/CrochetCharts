@@ -43,9 +43,9 @@ RubberBand::RubberBand(QWidget* parent)
 	: AbstractSelectionBand(parent)
 {
 	setAttribute(Qt::WA_TransparentForMouseEvents);
-	#ifndef Q_WS_WIN
+	#ifndef Q_OS_WIN
     setAttribute(Qt::WA_NoSystemBackground);
-	#endif //Q_WS_WIN
+	#endif //Q_OS_WIN
     setAttribute(Qt::WA_WState_ExplicitShowHide);
 }
 
@@ -111,9 +111,9 @@ LassoBand::LassoBand(QWidget* parent)
 	: AbstractSelectionBand(parent)
 {
 	setAttribute(Qt::WA_TransparentForMouseEvents);
-	#ifndef Q_WS_WIN
+	#ifndef Q_OS_WIN
     setAttribute(Qt::WA_NoSystemBackground);
-	#endif //Q_WS_WIN
+	#endif //Q_OS_WIN
     setAttribute(Qt::WA_WState_ExplicitShowHide);
 }
 	
@@ -160,7 +160,7 @@ void LassoBand::updatePath()
 	newr = newr.normalized();
 	
 	//expand our size rectangle to contain newr
-	mMaxGeom = mMaxGeom.unite(newr).normalized();
+	mMaxGeom = mMaxGeom.united(newr).normalized();
 	
 	//set the geometry to that rectangle, translated to our position
 	setGeometry(mMaxGeom.translated(mPosition.x(), mPosition.y()).normalized());
@@ -196,9 +196,9 @@ LineBand::LineBand(QWidget* parent)
 	: AbstractSelectionBand(parent)
 {
 	setAttribute(Qt::WA_TransparentForMouseEvents);
-	#ifndef Q_WS_WIN
+	#ifndef Q_OS_WIN
     setAttribute(Qt::WA_NoSystemBackground);
-	#endif //Q_WS_WIN
+	#endif //Q_OS_WIN
     setAttribute(Qt::WA_WState_ExplicitShowHide);
 }
 	
@@ -243,7 +243,7 @@ void LineBand::updatePath()
 	newr = newr.normalized();
 	
 	//expand our size rectangle to contain newr
-	mMaxGeom = mMaxGeom.unite(newr).normalized();
+	mMaxGeom = mMaxGeom.united(newr).normalized();
 	
 	//set the geometry to that rectangle, translated to our position
 	setGeometry(mMaxGeom.translated(mPosition.x(), mPosition.y()).normalized());

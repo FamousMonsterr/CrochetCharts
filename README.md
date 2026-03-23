@@ -1,45 +1,149 @@
 # Crochet Charts
 
-This software is licensed under GPLv3. All original artwork is licensed under Creative Commons Attribution-ShareAlike ( cc by-sa 4.0 ).
+## Русский
+`Crochet Charts` — настольное приложение для создания схем вязания крючком. Этот форк приведён в рабочее состояние для современного macOS, переведён на русский язык и собирается на `Qt 5`.
 
-## Setup a working environment
+### Что есть в этом форке
+- Сборка на современном `cmake` и `Qt 5`.
+- Русская локализация интерфейса через `QTranslator`.
+- Исправления для современного macOS и свежего toolchain.
+- Более чистый старт приложения без прежних warning'ов про `Sans`, `QPainter` и тихую проверку обновлений.
 
-There are some git commit hooks that can be setup after you initially clone this repository by running:
+### Лицензия
+- Исходный код распространяется по `GPLv3`.
+- Оригинальные графические материалы и artwork распространяются по `CC BY-SA 4.0`.
+- Если вы распространяете модифицированную версию, сохраните и соблюдайте обе лицензии.
 
-./bin/seutp
+Полные тексты лицензий находятся в файле [LICENSE](LICENSE).
 
-You will need to install the following software:
+### Сборка на macOS
+Требования:
+- `Xcode Command Line Tools`
+- `Homebrew`
+- `cmake`
+- `qt@5`
 
-All Platforms
---------------
-+ Qt4.8
-+ cmake
-+ docbook
-+ docbook-xsl-ns
-+ Apache fop
-+ xsltproc
+Установка зависимостей:
 
-Windows
---------
-+ MinGW
-+ NSIS
-+ signtool 
+```bash
+brew install cmake qt@5
+```
 
-Mac
-----
-+ Mac Developer tools Xcode
-+ (Paid) Mac Developer account ( to sign the software )
-+ custom build of cmake - https://github.com/iPenguin/cmake
+Сборка:
 
-Linux
-------
-+ build-essential
-+ gcc and/or clang
-+ doxygen
+```bash
+cmake -S . -B build -DCMAKE_PREFIX_PATH=/usr/local/opt/qt@5
+cmake --build build -j8
+```
 
-For ease of use there are some scripts in the bin folder that can help with the development process.
+Создание self-contained `.app`:
 
-- build   - compile the software based on the selected options, ( -h for a list of options )
-- tests   - run the unit tests and report the results in an easy to read format ( first you must build them ).
-- profile - compile and run the software with profiling turned on.
+```bash
+/usr/local/opt/qt@5/bin/macdeployqt build/src/CrochetCharts.app
+```
 
+### Запуск
+Обычный запуск:
+
+```bash
+open build/src/CrochetCharts.app
+```
+
+Принудительно включить русский интерфейс:
+
+```bash
+CROCHETCHARTS_LANG=ru build/src/CrochetCharts.app/Contents/MacOS/CrochetCharts
+```
+
+Если переменная `CROCHETCHARTS_LANG` не задана, приложение включает русский перевод на системах с русской локалью.
+
+### Обновление перевода
+Обновить `.ts`:
+
+```bash
+lupdate src -ts translations/crochetcharts_ru.ts
+```
+
+Собрать `.qm`:
+
+```bash
+lrelease translations/crochetcharts_ru.ts -qm translations/crochetcharts_ru.qm
+```
+
+### Происхождение
+Исходный проект: `StitchworksSoftware/CrochetCharts`.
+
+---
+
+## English
+`Crochet Charts` is a desktop application for creating crochet chart patterns. This fork has been updated to build on modern macOS, translated to Russian, and ported to a `Qt 5` based toolchain.
+
+### What This Fork Adds
+- Modern `cmake` and `Qt 5` build support.
+- Russian UI localization via `QTranslator`.
+- Compatibility fixes for modern macOS and current compilers.
+- Cleaner startup with the previous `Sans`, `QPainter`, and silent updater warnings removed.
+
+### License
+- Source code is licensed under `GPLv3`.
+- Original artwork and graphical assets are licensed under `CC BY-SA 4.0`.
+- If you redistribute a modified version, make sure you comply with both licenses.
+
+See [LICENSE](LICENSE) for the full license text shipped with this repository.
+
+### Building on macOS
+Requirements:
+- `Xcode Command Line Tools`
+- `Homebrew`
+- `cmake`
+- `qt@5`
+
+Install dependencies:
+
+```bash
+brew install cmake qt@5
+```
+
+Configure and build:
+
+```bash
+cmake -S . -B build -DCMAKE_PREFIX_PATH=/usr/local/opt/qt@5
+cmake --build build -j8
+```
+
+Create a self-contained `.app` bundle:
+
+```bash
+/usr/local/opt/qt@5/bin/macdeployqt build/src/CrochetCharts.app
+```
+
+### Running
+Regular launch:
+
+```bash
+open build/src/CrochetCharts.app
+```
+
+Force Russian UI:
+
+```bash
+CROCHETCHARTS_LANG=ru build/src/CrochetCharts.app/Contents/MacOS/CrochetCharts
+```
+
+If `CROCHETCHARTS_LANG` is not set, the app enables the Russian translation automatically on systems using a Russian locale.
+
+### Updating Translations
+Refresh the `.ts` catalog:
+
+```bash
+lupdate src -ts translations/crochetcharts_ru.ts
+```
+
+Compile the `.qm` file:
+
+```bash
+lrelease translations/crochetcharts_ru.ts -qm translations/crochetcharts_ru.qm
+```
+
+### Upstream
+Original project: `StitchworksSoftware/CrochetCharts`.

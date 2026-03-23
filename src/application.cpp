@@ -35,7 +35,10 @@ Application::Application(int &argc, char **argv)
     qApp->setApplicationVersion(AppInfo::inst()->appVersion);
     qApp->setOrganizationName(AppInfo::inst()->appOrg);
     qApp->setOrganizationDomain(AppInfo::inst()->appOrgDomain);
+}
 
+void Application::loadStitchLibrary()
+{
     StitchLibrary* library = StitchLibrary::inst();
     library->loadStitchSets();
 }

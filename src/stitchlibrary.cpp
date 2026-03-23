@@ -29,6 +29,7 @@
 #include "debug.h"
 
 #include <QDir>
+#include <QDataStream>
 #include <QFileInfo>
 #include "settings.h"
 

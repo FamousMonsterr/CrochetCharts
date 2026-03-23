@@ -23,7 +23,6 @@
 #include <QWheelEvent>
 #include <QDebug>
 #include <QScrollBar>
-#include <QGLWidget>
 
 ChartView::ChartView(QWidget* parent)
     : QGraphicsView(parent)
@@ -106,7 +105,7 @@ void ChartView::mouseReleaseEvent(QMouseEvent* event)
 void ChartView::wheelEvent(QWheelEvent* event)
 {
     if (event->modifiers() && Qt::CTRL)
-        zoom(event->delta());
+        zoom(event->angleDelta().y());
     else
         QGraphicsView::wheelEvent(event);
 }

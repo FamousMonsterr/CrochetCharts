@@ -61,7 +61,7 @@ StitchLibraryUi::StitchLibraryUi(QWidget* parent)
     ui->listView->setItemDelegate(delegate);
 
     setDialogSize();
-    ui->listView->horizontalHeader()->setClickable(true);
+    ui->listView->horizontalHeader()->setSectionsClickable(true);
     ui->listView->horizontalHeader()->setSortIndicatorShown(true);
 
     //TODO: Wrong Side.
@@ -387,7 +387,7 @@ void StitchLibraryUi::printStitchSet()
     // paint cells
     for (int r = 0; r < rows; ++r) {
 
-        if(rowHeight + ui->listView->rowHeight(r) > (printer.pageRect().height() - 35)) {
+        if(rowHeight + ui->listView->rowHeight(r) > (printer.pageLayout().paintRectPixels(printer.resolution()).height() - 35)) {
             printer.newPage();
             rowHeight = 35;
         }
