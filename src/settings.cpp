@@ -93,6 +93,11 @@ void Settings::setupValueList() {
     //general application options
     mValueList["checkForUpdates"] = QVariant(true);
     mValueList["uiLanguage"] = QVariant("system");
+#ifdef Q_OS_MAC
+    mValueList["lowGraphicsMode"] = QVariant(true);
+#else
+    mValueList["lowGraphicsMode"] = QVariant(false);
+#endif
     mValueList["fileLocation"] = QVariant(userDocs);
 
     mValueList["maxRecentFiles"] = QVariant(5);

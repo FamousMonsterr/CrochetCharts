@@ -1,6 +1,7 @@
 #include "ChartImage.h"
 #include "debug.h"
 #include "ChartItemTools.h"
+#include "settings.h"
 #include <QMessageBox>
 
 ChartImage::ChartImage(const QString& filename, QGraphicsItem* parent):
@@ -21,6 +22,9 @@ ChartImage::ChartImage(const QString& filename, QGraphicsItem* parent):
 	
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
+    setCacheMode(Settings::inst()->value("lowGraphicsMode").toBool()
+                     ? QGraphicsItem::DeviceCoordinateCache
+                     : QGraphicsItem::NoCache);
 }
 
 ChartImage::ChartImage(QDataStream& stream, QGraphicsItem* parent):
@@ -34,6 +38,9 @@ ChartImage::ChartImage(QDataStream& stream, QGraphicsItem* parent):
 	
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
+    setCacheMode(Settings::inst()->value("lowGraphicsMode").toBool()
+                     ? QGraphicsItem::DeviceCoordinateCache
+                     : QGraphicsItem::NoCache);
 }
 
 ChartImage::~ChartImage()
@@ -55,7 +62,10 @@ QRectF ChartImage::boundingRect() const
 
 void ChartImage::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	Q_UNUSED(widget);
+
 	if (mPixmap) {
+		painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 		painter->drawPixmap(option->rect.x(), option->rect.y(), *mPixmap);
 	}
 	if(option->state & QStyle::State_Selected) {
@@ -79,6 +89,7 @@ void ChartImage::setFile(const QString& filename)
 	delete mPixmap;
 	mPixmap = newPixmap;
 	mFilename = filename;
+    update();
 }
 
 void ChartImage::setZLayer(const QString& zlayer)

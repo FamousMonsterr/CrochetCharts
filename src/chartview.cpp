@@ -19,9 +19,11 @@
 
  \****************************************************************************/
 #include "chartview.h"
+#include "settings.h"
 
 #include <QWheelEvent>
 #include <QDebug>
+#include <QPainter>
 #include <QScrollBar>
 
 ChartView::ChartView(QWidget* parent)
@@ -29,7 +31,22 @@ ChartView::ChartView(QWidget* parent)
 	
 {
 	setAcceptDrops(true);
-	//update();
+    setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    setResizeAnchor(QGraphicsView::AnchorViewCenter);
+
+    const bool lowGraphicsMode = Settings::inst()->value("lowGraphicsMode").toBool();
+    if (lowGraphicsMode) {
+        setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
+        setCacheMode(QGraphicsView::CacheBackground);
+        setOptimizationFlag(QGraphicsView::DontSavePainterState, true);
+        setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing, true);
+        setRenderHint(QPainter::Antialiasing, false);
+        setRenderHint(QPainter::SmoothPixmapTransform, false);
+        setRenderHint(QPainter::TextAntialiasing, true);
+    } else {
+        setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+        setRenderHint(QPainter::TextAntialiasing, true);
+    }
 }
 
 ChartView::~ChartView()

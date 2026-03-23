@@ -98,8 +98,6 @@ CrochetTab::CrochetTab(Scene::ChartStyle style, int defEditMode, QString defStit
 
     mView->setMinimumSize(width(), height()*2/3);
     
-    mView->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-
     mRowEditDialog = new RowEditDialog(scene(), mTextView, this);
     ui->verticalLayout->insertWidget(0, mRowEditDialog);
     mRowEditDialog->hide();
@@ -469,4 +467,3 @@ void CrochetTab::setGuidelinesType(QString guide)
 {
     mScene->setGuidelinesType(guide);
 }
-

@@ -86,6 +86,7 @@ void SettingsUi::buttonClicked(QAbstractButton *button)
 int SettingsUi::exec()
 {
     QString oldLanguage = Settings::inst()->value("uiLanguage").toString();
+    bool oldGraphicsMode = Settings::inst()->value("lowGraphicsMode").toBool();
     int retValue = QDialog::exec();
 
     if(retValue != QDialog::Accepted)
@@ -100,10 +101,11 @@ int SettingsUi::exec()
     saveDialogWidgets();
 
     QString newLanguage = Settings::inst()->value("uiLanguage").toString();
-    if(oldLanguage != newLanguage) {
+    bool newGraphicsMode = Settings::inst()->value("lowGraphicsMode").toBool();
+    if(oldLanguage != newLanguage || oldGraphicsMode != newGraphicsMode) {
         QMessageBox::information(this,
                                  tr("Restart Required"),
-                                 tr("Language changes will take effect after restarting %1.")
+                                 tr("Language and graphics changes will take effect after restarting %1.")
                                      .arg(qApp->applicationName()),
                                  QMessageBox::Ok);
     }

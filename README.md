@@ -8,6 +8,10 @@
 - Русская локализация интерфейса через `QTranslator`.
 - Исправления для современного macOS и свежего toolchain.
 - Более чистый старт приложения без прежних warning'ов про `Sans`, `QPainter` и тихую проверку обновлений.
+- Режим пониженной графической нагрузки для старых Mac и тяжёлых схем с изображениями.
+
+### Документация
+- Подробная инструкция по перемещению, вращению, выравниванию и раскладке петель для бабушкиного квадрата: [docs/granny-square-ru.md](docs/granny-square-ru.md)
 
 ### Лицензия
 - Исходный код распространяется по `GPLv3`.
@@ -83,6 +87,10 @@ lrelease translations/crochetcharts_ru.ts -qm translations/crochetcharts_ru.qm
 - Russian UI localization via `QTranslator`.
 - Compatibility fixes for modern macOS and current compilers.
 - Cleaner startup with the previous `Sans`, `QPainter`, and silent updater warnings removed.
+- A lower graphics load mode for older Macs and image-heavy charts.
+
+### Documentation
+- Detailed Russian guide for moving, rotating, aligning, and arranging stitches for a granny square workflow: [docs/granny-square-ru.md](docs/granny-square-ru.md)
 
 ### License
 - Source code is licensed under `GPLv3`.
