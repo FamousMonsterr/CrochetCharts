@@ -138,14 +138,24 @@ void PropertiesDock::loadProperties(Guidelines guidelines)
 
 void PropertiesDock::tabChanged(int tabNumber)
 {
+    if (mScene) {
+        disconnect(mScene, SIGNAL(selectionChanged()), this, SLOT(updateDialogUi()));
+    }
 
     if(tabNumber == -1) {
+        mScene = 0;
         clearUi();
         return;
     }
 
-    mScene = qobject_cast<CrochetTab*>(mTabWidget->widget(tabNumber))->scene();
-    connect(mScene, SIGNAL(selectionChanged()), SLOT(updateDialogUi()));
+    CrochetTab* tab = qobject_cast<CrochetTab*>(mTabWidget->widget(tabNumber));
+    mScene = tab ? tab->scene() : 0;
+    if (!mScene) {
+        clearUi();
+        return;
+    }
+
+    connect(mScene, SIGNAL(selectionChanged()), SLOT(updateDialogUi()), Qt::UniqueConnection);
     updateDialogUi();
 
 }
@@ -289,7 +299,7 @@ void PropertiesDock::updateDialogUi()
 {
 
     clearUi();
-    if(closing)
+    if(closing || !mScene)
         return;
 
     int count = mScene->selectedItems().count();
@@ -545,6 +555,9 @@ void PropertiesDock::showItemGroup()
 
 void PropertiesDock::showCanvas()
 {
+    if (!mScene)
+        return;
+
     ui->chartGroup->show();
 
     ui->showChartCenter->setChecked(mScene->showChartCenter());
@@ -646,6 +659,9 @@ void PropertiesDock::chartUpdateGuidelines()
 
 void PropertiesDock::propertyUpdated()
 {
+    if (!mScene)
+        return;
+
     updateDialogUi();
 }
 

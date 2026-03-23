@@ -22,6 +22,7 @@
 #define PROPERTIESDOCK_H
 
 #include <QDockWidget>
+#include <QPointer>
 #include <QTabWidget>
 #include "scene.h"
 
@@ -123,7 +124,7 @@ private:
     Ui::PropertiesDock *ui;
 
     QTabWidget* mTabWidget;
-    Scene* mScene;
+    QPointer<Scene> mScene;
     Guidelines mGuidelines;
 };
 
