@@ -1,0 +1,187 @@
+QMainWindow,
+QDialog {
+    background: #eef1f5;
+    color: #1f2937;
+}
+
+QWidget#centralWidget {
+    background: #eef1f5;
+}
+
+QMenuBar,
+QToolBar {
+    background: rgba(248, 250, 252, 0.92);
+    border: none;
+    spacing: 6px;
+    padding: 6px 10px;
+}
+
+QMenuBar {
+    border-bottom: 1px solid rgba(15, 23, 42, 0.10);
+}
+
+QMenuBar::item {
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: transparent;
+}
+
+QMenuBar::item:selected,
+QMenuBar::item:pressed {
+    background: rgba(63, 111, 216, 0.10);
+}
+
+QMenu {
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    border-radius: 12px;
+    padding: 6px;
+}
+
+QMenu::item {
+    padding: 7px 12px;
+    border-radius: 8px;
+}
+
+QMenu::item:selected {
+    background: rgba(63, 111, 216, 0.10);
+}
+
+QToolBar QToolButton,
+QPushButton,
+QComboBox,
+QAbstractSpinBox,
+QLineEdit {
+    min-height: 32px;
+    border-radius: 10px;
+}
+
+QToolBar QToolButton,
+QPushButton,
+QToolButton {
+    background: rgba(255, 255, 255, 0.74);
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    color: #1f2937;
+    padding: 0 12px;
+}
+
+QToolBar QToolButton:hover,
+QPushButton:hover,
+QToolButton:hover {
+    background: rgba(255, 255, 255, 0.94);
+    border-color: rgba(63, 111, 216, 0.24);
+}
+
+QToolBar QToolButton:pressed,
+QPushButton:pressed,
+QToolButton:pressed,
+QToolButton:checked,
+QPushButton:checked {
+    background: rgba(63, 111, 216, 0.12);
+    border-color: rgba(63, 111, 216, 0.34);
+}
+
+QComboBox,
+QAbstractSpinBox,
+QLineEdit,
+QPlainTextEdit,
+QTextEdit,
+QListView,
+QListWidget,
+QTreeView,
+QTableView {
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    color: #111827;
+    padding: 4px 10px;
+}
+
+QComboBox::drop-down {
+    border: none;
+    width: 24px;
+}
+
+QAbstractItemView {
+    selection-background-color: rgba(63, 111, 216, 0.16);
+    selection-color: #111827;
+    outline: 0;
+}
+
+QGroupBox,
+QWidget[panelSurface="true"],
+QTabWidget::pane {
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    border-radius: 14px;
+}
+
+QGroupBox {
+    margin-top: 18px;
+    padding: 12px;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 12px;
+    top: 8px;
+    padding: 0 4px;
+    color: #4b5563;
+    font-weight: 600;
+}
+
+QGroupBox#newDocument {
+    margin: 14px 14px 6px 14px;
+    padding: 18px;
+}
+
+QDockWidget {
+    color: #111827;
+}
+
+QDockWidget::title {
+    text-align: left;
+    background: rgba(248, 250, 252, 0.88);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-bottom: none;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 8px 12px;
+    font-weight: 600;
+}
+
+QTabWidget::pane {
+    padding-top: 8px;
+}
+
+QTabBar::tab {
+    background: rgba(255, 255, 255, 0.68);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin-right: 6px;
+    color: #4b5563;
+}
+
+QTabBar::tab:selected {
+    background: rgba(255, 255, 255, 0.94);
+    border-color: rgba(15, 23, 42, 0.10);
+    color: #111827;
+}
+
+QHeaderView::section {
+    background: rgba(248, 250, 252, 0.94);
+    border: none;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.10);
+    padding: 6px 8px;
+    color: #4b5563;
+    font-weight: 600;
+}
+
+QStatusBar {
+    background: rgba(248, 250, 252, 0.88);
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+QLabel {
+    color: #374151;
+}

@@ -65,9 +65,9 @@ void RowsDock::generateArrangement()
 
     if(verticalGroup.checkedButton() == ui->alignTop) {
         alignment.setHeight(1);
-    } else if(horizonalGroup.checkedButton() == ui->alignCenterV) {
+    } else if(verticalGroup.checkedButton() == ui->alignCenterV) {
         alignment.setHeight(2);
-    } else if(horizonalGroup.checkedButton() == ui->alignBottom) {
+    } else if(verticalGroup.checkedButton() == ui->alignBottom) {
         alignment.setHeight(3);
     }
 

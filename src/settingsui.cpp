@@ -36,6 +36,12 @@ SettingsUi::SettingsUi(QWidget *parent)
     ui(new Ui::SettingsDialog)
 {
     ui->setupUi(this);
+    ui->label_31->setText(tr("Stitch Tool"));
+    ui->label_36->setText(tr("Angle Tool"));
+    ui->label_38->setText(tr("Scale Tool"));
+    ui->label_31->setAlignment(Qt::AlignCenter);
+    ui->label_36->setAlignment(Qt::AlignCenter);
+    ui->label_38->setAlignment(Qt::AlignCenter);
 
     //in case the form gets saved on the wrong tab.
     ui->tabWidget->setCurrentIndex(0);

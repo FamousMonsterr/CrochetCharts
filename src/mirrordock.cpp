@@ -21,6 +21,9 @@
 #include "mirrordock.h"
 #include "ui_mirrordock.h"
 
+#include <QList>
+#include <QToolButton>
+
 MirrorDock::MirrorDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::MirrorDock)
@@ -29,6 +32,22 @@ MirrorDock::MirrorDock(QWidget *parent) :
     setVisible(false);
     setFloating(true);
     setObjectName("mirrorDock");
+    ui->dockWidgetContents->setProperty("panelSurface", true);
+
+    QList<QToolButton*> buttons;
+    buttons << ui->copyLeft << ui->copyRight << ui->copyUp << ui->copyDown
+            << ui->mirrorLeft << ui->mirrorRight << ui->mirrorUp << ui->mirrorDown
+            << ui->rotate90 << ui->rotate180 << ui->rotate270 << ui->rotateCustom;
+    foreach(QToolButton *button, buttons) {
+        button->setText(QString());
+        button->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        button->setAutoRaise(false);
+    }
+
+    ui->rotate90->setToolTip(tr("Rotate 90°"));
+    ui->rotate180->setToolTip(tr("Rotate 180°"));
+    ui->rotate270->setToolTip(tr("Rotate 270°"));
+    ui->rotateCustom->setToolTip(tr("Rotate custom degrees"));
 
     ui->rotateCustomWidgets->hide();
 

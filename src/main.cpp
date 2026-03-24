@@ -30,6 +30,7 @@
 #include "settings.h"
 
 #include "splashscreen.h"
+#include "theme.h"
 #include "updatefunctions.h"
 
 #include "errorhandler.h"
@@ -41,6 +42,7 @@ int main(int argc, char *argv[])
 
     Q_INIT_RESOURCE(crochet);
     Q_INIT_RESOURCE(translations);
+    Theme::applyApplicationTheme(&a);
 
     QTranslator translator;
     QByteArray languageOverride = qgetenv("CROCHETCHARTS_LANG").toLower();

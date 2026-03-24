@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/license.txt</file>
+        <file>resources/themes/desktop.qss</file>
         <file>./crochet.xml</file>
         <file>images/editredo.png</file>
         <file>images/editundo.png</file>

@@ -21,6 +21,9 @@
 #include "aligndock.h"
 #include "ui_aligndock.h"
 
+#include <QList>
+#include <QToolButton>
+
 AlignDock::AlignDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::AlignDock)
@@ -29,6 +32,19 @@ AlignDock::AlignDock(QWidget *parent) :
     setVisible(false);
     setFloating(true);
     setObjectName("alignDock");
+    ui->dockWidgetContents->setProperty("panelSurface", true);
+
+    QList<QToolButton*> buttons;
+    buttons << ui->alignLeft << ui->alignRight << ui->alignTop << ui->alignBottom
+            << ui->alignCenterH << ui->alignCenterV << ui->alignToPath
+            << ui->distributeLeft << ui->distributeRight << ui->distributeTop
+            << ui->distributeBottom << ui->distributeCenterH << ui->distributeCenterV
+            << ui->distributeToPath;
+    foreach(QToolButton *button, buttons) {
+        button->setText(QString());
+        button->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        button->setAutoRaise(false);
+    }
 
     connect(ui->alignBottom, SIGNAL(clicked(bool)), SLOT(generateAlignment()));
     connect(ui->alignCenterH, SIGNAL(clicked(bool)), SLOT(generateAlignment()));

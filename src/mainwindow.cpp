@@ -28,6 +28,7 @@
 #include "appinfo.h"
 #include "settings.h"
 #include "settingsui.h"
+#include "theme.h"
 
 #include "crochettab.h"
 #include "stitchlibrary.h"
@@ -107,6 +108,8 @@ MainWindow::MainWindow(QStringList fileNames, QWidget* parent)
 
     setupMenus();
     readSettings();
+    ui->newDocument->setProperty("panelSurface", true);
+    Theme::polishMainWindow(this);
 
 #ifdef Q_OS_MAC
     //File icon for titlebar
@@ -1771,7 +1774,7 @@ void MainWindow::setEditMode(int mode)
     
     if(mode == 10)
         ui->actionStitchMode->setChecked(true);
-    else if(mode == 1)
+    else if(mode == 11)
         ui->actionColorMode->setChecked(true);
     else if(mode == 12)
         ui->actionCreateRows->setChecked(true);
