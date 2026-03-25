@@ -5,7 +5,7 @@
 - [x] Add `MEMORY.md`
 - [x] Add `TODO.md`
 - [x] Start repository-local skills for repeatable audit and modernization work
-- [ ] Keep these files current after every significant slice
+- [x] Keep these files current after every significant slice
 
 ## Phase 1. Desktop Feature Audit
 - [x] Build an initial matrix of menu actions, toolbar buttons, dock actions, and editing modes
@@ -27,6 +27,14 @@
 - [ ] Add safer selection and tab-change handling
 - [ ] Add internal logging hooks for user action failures where behavior is silent today
 - [ ] Restore or replace the broken legacy test entry point under `tests/`
+- [ ] Finish the remaining P0 action fixes after the first behavior pass:
+  - [x] `RowsDock` vertical alignment mapping
+  - [x] `Color Edit` checked-state sync
+  - [x] selected-item `Arrange` implementation
+  - [x] reduce multi-select rotate / scale undo corruption risk
+  - [ ] `Ctrl` additive selection reliability
+  - [ ] indicator paste undo path
+  - [ ] mixed non-cell properties behavior
 
 ## Phase 3. Desktop UI Foundation
 - [ ] Introduce a shared Qt theme layer:

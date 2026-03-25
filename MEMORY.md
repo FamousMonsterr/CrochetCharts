@@ -90,3 +90,13 @@
   - selected-item `Arrange` path is still effectively missing
   - multi-select rotate / scale undo path is high risk
 - First modernization slice started with an application theme layer in `src/theme.*` and `resources/themes/desktop.qss`.
+
+## Latest Implementation Slice
+- On `2026-03-25`, the next P0 behavior pass was implemented:
+  - `RowsDock` is no longer force-disabled in the desktop shell
+  - `Scene::arrangeGrid(..., useSelection=true)` now performs real selection layout into a grid with alignment and spacing
+  - multi-item rotate / scale no longer performs an extra eager `ungroup()` before the undo command, reducing transform-history corruption risk
+  - row-edit mouse handling now checks the left button correctly instead of relying on a precedence bug
+- These fixes are implemented in:
+  - `src/mainwindow.cpp`
+  - `src/scene.cpp`

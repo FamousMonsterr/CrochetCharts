@@ -45,11 +45,16 @@ Date: `2026-03-24`
 - align to path / distribute to path
 
 ## P0 Fix Targets
-- `RowsDock` vertical alignment mapping in `src/rowsdock.cpp`
-- `Color Edit` checked-state sync in `src/mainwindow.cpp`
-- wheel zoom modifier check in `src/chartview.cpp`
-- `Arrange` implementation for selected items in `src/scene.cpp`
-- multi-select rotate / scale undo integrity in `src/scene.cpp`
+- Fixed in the first two modernization slices:
+  - `RowsDock` vertical alignment mapping in `src/rowsdock.cpp`
+  - `Color Edit` checked-state sync in `src/mainwindow.cpp`
+  - wheel zoom modifier check in `src/chartview.cpp`
+  - `Arrange` implementation for selected items in `src/scene.cpp`
+  - reduced risk in multi-select rotate / scale undo flow in `src/scene.cpp`
+- Still requiring explicit manual regression:
+  - `Ctrl` additive selection
+  - indicator paste undo
+  - mixed-property handling for non-cell multi-selection
 
 ## Manual QA Checklist
 - Select several stitches, rotate them, then run `Undo` and `Redo` repeatedly.

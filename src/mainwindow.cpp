@@ -465,7 +465,6 @@ void MainWindow::setupDocks()
 
     //Rows & Stitches Dock.
     mRowsDock = new RowsDock(this);
-    mRowsDock->setEnabled(false); //TODO: remove this line when this is working again.
     connect(mRowsDock, SIGNAL(arrangeGrid(QSize,QSize,QSize,bool)), SLOT(arrangeGrid(QSize,QSize,QSize,bool)));
     connect(mRowsDock, SIGNAL(visibilityChanged(bool)), ui->actionShowRowsDock, SLOT(setChecked(bool)));
     

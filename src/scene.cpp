@@ -53,6 +53,8 @@
 
 #include "guideline.h"
 
+#include <algorithm>
+
 #ifndef M_PI
 	# define M_PI	3.14159265358979323846
 #endif
@@ -1141,7 +1143,6 @@ void Scene::angleModeMouseRelease(QGraphicsSceneMouseEvent *e)
     undoStack()->push(new SetItemRotation(mCurItem, mOldAngle, mPivotPt));
 		
 	if (mMultiEdit) {
-		ungroup();
 		undoStack()->push(new UngroupItems(this, (ItemGroup*)mCurItem));
 		undoStack()->endMacro();
 		emit selectionChanged();
@@ -1164,7 +1165,7 @@ void Scene::scaleModeMousePress(QGraphicsSceneMouseEvent *e)
 	}
 	
 	if (selectedItems().count() > 1) {
-		undoStack()->beginMacro("Rotate multiple items.");
+		undoStack()->beginMacro("Scale multiple items.");
 		GroupItems* g = new GroupItems(this, selectedItems());
 		undoStack()->push(g);
 		mCurItem = g->group();
@@ -1240,7 +1241,6 @@ void Scene::scaleModeMouseRelease(QGraphicsSceneMouseEvent *e)
     undoStack()->push(new SetItemScale(mCurItem, mOldScale, mPivotPt));
 
 	if (mMultiEdit) {
-		ungroup();
 		undoStack()->push(new UngroupItems(this, (ItemGroup*)mCurItem));
 		undoStack()->endMacro();
 		emit selectionChanged();
@@ -1254,7 +1254,7 @@ void Scene::scaleModeMouseRelease(QGraphicsSceneMouseEvent *e)
 void Scene::rowEditMousePress(QGraphicsSceneMouseEvent* e)
 {
 
-    if(!e->buttons() == Qt::LeftButton)
+    if(!(e->buttons() & Qt::LeftButton))
         return;
 
 
@@ -1285,7 +1285,7 @@ void Scene::rowEditMousePress(QGraphicsSceneMouseEvent* e)
 void Scene::rowEditMouseMove(QGraphicsSceneMouseEvent* e)
 {
     
-    if(!e->buttons() == Qt::LeftButton)
+    if(!(e->buttons() & Qt::LeftButton))
         return;
 
     mMoving = false;
@@ -2196,18 +2196,73 @@ void Scene::createBlankChart()
 
 void Scene::arrangeGrid(QSize grd, QSize alignment, QSize spacing, bool useSelection)
 {
-    //FIXME: make this function create a grid out of a selection of stitches.
-    Q_UNUSED(alignment);
-
     if(useSelection) {
-    /*
-        boundingRect().height()[.width()] / rows/[cols] = MOE for spacing.
+        QList<QGraphicsItem*> items = selectedItems();
+        for(int i = items.count() - 1; i >= 0; --i) {
+            if(items.at(i)->type() == QGraphicsEllipseItem::Type)
+                items.removeAt(i);
+        }
 
-        look in each "box" for a stitch
-        if found position stitch per user rules above.
-        else leave box empty?
+        if(items.isEmpty())
+            return;
 
-    */
+        int columnCount = qMax(1, grd.height());
+
+        std::stable_sort(items.begin(), items.end(),
+            [](QGraphicsItem *left, QGraphicsItem *right) {
+                QRectF leftRect = left->sceneBoundingRect();
+                QRectF rightRect = right->sceneBoundingRect();
+
+                if(qAbs(leftRect.top() - rightRect.top()) > 0.5)
+                    return leftRect.top() < rightRect.top();
+
+                return leftRect.left() < rightRect.left();
+            });
+
+        QRectF selectionRect = selectedItemsBoundingRect(items);
+        qreal maxWidth = 0;
+        qreal maxHeight = 0;
+        foreach(QGraphicsItem *item, items) {
+            QRectF rect = item->sceneBoundingRect();
+            maxWidth = qMax(maxWidth, rect.width());
+            maxHeight = qMax(maxHeight, rect.height());
+        }
+
+        qreal cellWidth = maxWidth + spacing.width();
+        qreal cellHeight = maxHeight + spacing.height();
+
+        undoStack()->beginMacro(QObject::tr("arrange items into grid"));
+        for(int index = 0; index < items.count(); ++index) {
+            QGraphicsItem *item = items.at(index);
+            QPointF oldPos = item->pos();
+            QRectF rect = item->sceneBoundingRect();
+
+            int row = index / columnCount;
+            int column = index % columnCount;
+
+            qreal offsetX = 0;
+            if(alignment.width() == 2)
+                offsetX = (maxWidth - rect.width()) / 2.0;
+            else if(alignment.width() == 3)
+                offsetX = maxWidth - rect.width();
+
+            qreal offsetY = 0;
+            if(alignment.height() == 2)
+                offsetY = (maxHeight - rect.height()) / 2.0;
+            else if(alignment.height() == 3)
+                offsetY = maxHeight - rect.height();
+
+            qreal targetLeft = selectionRect.left() + (column * cellWidth) + offsetX;
+            qreal targetTop = selectionRect.top() + (row * cellHeight) + offsetY;
+
+            qreal newX = oldPos.x() + (targetLeft - rect.left());
+            qreal newY = oldPos.y() + (targetTop - rect.top());
+
+            item->setPos(newX, newY);
+            undoStack()->push(new SetItemCoordinates(item, oldPos));
+        }
+        undoStack()->endMacro();
+        updateSceneRect();
     } else {
         //create new cells.
         //TODO: figure out how to deal with spacing.
