@@ -747,6 +747,8 @@ void PropertiesDock::chartImageChoosePath()
 	//get the file we need to open
 	QString file = QFileDialog::getOpenFileName(this, tr("Open Image"),
 		QString(), tr("Image Files (*.png *.jpg *.bmp *.tga *.gif)"));
+    if(file.isEmpty())
+        return;
 	
 	ui->ci_path->blockSignals(true);
 	ui->ci_path->setText(file);

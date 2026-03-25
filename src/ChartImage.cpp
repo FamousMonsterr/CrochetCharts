@@ -81,6 +81,11 @@ void ChartImage::setFile(const QString& filename)
 	
 	//if the new pixmap is not a valid image, cancel the operation
 	if (newPixmap->isNull()) {
+        if(!filename.isEmpty()) {
+            QMessageBox message;
+            message.setText(QObject::tr("The chosen file (%1) is not a valid image.").arg(filename));
+            message.exec();
+        }
 		delete newPixmap;
 		return;
 	}

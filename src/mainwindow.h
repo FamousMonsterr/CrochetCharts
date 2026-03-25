@@ -196,6 +196,8 @@ public slots:
     void loadFile(QString fileName);
 private:
     void loadFiles(QStringList fileNames);
+    void notifyUnavailableAction(const QString& action, const QString& reason);
+    CrochetTab* requireCurrentTab(const QString& action);
     
     void setupMenus();
     void setupRecentFiles();

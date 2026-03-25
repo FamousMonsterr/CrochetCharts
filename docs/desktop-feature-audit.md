@@ -55,10 +55,18 @@ Date: `2026-03-24`
   - `Ctrl` additive selection now uses modifier bit checks consistently in `src/scene.cpp`
   - indicator paste is now added through the undo stack in `src/scene.cpp`
   - multi-selection of `Indicator`, `ChartImage`, and `ItemGroup` now falls back to safe mixed generic properties in `src/propertiesdock.cpp`
+- Fixed in the latest slice:
+  - shell-launched macOS bundles are now hardened against mixed Homebrew/bundle Qt runtime loading via `bundle_macos`
+  - silent no-op paths now emit diagnostics for empty or invalid selection use in `src/scene.cpp`
+  - main-window action entry points now surface missing-tab failures through the status bar instead of silently returning
+  - `Group` / `Ungroup` menu enablement now reflects selection state in `src/mainwindow.cpp`
+  - invalid chart-image path edits now surface an error instead of silently failing in `src/ChartImage.cpp`
 - Still requiring explicit manual regression:
   - `Ctrl` additive selection
   - indicator paste undo
   - mixed-property handling for non-cell multi-selection
+  - group / ungroup enablement and warning coverage
+  - directional copy / mirror with mixed selections containing indicators or chart center
 
 ## Manual QA Checklist
 - Select several stitches, rotate them, then run `Undo` and `Redo` repeatedly.

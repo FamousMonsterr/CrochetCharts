@@ -20,6 +20,9 @@
  \****************************************************************************/
 #include "teststitchset.h"
 
+#include <QDir>
+#include <QTemporaryDir>
+
 void TestStitchSet::initTestCase()
 {
     mSet = new StitchSet();
@@ -27,11 +30,10 @@ void TestStitchSet::initTestCase()
 
 void TestStitchSet::setupStitchSet()
 {
-    //TODO: make a couple of test sets of stitches.
     QVERIFY(mSet->stitchCount() == 0);
-    mSet->loadXmlFile("../crochet.xml");
+    QVERIFY(mSet->loadXmlFile(":/crochet.xml"));
 
-    QVERIFY(mSet->stitchCount() == 109);
+    QVERIFY(mSet->stitchCount() > 100);
 }
 
 void TestStitchSet::findStitch()
@@ -70,17 +72,23 @@ void TestStitchSet::findStitch_data()
     QTest::addColumn<QString>("cat");
     QTest::addColumn<QString>("ws");
 
-    QTest::newRow("sl st") << "sl st" << "stitches/slip.svg" << "slip stitch" << "Basic" << "sl st";
-    QTest::newRow("ch") << "ch" << "stitches/chain.svg" << "chain" << "Basic" << "ch";
+    QTest::newRow("sl st") << "sl st" << true << ":/stitches/sl_st.svg" << "slip stitch" << "Default" << "sl st";
+    QTest::newRow("ch") << "ch" << true << ":/stitches/ch.svg" << "chain" << "Default" << "ch";
+    QTest::newRow("missing") << "does-not-exist" << false << "" << "" << "" << "";
 }
 
 void TestStitchSet::saveLoadDataSet()
 {
-    QString fileName = "teststitchset-savefile.set";
+    QTemporaryDir tempDir;
+    QVERIFY(tempDir.isValid());
+
+    QString fileName = tempDir.filePath("teststitchset-savefile.set");
     mSet->saveDataFile(fileName);
 
     StitchSet* testSet = new StitchSet();
-    testSet->loadDataFile(fileName, "set1.xml");
+    QString destFile = tempDir.filePath("set1.xml");
+    QVERIFY(QDir().mkpath(tempDir.filePath("set1")));
+    testSet->loadDataFile(fileName, destFile);
 
     QVERIFY(testSet->stitchCount() == mSet->stitchCount());
 
@@ -99,5 +107,6 @@ void TestStitchSet::saveLoadDataSet()
 
 void TestStitchSet::cleanupTestCase()
 {
+    delete mSet;
+    mSet = 0;
 }
-

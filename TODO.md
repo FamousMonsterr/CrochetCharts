@@ -25,8 +25,8 @@
 ## Phase 2. Desktop Stability
 - [ ] Remove high-risk dangling-pointer and lifetime bugs in scene/dock interactions
 - [ ] Add safer selection and tab-change handling
-- [ ] Add internal logging hooks for user action failures where behavior is silent today
-- [ ] Restore or replace the broken legacy test entry point under `tests/`
+- [x] Add internal logging hooks for user action failures where behavior is silent today
+- [x] Restore or replace the broken legacy test entry point under `tests/`
 - [ ] Finish the remaining P0 action fixes after the first behavior pass:
   - [x] `RowsDock` vertical alignment mapping
   - [x] `Color Edit` checked-state sync
@@ -35,6 +35,7 @@
   - [x] `Ctrl` additive selection reliability
   - [x] indicator paste undo path
   - [x] mixed non-cell properties behavior
+  - [x] harden macOS shell launch against mixed Homebrew/bundle Qt runtime loading
 
 ## Phase 3. Desktop UI Foundation
 - [ ] Introduce a shared Qt theme layer:

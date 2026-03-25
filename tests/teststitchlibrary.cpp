@@ -26,6 +26,8 @@
 void TestStitchLibrary::initTestCase()
 {
     StitchLibrary::inst()->loadStitchSets();
+    QVERIFY(StitchLibrary::inst()->masterStitchSet() != 0);
+    QVERIFY(StitchLibrary::inst()->masterStitchSet()->stitchCount() > 100);
 }
 
 void TestStitchLibrary::findStitch()
@@ -40,15 +42,14 @@ void TestStitchLibrary::findStitch()
 
     Stitch* s = StitchLibrary::inst()->findStitch(name);
 
-    if(!s) {
-        if(exists) {
-            QFAIL("stitch not found in set as it should have been");
-        } else {
-            QCOMPARE((bool)s, exists);
-            return;
-        }
+    if(!exists) {
+        QVERIFY(s != 0);
+        QCOMPARE(s->name(), name);
+        QCOMPARE(s->file(), QString(":/stitches/unknown.svg"));
+        return;
     }
 
+    QVERIFY(s != 0);
     QVERIFY(s->name() == name);
     QVERIFY(s->file() == file);
     QVERIFY(s->description() == desc);

@@ -77,6 +77,7 @@ This repository now uses explicit workstreams so the desktop product can be stab
 - Builds desktop bundles.
 - Runs regression passes on high-risk actions.
 - Verifies installed app behavior on macOS.
+- Verifies shell-launched macOS bundles do not inherit broken Qt runtime state from terminal or editor environments.
 
 ## Current Ownership Map
 - `src/mainwindow.*`, `src/*.ui`, `src/*dock*`, `src/settings*`, `src/chartview*`: Desktop UI Modernization + Desktop Behavior Audit

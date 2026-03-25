@@ -43,6 +43,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/version.cpp.in
 set(crochet_version "${CMAKE_CURRENT_BINARY_DIR}/version.cpp")
 
 find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets Svg Network Xml PrintSupport)
+include(CTest)
 
 option(UNIT_TESTING  "Build the test libraries for this software" OFF)
 option(DOCS "Create docbook documentation" OFF)

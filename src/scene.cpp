@@ -59,6 +59,50 @@
 	# define M_PI	3.14159265358979323846
 #endif
 
+namespace {
+
+int groupableSelectionCount(const QList<QGraphicsItem*> &items)
+{
+    int count = 0;
+    foreach(QGraphicsItem *item, items) {
+        if(item && item->type() != QGraphicsEllipseItem::Type)
+            ++count;
+    }
+    return count;
+}
+
+int selectedGroupCount(const QList<QGraphicsItem*> &items)
+{
+    int count = 0;
+    foreach(QGraphicsItem *item, items) {
+        if(item && item->type() == ItemGroup::Type)
+            ++count;
+    }
+    return count;
+}
+
+int unsupportedDirectionalTransformCount(const QList<QGraphicsItem*> &items)
+{
+    int count = 0;
+    foreach(QGraphicsItem *item, items) {
+        if(!item)
+            continue;
+
+        switch(item->type()) {
+        case Cell::Type:
+        case ChartImage::Type:
+        case ItemGroup::Type:
+            break;
+        default:
+            ++count;
+            break;
+        }
+    }
+    return count;
+}
+
+}
+
 Guidelines::Guidelines()
     : mType("None"),
       mRows(Settings::inst()->value("rowCount").toInt()),
@@ -1609,8 +1653,15 @@ void Scene::hideRowLines()
 //FIXME: simplify the number of foreach loops?
 void Scene::alignSelection(int alignmentStyle)
 {
-    if(selectedItems().count() <= 0)
+    const int selectionCount = selectedItems().count();
+    if(selectionCount <= 0) {
+        WARN("Align requested with an empty selection.");
         return;
+    }
+    if(selectionCount == 1) {
+        WARN("Align requested with only one selected item.");
+        return;
+    }
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
@@ -1650,8 +1701,15 @@ void Scene::alignSelection(int alignmentStyle)
 void Scene::distributeSelection(int distributionStyle)
 {
 
-    if(selectedItems().count() <= 0)
+    const int selectionCount = selectedItems().count();
+    if(selectionCount <= 0) {
+        WARN("Distribute requested with an empty selection.");
         return;
+    }
+    if(selectionCount == 1) {
+        WARN("Distribute requested with only one selected item.");
+        return;
+    }
     
     QApplication::setOverrideCursor(Qt::WaitCursor);
     
@@ -2316,8 +2374,10 @@ void Scene::propertiesUpdate(QString property, QVariant newValue)
 
     } else { // all options that require operations on a per stitch level.
 
-        if(selectedItems().count() <= 0)
+        if(selectedItems().count() <= 0) {
+            WARN(QString("Property update ignored because the selection is empty: %1").arg(property));
             return;
+        }
 
         IndicatorProperties ip;
         ip = newValue.value<IndicatorProperties>();
@@ -2489,13 +2549,19 @@ void Scene::showProperties()
 
 void Scene::copy(int direction)
 {
-    if(selectedItems().count() <= 0)
+    if(selectedItems().count() <= 0) {
+        WARN("Directional copy requested with an empty selection.");
         return;
+    }
 	
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     QRectF rect = selectedItemsBoundingRect(selectedItems());
     QList<QGraphicsItem*> list = selectedItems();
+    const int unsupportedItems = unsupportedDirectionalTransformCount(list);
+    if(unsupportedItems > 0) {
+        WARN(QString("Directional copy skipped %1 unsupported selected item(s).").arg(unsupportedItems));
+    }
 
 	blockSignals(true);
 
@@ -2574,12 +2640,18 @@ QGraphicsItem* Scene::mirror_rec(QGraphicsItem* item, QPointF displacement, QRec
 
 void Scene::mirror(int direction)
 {
-    if(selectedItems().count() <= 0)
+    if(selectedItems().count() <= 0) {
+        WARN("Mirror requested with an empty selection.");
         return;
+    }
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     QRectF rect = selectedItemsBoundingRect(selectedItems());
     QList<QGraphicsItem*> list = selectedItems();
+    const int unsupportedItems = unsupportedDirectionalTransformCount(list);
+    if(unsupportedItems > 0) {
+        WARN(QString("Mirror skipped %1 unsupported selected item(s).").arg(unsupportedItems));
+    }
 
 	blockSignals(true);
 
@@ -2635,16 +2707,20 @@ void Scene::mirror(int direction)
 
 void Scene::rotate(qreal degrees)
 {
-    if(selectedItems().count() <= 0)
+    if(selectedItems().count() <= 0) {
+        WARN(QString("Rotate requested with an empty selection: %1 degrees").arg(degrees));
         return;
+    }
 
     undoStack()->push(new SetSelectionRotation(this, selectedItems(), degrees));
 }
 
 void Scene::copy()
 {
-    if(selectedItems().count() <= 0)
+    if(selectedItems().count() <= 0) {
+        WARN("Clipboard copy requested with an empty selection.");
         return;
+    }
 
     QByteArray copyData;
     QDataStream stream(&copyData, QIODevice::WriteOnly);
@@ -3039,10 +3115,17 @@ QRectF Scene::selectedItemsBoundingRect(QList<QGraphicsItem*> items)
 
 void Scene::group()
 {
-    if(selectedItems().count() <= 1)
+    const QList<QGraphicsItem*> items = selectedItems();
+    if(items.count() <= 1) {
+        WARN("Group requested without at least two selected items.");
         return;
+    }
+    if(groupableSelectionCount(items) <= 1) {
+        WARN("Group requested without at least two groupable items. Chart center is ignored.");
+        return;
+    }
 
-    undoStack()->push(new GroupItems(this, selectedItems()));
+    undoStack()->push(new GroupItems(this, items));
 }
 
 ItemGroup* Scene::group(QList<QGraphicsItem*> items, ItemGroup* g)
@@ -3076,10 +3159,17 @@ ItemGroup* Scene::group(QList<QGraphicsItem*> items, ItemGroup* g)
 
 void Scene::ungroup()
 {
-    if(selectedItems().count() <= 0)
+    const QList<QGraphicsItem*> items = selectedItems();
+    if(items.count() <= 0) {
+        WARN("Ungroup requested with an empty selection.");
         return;
+    }
+    if(selectedGroupCount(items) <= 0) {
+        WARN("Ungroup requested but no item groups are selected.");
+        return;
+    }
 
-    foreach(QGraphicsItem* item, selectedItems()) {
+    foreach(QGraphicsItem* item, items) {
         if(item->type() == ItemGroup::Type) {
             ItemGroup* group = qgraphicsitem_cast<ItemGroup*>(item);
             undoStack()->push(new UngroupItems(this, group));

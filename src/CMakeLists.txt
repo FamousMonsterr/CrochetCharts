@@ -51,6 +51,22 @@ target_link_libraries(${EXE_NAME} PRIVATE
 )
 
 if(APPLE)
+    find_program(MACDEPLOYQT_EXECUTABLE
+        NAMES macdeployqt
+        HINTS /usr/local/opt/qt@5/bin /opt/homebrew/opt/qt@5/bin
+    )
+
+    if(MACDEPLOYQT_EXECUTABLE)
+        add_custom_target(bundle_macos
+            COMMAND "${CMAKE_SOURCE_DIR}/utils/prepare_macos_bundle.sh"
+                    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.app"
+                    "${MACDEPLOYQT_EXECUTABLE}"
+            DEPENDS ${EXE_NAME}
+            USES_TERMINAL
+            COMMENT "Deploying Qt bundle and installing sanitized macOS launcher"
+        )
+    endif()
+
     #install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME} DESTINATION ../MacOS)
 
     if(APP_STORE)

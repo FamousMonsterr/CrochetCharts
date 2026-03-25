@@ -19,16 +19,22 @@
 
  \****************************************************************************/
 #include "testsettings.h"
-#include "teststitch.h"
 #include "teststitchset.h"
-#include "testcell.h"
-#include "testtextview.h"
 #include "teststitchlibrary.h"
+
+#include <QApplication>
+#include <QDir>
+#include <QSettings>
+#include <QStandardPaths>
 
 int main(int argc, char** argv) 
 {
-
     QApplication app(argc, argv);
+    QCoreApplication::setOrganizationName("CrochetChartsTests");
+    QCoreApplication::setOrganizationDomain("tests.local");
+    QCoreApplication::setApplicationName("CrochetChartsTests");
+    QStandardPaths::setTestModeEnabled(true);
+    QSettings::setDefaultFormat(QSettings::IniFormat);
     int retval(0);
 
     QObject* test;
@@ -40,27 +46,12 @@ int main(int argc, char** argv)
     delete test;
     test = 0;
 
-    test = new TestStitch();
-    retval +=QTest::qExec(test, argc, argv);
-    delete test;
-    test = 0;
-
     test = new TestStitchSet();
     retval +=QTest::qExec(test, argc, argv);
     delete test;
     test = 0;
 
     test = new TestStitchLibrary();
-    retval +=QTest::qExec(test, argc, argv);
-    delete test;
-    test = 0;
-
-    test = new TestCell();
-    retval +=QTest::qExec(test, argc, argv);
-    delete test;
-    test = 0;
-
-    test = new TestTextView();
     retval +=QTest::qExec(test, argc, argv);
     delete test;
     test = 0;

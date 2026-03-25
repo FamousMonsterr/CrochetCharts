@@ -60,6 +60,7 @@
 #include <QSortFilterProxyModel>
 #include <QDesktopServices>
 #include <QMimeData>
+#include <QStatusBar>
 
 MainWindow::MainWindow(QStringList fileNames, QWidget* parent)
     : QMainWindow(parent),
@@ -1319,8 +1320,20 @@ void MainWindow::menuStitchesAboutToShow()
     hasItems = (mPatternColors.count() > 0 ? true : false);
     ui->actionColorReplacer->setEnabled(hasTab() && curCrochetTab() && hasItems);
 
-    ui->actionGroup->setEnabled(hasTab() && curCrochetTab());
-    ui->actionUngroup->setEnabled(hasTab() && curCrochetTab());
+    int selectedCount = 0;
+    int selectedGroups = 0;
+    CrochetTab *tab = curCrochetTab();
+    if(tab && tab->scene()) {
+        QList<QGraphicsItem*> selection = tab->scene()->selectedItems();
+        selectedCount = selection.count();
+        foreach(QGraphicsItem *item, selection) {
+            if(item && item->type() == ItemGroup::Type)
+                ++selectedGroups;
+        }
+    }
+
+    ui->actionGroup->setEnabled(hasTab() && curCrochetTab() && selectedCount > 1);
+    ui->actionUngroup->setEnabled(hasTab() && curCrochetTab() && selectedGroups > 0);
 
 }
 
@@ -2101,49 +2114,49 @@ void MainWindow::documentIsModified(bool isModified)
 
 void MainWindow::chartCreateRows(bool state)
 {
-    CrochetTab* tab = curCrochetTab();
+    CrochetTab* tab = requireCurrentTab(tr("Row editor"));
     if(tab) tab->showRowEditor(state);
 }
 
 void MainWindow::alignSelection(int style)
 {
-    CrochetTab* tab = curCrochetTab();
+    CrochetTab* tab = requireCurrentTab(tr("Align selection"));
     if(tab) tab->alignSelection(style);
 }
 
 void MainWindow::distributeSelection(int style)
 {
-    CrochetTab* tab = curCrochetTab();
+    CrochetTab* tab = requireCurrentTab(tr("Distribute selection"));
     if(tab) tab->distributeSelection(style);
 }
 
 void MainWindow::arrangeGrid(QSize grid, QSize alignment, QSize spacing, bool useSelection)
 {
-    CrochetTab* tab = curCrochetTab();
+    CrochetTab* tab = requireCurrentTab(tr("Arrange"));
     if(tab) tab->arrangeGrid(grid, alignment, spacing, useSelection);
 }
 
 void MainWindow::copy(int direction)
 {
-    CrochetTab* tab = curCrochetTab();
+    CrochetTab* tab = requireCurrentTab(tr("Directional copy"));
     if(tab) tab->copy(direction);
 }
 
 void MainWindow::mirror(int direction)
 {
-    CrochetTab* tab = curCrochetTab();
+    CrochetTab* tab = requireCurrentTab(tr("Mirror"));
     if(tab) tab->mirror(direction);
 }
 
 void MainWindow::rotate(qreal degrees)
 {
-    CrochetTab* tab = curCrochetTab();
+    CrochetTab* tab = requireCurrentTab(tr("Rotate"));
     if(tab) tab->rotate(degrees);
 }
 
 void MainWindow::resize(QRectF scenerect)
 {
-    CrochetTab* tab = curCrochetTab();
+    CrochetTab* tab = requireCurrentTab(tr("Resize chart"));
     if(tab) tab->resizeScene(scenerect);
 }
 
@@ -2154,19 +2167,19 @@ void MainWindow::updateGuidelines(Guidelines guidelines)
 
 void MainWindow::copy()
 {
-    CrochetTab* tab = curCrochetTab();
+    CrochetTab* tab = requireCurrentTab(tr("Copy"));
     if(tab) tab->copy();
 }
 
 void MainWindow::cut()
 {
-    CrochetTab* tab = curCrochetTab();
+    CrochetTab* tab = requireCurrentTab(tr("Cut"));
     if(tab) tab->cut();
 }
 
 void MainWindow::paste()
 {
-    CrochetTab* tab = curCrochetTab();
+    CrochetTab* tab = requireCurrentTab(tr("Paste"));
     if(tab) tab->paste();
 }
 
@@ -2175,8 +2188,10 @@ void MainWindow::insertImage()
 	//first choose the image we want to add
 	QString file = QFileDialog::getOpenFileName(this, tr("Open Image"),
 		QString(), tr("Image Files (*.png *.jpg *.bmp *.tga *.gif)"));
+    if(file.isEmpty())
+        return;
 		
-	CrochetTab* tab = curCrochetTab();
+	CrochetTab* tab = requireCurrentTab(tr("Insert image"));
 	
 	//get the location of the current center of the scene
 	if (!tab)
@@ -2194,13 +2209,29 @@ void MainWindow::insertImage()
 
 void MainWindow::group()
 {
-    CrochetTab* tab = curCrochetTab();
+    CrochetTab* tab = requireCurrentTab(tr("Group"));
     if(tab) tab->group();
 }
 
 void MainWindow::ungroup()
 {
-    CrochetTab* tab = curCrochetTab();
+    CrochetTab* tab = requireCurrentTab(tr("Ungroup"));
     if(tab) tab->ungroup();
 
+}
+
+void MainWindow::notifyUnavailableAction(const QString& action, const QString& reason)
+{
+    const QString message = tr("%1 is unavailable: %2").arg(action, reason);
+    qWarning() << message;
+    if(statusBar())
+        statusBar()->showMessage(message, 4000);
+}
+
+CrochetTab* MainWindow::requireCurrentTab(const QString& action)
+{
+    CrochetTab* tab = curCrochetTab();
+    if(!tab)
+        notifyUnavailableAction(action, tr("no chart tab is open"));
+    return tab;
 }

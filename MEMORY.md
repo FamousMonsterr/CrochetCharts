@@ -107,3 +107,18 @@
   - remaining P1 behavior fixes from `docs/desktop-feature-audit.md`
   - deeper `PropertiesDock` and `MainWindow` UI modernization
   - restoring a modern automated regression entry point under `tests/`
+
+## macOS Launch Reliability
+- A shell-launched app on this Mac can inherit Homebrew Qt environment contamination from terminal or VSCode shells.
+- This causes mixed bundle/Homebrew Qt frameworks before `main()` and can abort in platform plugin initialization.
+- The repo now includes `utils/prepare_macos_bundle.sh` and a `bundle_macos` target to deploy the app and install a sanitized launcher script that clears `DYLD_*` and `QT_*` before execing the real Qt binary.
+
+## Latest Implementation Slice
+- On `2026-03-25`, launch reliability and silent-action diagnostics were extended:
+  - macOS bundles can now be wrapped with `bundle_macos` so direct shell launch does not mix bundled Qt with Homebrew Qt
+  - editor actions that used to no-op silently now log explicit warnings for empty or invalid selection states in `src/scene.cpp`
+  - main-window actions that require an open chart tab now report unavailability through the status bar instead of failing silently
+  - `Group` / `Ungroup` menu enablement is now selection-aware in `src/mainwindow.cpp`
+  - changing an existing chart image to an invalid file path now surfaces an error instead of failing silently in `src/ChartImage.cpp`
+  - cancelled image pickers no longer create bogus operations in `src/mainwindow.cpp` and `src/propertiesdock.cpp`
+  - the legacy `tests/` entry point was replaced with a working Qt5/CTest target, and `ctest --test-dir build --output-on-failure` passes
