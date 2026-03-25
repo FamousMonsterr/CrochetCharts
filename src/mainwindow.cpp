@@ -108,6 +108,7 @@ MainWindow::MainWindow(QStringList fileNames, QWidget* parent)
     setupNewTabDialog();
 
     setupMenus();
+    updateSelectionDependentActions();
     readSettings();
     ui->newDocument->setProperty("panelSurface", true);
     Theme::polishMainWindow(this);
@@ -1320,11 +1321,18 @@ void MainWindow::menuStitchesAboutToShow()
     hasItems = (mPatternColors.count() > 0 ? true : false);
     ui->actionColorReplacer->setEnabled(hasTab() && curCrochetTab() && hasItems);
 
+    updateSelectionDependentActions();
+
+}
+
+void MainWindow::updateSelectionDependentActions()
+{
     int selectedCount = 0;
     int selectedGroups = 0;
+
     CrochetTab *tab = curCrochetTab();
     if(tab && tab->scene()) {
-        QList<QGraphicsItem*> selection = tab->scene()->selectedItems();
+        const QList<QGraphicsItem*> selection = tab->scene()->selectedItems();
         selectedCount = selection.count();
         foreach(QGraphicsItem *item, selection) {
             if(item && item->type() == ItemGroup::Type)
@@ -1334,7 +1342,6 @@ void MainWindow::menuStitchesAboutToShow()
 
     ui->actionGroup->setEnabled(hasTab() && curCrochetTab() && selectedCount > 1);
     ui->actionUngroup->setEnabled(hasTab() && curCrochetTab() && selectedGroups > 0);
-
 }
 
 void MainWindow::stitchesReplaceStitch()
@@ -1622,6 +1629,7 @@ CrochetTab* MainWindow::createTab(Scene::ChartStyle style)
 	connect(tab, SIGNAL(layersChanged(QList<ChartLayer*>&, ChartLayer*)), this, SLOT(reloadLayerContent(QList<ChartLayer*>&, ChartLayer*)));
 	connect(tab->scene(), SIGNAL(sceneRectChanged(const QRectF&)), mResizeUI, SLOT(updateContent()));
 	connect(tab->scene(), SIGNAL(showPropertiesSignal()), SLOT(viewMakePropertiesVisible()));
+    connect(tab->scene(), SIGNAL(selectionChanged()), SLOT(updateSelectionDependentActions()));
 
     mUndoGroup.addStack(tab->undoStack());
     
@@ -1906,14 +1914,19 @@ QTabWidget* MainWindow::tabWidget()
 
 void MainWindow::tabChanged(int newTab)
 {
-    if(newTab == -1)
+    if(newTab == -1) {
+        updateSelectionDependentActions();
         return;
+    }
 
     CrochetTab* tab = qobject_cast<CrochetTab*>(ui->tabWidget->widget(newTab));
-    if(!tab)
+    if(!tab) {
+        updateSelectionDependentActions();
         return;
+    }
     
     mUndoGroup.setActiveStack(tab->undoStack());
+    updateSelectionDependentActions();
 }
 
 void MainWindow::removeCurrentTab()
@@ -1955,6 +1968,7 @@ void MainWindow::removeTab(int tabIndex)
     //update the title and menus
     setApplicationTitle();
     updateMenuItems();
+    updateSelectionDependentActions();
 }
 
 void MainWindow::addLayer()

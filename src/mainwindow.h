@@ -191,6 +191,7 @@ private slots:
     void updateDefaultStitchColor(QColor originalColor, QColor newColor);
 	
 	void reloadLayerContent(QList<ChartLayer*>& layers, ChartLayer* selected);
+    void updateSelectionDependentActions();
 
 public slots:
     void loadFile(QString fileName);
