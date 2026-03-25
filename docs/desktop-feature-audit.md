@@ -60,6 +60,7 @@ Date: `2026-03-24`
   - silent no-op paths now emit diagnostics for empty or invalid selection use in `src/scene.cpp`
   - main-window action entry points now surface missing-tab failures through the status bar instead of silently returning
   - `Group` / `Ungroup` menu enablement now reflects selection state in `src/mainwindow.cpp`
+  - `Group` / `Ungroup` action state now updates live on selection change and tab change
   - invalid chart-image path edits now surface an error instead of silently failing in `src/ChartImage.cpp`
 - Still requiring explicit manual regression:
   - `Ctrl` additive selection

@@ -119,6 +119,7 @@
   - editor actions that used to no-op silently now log explicit warnings for empty or invalid selection states in `src/scene.cpp`
   - main-window actions that require an open chart tab now report unavailability through the status bar instead of failing silently
   - `Group` / `Ungroup` menu enablement is now selection-aware in `src/mainwindow.cpp`
+  - `Group` / `Ungroup` action state now also refreshes live on tab switches and scene selection changes instead of only when the menu opens
   - changing an existing chart image to an invalid file path now surfaces an error instead of failing silently in `src/ChartImage.cpp`
   - cancelled image pickers no longer create bogus operations in `src/mainwindow.cpp` and `src/propertiesdock.cpp`
   - the legacy `tests/` entry point was replaced with a working Qt5/CTest target, and `ctest --test-dir build --output-on-failure` passes
