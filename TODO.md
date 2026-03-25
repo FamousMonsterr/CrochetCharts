@@ -27,7 +27,7 @@
 - [ ] Add safer selection and tab-change handling
 - [x] Add internal logging hooks for user action failures where behavior is silent today
 - [x] Restore or replace the broken legacy test entry point under `tests/`
-- [ ] Finish the remaining P0 action fixes after the first behavior pass:
+- [x] Finish the remaining P0 action fixes after the first behavior pass:
   - [x] `RowsDock` vertical alignment mapping
   - [x] `Color Edit` checked-state sync
   - [x] selected-item `Arrange` implementation

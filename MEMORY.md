@@ -103,17 +103,17 @@
 
 ## Current Focus
 - After the latest editor behavior pass, the next high-value targets are:
-  - manual regression of the recently fixed selection / paste / properties paths
-  - remaining P1 behavior fixes from `docs/desktop-feature-audit.md`
+  - manual regression of the recently fixed selection / paste / properties / group flows
+  - remaining dangling-pointer and lifetime issues in scene/dock interactions
   - deeper `PropertiesDock` and `MainWindow` UI modernization
-  - restoring a modern automated regression entry point under `tests/`
+  - expanding the restored test entry point toward selection-transform and file-flow coverage
 
 ## macOS Launch Reliability
 - A shell-launched app on this Mac can inherit Homebrew Qt environment contamination from terminal or VSCode shells.
 - This causes mixed bundle/Homebrew Qt frameworks before `main()` and can abort in platform plugin initialization.
 - The repo now includes `utils/prepare_macos_bundle.sh` and a `bundle_macos` target to deploy the app and install a sanitized launcher script that clears `DYLD_*` and `QT_*` before execing the real Qt binary.
 
-## Latest Implementation Slice
+## Latest Reliability Slice
 - On `2026-03-25`, launch reliability and silent-action diagnostics were extended:
   - macOS bundles can now be wrapped with `bundle_macos` so direct shell launch does not mix bundled Qt with Homebrew Qt
   - editor actions that used to no-op silently now log explicit warnings for empty or invalid selection states in `src/scene.cpp`
