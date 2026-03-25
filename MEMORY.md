@@ -100,3 +100,10 @@
 - These fixes are implemented in:
   - `src/mainwindow.cpp`
   - `src/scene.cpp`
+
+## Current Focus
+- After the latest editor behavior pass, the next high-value targets are:
+  - manual regression of the recently fixed selection / paste / properties paths
+  - remaining P1 behavior fixes from `docs/desktop-feature-audit.md`
+  - deeper `PropertiesDock` and `MainWindow` UI modernization
+  - restoring a modern automated regression entry point under `tests/`

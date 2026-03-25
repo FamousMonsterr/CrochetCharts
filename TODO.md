@@ -32,9 +32,9 @@
   - [x] `Color Edit` checked-state sync
   - [x] selected-item `Arrange` implementation
   - [x] reduce multi-select rotate / scale undo corruption risk
-  - [ ] `Ctrl` additive selection reliability
-  - [ ] indicator paste undo path
-  - [ ] mixed non-cell properties behavior
+  - [x] `Ctrl` additive selection reliability
+  - [x] indicator paste undo path
+  - [x] mixed non-cell properties behavior
 
 ## Phase 3. Desktop UI Foundation
 - [ ] Introduce a shared Qt theme layer:

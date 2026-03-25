@@ -253,19 +253,20 @@ PropertiesData PropertiesDock::selectionProperties()
             firstPass = false;
         }
 
-        if(!c)
-            continue;
-        
-        if(props.angle != ChartItemTools::getRotation(c))
+        if(props.angle != ChartItemTools::getRotation(i))
             angleMixed = true;
         if(props.scale.x() != ChartItemTools::getScaleX(i))
             xScaleMixed = true;
         if(props.scale.y() != ChartItemTools::getScaleY(i))
             yScaleMixed = true;
-        if(props.position.x() != c->pos().x())
+        if(props.position.x() != i->pos().x())
             xPositionMixed = true;
-        if(props.position.y() != c->pos().y())
+        if(props.position.y() != i->pos().y())
             yPositionMixed = true;
+
+        if(!c)
+            continue;
+
         if(props.stitch != c->name())
             stitchMixed = true;
         if(props.color != c->color())
@@ -324,13 +325,22 @@ void PropertiesDock::updateDialogUi()
         } else if(firstType == Cell::Type) {
             showUi(PropertiesDock::CellUi, count);
         } else if(firstType == Indicator::Type) {
-            showUi(PropertiesDock::IndicatorUi, count);
+            if(count > 1)
+                showUi(PropertiesDock::MixedUi, count);
+            else
+                showUi(PropertiesDock::IndicatorUi, count);
         } else if(firstType == ItemGroup::Type) {
-            showUi(PropertiesDock::ItemGroupUi, count);
+            if(count > 1)
+                showUi(PropertiesDock::MixedUi, count);
+            else
+                showUi(PropertiesDock::ItemGroupUi, count);
         } else if(firstType == QGraphicsEllipseItem::Type) {
 			showUi(PropertiesDock::CenterUi, count);
 		} else if (firstType == ChartImage::Type) {
-			showUi(PropertiesDock::ChartImageUi, count);
+			if(count > 1)
+                showUi(PropertiesDock::MixedUi, count);
+            else
+                showUi(PropertiesDock::ChartImageUi, count);
 		}
     }
 }

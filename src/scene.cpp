@@ -259,7 +259,8 @@ void Scene::addItem(QGraphicsItem* item)
             //TODO: add font selection & styling etc.
             //connect(i, SIGNAL(selectedChange(QGraphicsItem*)), this, SIGNAL(itemSelected(QGraphicsItem*)));
             mIndicators.append(i);
-            i->setText(QString::number(mIndicators.count()));
+            if(i->text().isEmpty())
+                i->setText(QString::number(mIndicators.count()));
             break;
         }
         case ItemGroup::Type: {
@@ -505,7 +506,7 @@ void Scene::scaleModeKeyRelease(QKeyEvent* keyEvent)
         return;
 
     //Keep in perportion:
-    if(keyEvent->modifiers() == Qt::ControlModifier) {
+    if(keyEvent->modifiers() & Qt::ControlModifier) {
         if(delta.x() != 0)
             delta.ry() = delta.x();
         else
@@ -534,10 +535,10 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *e)
     if(selectedItems().count() > 0)
         mHasSelection = true;
 
-    if(mHasSelection && e->modifiers() == Qt::ControlModifier)
+    if(mHasSelection && (e->modifiers() & Qt::ControlModifier))
         mSelectionPath = selectionArea();
 	//
-    if(e->buttons() & Qt::LeftButton &&(e->modifiers() != Qt::ShiftModifier || selectedItems().count() >= 1))
+    if(e->buttons() & Qt::LeftButton && (!(e->modifiers() & Qt::ShiftModifier) || selectedItems().count() >= 1))
         QGraphicsScene::mousePressEvent(e);
 
 	//FIXME: there has to be a better way to keep the current selection.
@@ -551,7 +552,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *e)
     mIsRubberband = false;
     
 	//select an item unless we force a rubberband using shift
-	if (e->modifiers() != Qt::ShiftModifier)
+	if (!(e->modifiers() & Qt::ShiftModifier))
 		mCurItem = selectableItemAt(e->scenePos());
 	else
 		mCurItem = NULL;
@@ -634,7 +635,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *e)
     if(e->buttons() != Qt::LeftButton)
         return;
 
-    if(selectedItems().count() <= 0 || e->modifiers() == Qt::ControlModifier) {
+    if(selectedItems().count() <= 0 || (e->modifiers() & Qt::ControlModifier)) {
         ChartView* view = qobject_cast<ChartView*>(parent());
 
         //if(!mRubberBand)
@@ -750,7 +751,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *e)
 		path.addPath(view->mapToScene(mSelectionBand->path()));
 
         //if user is holding down ctrl add items to existing selection.
-        if(mHasSelection && e->modifiers() == Qt::ControlModifier) {
+        if(mHasSelection && (e->modifiers() & Qt::ControlModifier)) {
             path.addPath(mSelectionPath);
         }
 		blockSignals(true);
@@ -1022,7 +1023,7 @@ void Scene::indicatorModeMouseRelease(QGraphicsSceneMouseEvent *e)
     if(e->isAccepted())
         return;
 
-    if((e->button() == Qt::LeftButton && e->modifiers() == Qt::ControlModifier)) {
+    if((e->button() == Qt::LeftButton && (e->modifiers() & Qt::ControlModifier))) {
         if(mCurIndicator) {
             undoStack()->push(new RemoveIndicator(this, mCurIndicator));
         }
@@ -1218,7 +1219,7 @@ void Scene::scaleModeMouseMove(QGraphicsSceneMouseEvent *e)
 								  newSize.height() / originalSize.height());
 	
     //When holding Ctrl or when scaling a group, lock scale to largest dimension.
-    if(e->modifiers() == Qt::ControlModifier || mCurItem->type() == ItemGroup::Type) {
+    if((e->modifiers() & Qt::ControlModifier) || mCurItem->type() == ItemGroup::Type) {
         if(neededScale.x() < neededScale.y())
             neededScale.ry() = neededScale.rx();
         else
@@ -1368,7 +1369,7 @@ void Scene::stitchModeMouseRelease(QGraphicsSceneMouseEvent* e)
     if(e->isAccepted())
         return;
 
-    if(mCurItem && e->modifiers() != Qt::ControlModifier) {
+    if(mCurItem && !(e->modifiers() & Qt::ControlModifier)) {
 		
 		Cell *cell = qgraphicsitem_cast<Cell*>(mCurItem);
 
@@ -2874,7 +2875,6 @@ void Scene::pasteRecursively(QDataStream &stream, QList<QGraphicsItem*> *group)
         }
         case Indicator::Type: {
             Indicator *i = new Indicator();
-            //FIXME: add this indicator to the undo stack.
             QPointF pos, pivotScale, pivotRotation;
             QString text;
             qreal rotation, scaleX, scaleY;
@@ -2884,7 +2884,7 @@ void Scene::pasteRecursively(QDataStream &stream, QList<QGraphicsItem*> *group)
 			
             pos += offSet;
             i->setText(text);
-            addItem(i);
+            undoStack()->push(new AddItem(this, i));
             i->setPos(pos);
 			i->setLayer(getCurrentLayer()->uid());
 

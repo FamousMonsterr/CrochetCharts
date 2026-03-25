@@ -9,6 +9,11 @@ This repository now uses explicit workstreams so the desktop product can be stab
 - Every substantial change should update [MEMORY.md](MEMORY.md) and, when scope changes, [TODO.md](TODO.md).
 - Desktop correctness comes before visual polish.
 - Web/VDS and Android work must reuse a shared domain model where practical instead of forking product behavior.
+- Current execution order for modernization is:
+  - stabilize editor behavior
+  - finish the desktop UI system pass
+  - extract shared document/core boundaries
+  - only then expand into online and Android delivery
 
 ## Agent Roles
 

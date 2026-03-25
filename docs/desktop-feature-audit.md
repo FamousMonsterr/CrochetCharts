@@ -51,6 +51,10 @@ Date: `2026-03-24`
   - wheel zoom modifier check in `src/chartview.cpp`
   - `Arrange` implementation for selected items in `src/scene.cpp`
   - reduced risk in multi-select rotate / scale undo flow in `src/scene.cpp`
+- Fixed in the current slice:
+  - `Ctrl` additive selection now uses modifier bit checks consistently in `src/scene.cpp`
+  - indicator paste is now added through the undo stack in `src/scene.cpp`
+  - multi-selection of `Indicator`, `ChartImage`, and `ItemGroup` now falls back to safe mixed generic properties in `src/propertiesdock.cpp`
 - Still requiring explicit manual regression:
   - `Ctrl` additive selection
   - indicator paste undo
