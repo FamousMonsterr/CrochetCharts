@@ -48,6 +48,7 @@ public slots:
 
 private slots:
     void setColor();
+    void updateSummary(int index);
 
     void buttonClicked(QAbstractButton* button);
 private:

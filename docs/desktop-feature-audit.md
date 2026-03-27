@@ -77,6 +77,10 @@ Date: `2026-03-24`
   - color and file actions now use clearer action labels and tooltips, reducing blind icon/button usage in the dock
   - `RowsDock` now uses explicit text alignment controls instead of blank tooltip-only radio buttons
   - the dead `Create Rows` checkbox was removed from `RowsDock`, leaving only the two real actions: create a grid or arrange the current selection
+- Fixed in the current settings slice:
+  - `SettingsUi` now opens with a tab summary card that explains the active configuration section
+  - the summary updates on tab switch for `Application`, `Charts`, `Legends`, and `Tools`
+  - the default-folder picker now uses a readable `Choose...` button instead of an opaque `...` affordance
 - Still requiring explicit manual regression:
   - move-mode drag and click behavior on dense charts
   - `Ctrl` additive selection
@@ -86,6 +90,7 @@ Date: `2026-03-24`
   - directional copy / mirror with mixed selections containing indicators or chart center
   - visual regression of the new `PropertiesDock` summary and swatch-button presentation on macOS
   - visual regression of the rebuilt `RowsDock` alignment controls and button sizing on macOS
+  - visual regression of the new `SettingsUi` summary card and tab-shell spacing on macOS
 
 ## Manual QA Checklist
 - Switch between `Move Edit`, `Stitch Edit`, and `Indicator Edit`; confirm cursor and click behavior make the active mode obvious.

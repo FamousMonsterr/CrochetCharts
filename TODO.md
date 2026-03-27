@@ -57,7 +57,7 @@
   - [x] align dock
   - [x] mirror dock
   - [x] rows dock
-  - [ ] settings
+  - [x] settings
 - [ ] Replace the most legacy-feeling icons and control layouts
 
 ## Phase 4. Desktop Workflow Modernization
@@ -73,6 +73,7 @@
   - [x] align/mirror dock gating based on actual selection requirements
   - [x] rows dock alignment controls made explicit instead of tooltip-only blank radios
   - [x] properties dock summary and clearer action affordances
+  - [x] settings dialog summary card and readable folder-picker affordance
   - [ ] targeted visual pass for the remaining legacy docks and iconography
 
 ## Phase 5. Shared Core Extraction

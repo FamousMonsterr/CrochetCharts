@@ -45,6 +45,7 @@ SettingsUi::SettingsUi(QWidget *parent)
 
     //in case the form gets saved on the wrong tab.
     ui->tabWidget->setCurrentIndex(0);
+    updateSummary(ui->tabWidget->currentIndex());
 
 #ifdef Q_OS_MAC
     this->setWindowTitle(tr("Preferences"));
@@ -53,6 +54,7 @@ SettingsUi::SettingsUi(QWidget *parent)
 #endif //Q_OS_MAC
 
     connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), SLOT(buttonClicked(QAbstractButton*)));
+    connect(ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateSummary(int)));
 
     //TODO: add later for expanded use of software.
     ui->showStitchWrongSide->hide();
@@ -87,6 +89,38 @@ void SettingsUi::buttonClicked(QAbstractButton *button)
         }
         resetDialogWidgets();
     }
+}
+
+void SettingsUi::updateSummary(int index)
+{
+    QString title;
+    QString hint;
+
+    switch(index) {
+    case 0:
+        title = tr("Application");
+        hint = tr("Manage startup behavior, default folders, language, and low graphics mode.");
+        break;
+    case 1:
+        title = tr("Charts");
+        hint = tr("Choose default chart geometry, row and stitch counts, colors, and row-indicator behavior.");
+        break;
+    case 2:
+        title = tr("Legends");
+        hint = tr("Control stitch and color legend titles, column counts, borders, and visible metadata.");
+        break;
+    case 3:
+        title = tr("Tools");
+        hint = tr("Tune placement, rotation, scale, and stitch-tool defaults for editing workflows.");
+        break;
+    default:
+        title = tr("Preferences");
+        hint = tr("Adjust editor defaults for documents, tools, and presentation.");
+        break;
+    }
+
+    ui->settingsSummaryTitle->setText(title);
+    ui->settingsSummaryHint->setText(hint);
 }
 
 int SettingsUi::exec()

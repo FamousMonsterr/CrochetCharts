@@ -157,6 +157,17 @@
   - `src/rowsdock.ui`
   - `resources/themes/desktop.qss`
 
+## Latest Settings Slice
+- On `2026-03-27`, `SettingsUi` received a compact shell modernization pass:
+  - the settings dialog now opens with a summary card that explains the active tab instead of dropping the user directly into an unlabeled old tab layout
+  - the summary updates as the user switches between `Application`, `Charts`, `Legends`, and `Tools`
+  - outer dialog spacing is less cramped, improving readability on macOS
+  - the default-folder picker now uses a readable `Choose...` label and a tooltip instead of an opaque `...` button
+- This slice is centered in:
+  - `src/settings.ui`
+  - `src/settingsui.cpp`
+  - `resources/themes/desktop.qss`
+
 ## Latest Properties Slice
 - On `2026-03-27`, `PropertiesDock` received the first real structure pass instead of reading like a raw legacy form:
   - the dock now shows a persistent summary card describing the current canvas or selection context
