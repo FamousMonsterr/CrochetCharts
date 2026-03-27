@@ -171,7 +171,9 @@ MainWindow::MainWindow(QStringList fileNames, QWidget* parent)
     updateSelectionDependentActions();
     readSettings();
     ui->newDocument->setProperty("panelSurface", true);
+    ui->editorContextBar->setProperty("panelSurface", true);
     Theme::polishMainWindow(this);
+    updateEditorContextBar();
 
 #ifdef Q_OS_MAC
     //File icon for titlebar
@@ -506,6 +508,11 @@ void MainWindow::setupLayersDock()
 	connect(ui->removeLayerBtn, SIGNAL(released()), this, SLOT(removeLayer()));
 	connect(ui->mergeBtn, SIGNAL(released()), this, SLOT(mergeLayer()));
 	connect(ui->layersView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(selectLayer(const QModelIndex&)));
+    ui->layerName->setPlaceholderText(tr("Layer name"));
+    ui->addLayerBtn->setToolTip(tr("Add a new layer using the name field"));
+    ui->removeLayerBtn->setToolTip(tr("Remove the active layer"));
+    ui->mergeBtn->setToolTip(tr("Merge the active layer into the next layer"));
+    ui->layersView->setHeaderHidden(false);
 }
 
 void MainWindow::setupDocks()
@@ -1089,6 +1096,24 @@ void MainWindow::changeSelectMode(QAction* action)
 		else if (action == ui->actionLineSelectMode)
 			tab->setSelectMode(Scene::LineSelect);
 	}
+    updateEditorContextBar();
+}
+
+void MainWindow::setSelectedSelectMode(Scene::SelectMode mode)
+{
+    ui->actionBoxSelectMode->blockSignals(true);
+    ui->actionLassoSelectMode->blockSignals(true);
+    ui->actionLineSelectMode->blockSignals(true);
+
+    ui->actionBoxSelectMode->setChecked(mode == Scene::BoxSelect);
+    ui->actionLassoSelectMode->setChecked(mode == Scene::LassoSelect);
+    ui->actionLineSelectMode->setChecked(mode == Scene::LineSelect);
+
+    ui->actionBoxSelectMode->blockSignals(false);
+    ui->actionLassoSelectMode->blockSignals(false);
+    ui->actionLineSelectMode->blockSignals(false);
+
+    updateEditorContextBar();
 }
 
 void MainWindow::nextSelectMode()
@@ -1148,6 +1173,7 @@ void MainWindow::setSelectedGridMode(QString gmode) {
 	ui->actionGridTriangle->blockSignals(false);
 
     updateGridSnapActionState();
+    updateEditorContextBar();
 }
 
 void MainWindow::nextGridMode()
@@ -1173,6 +1199,7 @@ void MainWindow::toggleSnapToGrid(bool state)
     }
 
     updateGridSnapActionState();
+    updateEditorContextBar();
     if(statusBar())
         statusBar()->showMessage(state ? tr("Snap to grid enabled") : tr("Snap to grid disabled"), 2500);
 }
@@ -1442,6 +1469,7 @@ void MainWindow::updateSelectionDependentActions()
     else if(groupableCount <= 1)
         groupToolTip = tr("Select at least two movable items to create a group");
     ui->actionGroup->setToolTip(groupToolTip);
+    updateEditorContextBar();
 }
 
 void MainWindow::stitchesReplaceStitch()
@@ -1935,6 +1963,7 @@ void MainWindow::setEditMode(int mode)
         if(checkedAction)
             statusBar()->showMessage(tr("Mode: %1").arg(checkedAction->text()), 2500);
     }
+    updateEditorContextBar();
 }
 
 void MainWindow::menuChartAboutToShow()
@@ -2040,6 +2069,7 @@ void MainWindow::tabChanged(int newTab)
     if(newTab == -1) {
         updateSelectionDependentActions();
         updateGridSnapActionState();
+        updateEditorContextBar();
         return;
     }
 
@@ -2047,16 +2077,19 @@ void MainWindow::tabChanged(int newTab)
     if(!tab) {
         updateSelectionDependentActions();
         updateGridSnapActionState();
+        updateEditorContextBar();
         return;
     }
     
     mUndoGroup.setActiveStack(tab->undoStack());
+    setSelectedSelectMode(tab->selectMode());
     setSelectedGridMode(tab->scene()->guidelines().type());
     ui->actionSnapToGrid->blockSignals(true);
     ui->actionSnapToGrid->setChecked(tab->snapToGrid());
     ui->actionSnapToGrid->blockSignals(false);
     updateGridSnapActionState();
     updateSelectionDependentActions();
+    updateEditorContextBar();
 }
 
 void MainWindow::removeCurrentTab()
@@ -2138,6 +2171,8 @@ void MainWindow::mergeLayer()
 	CrochetTab* tab = curCrochetTab();
 	if (tab != NULL)
 		tab->mergeLayer(from->uid(), to->uid());
+
+    updateEditorContextBar();
 }
 
 void MainWindow::selectLayer(const QModelIndex& index)
@@ -2155,6 +2190,7 @@ void MainWindow::selectLayer(const QModelIndex& index)
 	if (tab != NULL) {
 		tab->selectLayer(layer->uid());
         updateSelectionDependentActions();
+        updateEditorContextBar();
         if(statusBar())
             statusBar()->showMessage(tr("Active layer: %1").arg(layer->name()), 2500);
     }
@@ -2184,6 +2220,7 @@ void MainWindow::layerModelChanged(const QModelIndex& index)
 
 	tab->editedLayer(layer);
     updateSelectionDependentActions();
+    updateEditorContextBar();
     if(statusBar()) {
         const QString visibility = checked ? tr("visible") : tr("hidden");
         statusBar()->showMessage(tr("Layer %1 is now %2").arg(layer->name(), visibility), 2500);
@@ -2420,4 +2457,65 @@ CrochetTab* MainWindow::requireCurrentTab(const QString& action)
     if(!tab)
         notifyUnavailableAction(action, tr("no chart tab is open"));
     return tab;
+}
+
+QString MainWindow::currentLayerContextLabel() const
+{
+    QTreeView *view = ui->layersView;
+    if(!view || !view->selectionModel())
+        return tr("No layer");
+
+    QModelIndex index = view->selectionModel()->currentIndex();
+    if(!index.isValid())
+        return tr("No layer");
+
+    return index.data(Qt::DisplayRole).toString();
+}
+
+void MainWindow::updateEditorContextBar()
+{
+    const bool hasCurrentTab = hasTab();
+    CrochetTab *tab = curCrochetTab();
+    Scene *scene = tab ? tab->scene() : 0;
+
+    ui->contextChartValue->setText(hasCurrentTab ? ui->tabWidget->tabText(ui->tabWidget->currentIndex()) : tr("No chart"));
+
+    QAction *modeAction = mModeGroup ? mModeGroup->checkedAction() : 0;
+    ui->contextModeValue->setText(modeAction ? modeAction->text() : tr("No mode"));
+
+    QAction *selectAction = mSelectGroup ? mSelectGroup->checkedAction() : 0;
+    QString selectLabel = tr("None");
+    if(selectAction == ui->actionBoxSelectMode)
+        selectLabel = tr("Box");
+    else if(selectAction == ui->actionLassoSelectMode)
+        selectLabel = tr("Lasso");
+    else if(selectAction == ui->actionLineSelectMode)
+        selectLabel = tr("Line");
+    ui->contextSelectValue->setText(selectLabel);
+
+    QString gridLabel = tr("None");
+    if(scene) {
+        const QString guideType = scene->guidelines().type();
+        if(guideType == "Rows")
+            gridLabel = tr("Square");
+        else if(guideType == "Rounds")
+            gridLabel = tr("Rounds");
+        else if(guideType == "Triangles")
+            gridLabel = tr("Triangles");
+    }
+    if(scene && scene->guidelines().type() != "None")
+        gridLabel += scene->snapToGrid() ? tr(" • Snap on") : tr(" • Snap off");
+    ui->contextGridValue->setText(gridLabel);
+
+    ui->contextLayerValue->setText(hasCurrentTab ? currentLayerContextLabel() : tr("No layer"));
+
+    QString selectionLabel = tr("Empty");
+    if(scene) {
+        const int count = scene->selectedItems().count();
+        if(count == 1)
+            selectionLabel = tr("1 item");
+        else if(count > 1)
+            selectionLabel = tr("%1 items").arg(count);
+    }
+    ui->contextSelectionValue->setText(selectionLabel);
 }

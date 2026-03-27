@@ -26,6 +26,163 @@
      <number>0</number>
     </property>
     <item>
+     <widget class="QWidget" name="editorContextBar">
+      <property name="panelSurface" stdset="0">
+       <bool>true</bool>
+      </property>
+      <layout class="QHBoxLayout" name="editorContextLayout">
+       <property name="spacing">
+        <number>8</number>
+       </property>
+       <property name="leftMargin">
+        <number>14</number>
+       </property>
+       <property name="topMargin">
+        <number>8</number>
+       </property>
+       <property name="rightMargin">
+        <number>14</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="contextChartLabel">
+         <property name="contextRole" stdset="0">
+          <string>caption</string>
+         </property>
+         <property name="text">
+          <string>Chart</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="contextChartValue">
+         <property name="contextRole" stdset="0">
+          <string>value</string>
+         </property>
+         <property name="text">
+          <string>No chart</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="contextModeLabel">
+         <property name="contextRole" stdset="0">
+          <string>caption</string>
+         </property>
+         <property name="text">
+          <string>Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="contextModeValue">
+         <property name="contextRole" stdset="0">
+          <string>value</string>
+         </property>
+         <property name="text">
+          <string>Move Edit</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="contextSelectLabel">
+         <property name="contextRole" stdset="0">
+          <string>caption</string>
+         </property>
+         <property name="text">
+          <string>Select</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="contextSelectValue">
+         <property name="contextRole" stdset="0">
+          <string>value</string>
+         </property>
+         <property name="text">
+          <string>Box</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="contextGridLabel">
+         <property name="contextRole" stdset="0">
+          <string>caption</string>
+         </property>
+         <property name="text">
+          <string>Grid</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="contextGridValue">
+         <property name="contextRole" stdset="0">
+          <string>value</string>
+         </property>
+         <property name="text">
+          <string>None</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="contextLayerLabel">
+         <property name="contextRole" stdset="0">
+          <string>caption</string>
+         </property>
+         <property name="text">
+          <string>Layer</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="contextLayerValue">
+         <property name="contextRole" stdset="0">
+          <string>value</string>
+         </property>
+         <property name="text">
+          <string>No layer</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="contextSelectionLabel">
+         <property name="contextRole" stdset="0">
+          <string>caption</string>
+         </property>
+         <property name="text">
+          <string>Selection</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="contextSelectionValue">
+         <property name="contextRole" stdset="0">
+          <string>value</string>
+         </property>
+         <property name="text">
+          <string>Empty</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="editorContextSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
      <layout class="QVBoxLayout" name="dialogLayout" stretch="0">
       <property name="spacing">
        <number>6</number>
@@ -845,6 +1002,9 @@
        </property>
        <item>
         <widget class="QLineEdit" name="layerName">
+         <property name="toolTip">
+          <string>Name for the next layer you add</string>
+         </property>
          <property name="text">
           <string>New Layer</string>
          </property>
@@ -852,6 +1012,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="addLayerBtn">
+         <property name="toolTip">
+          <string>Add a new layer</string>
+         </property>
          <property name="text">
           <string>...</string>
          </property>
@@ -866,6 +1029,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="removeLayerBtn">
+         <property name="toolTip">
+          <string>Remove the selected layer</string>
+         </property>
          <property name="text">
           <string>...</string>
          </property>
@@ -877,6 +1043,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="mergeBtn">
+         <property name="toolTip">
+          <string>Merge the selected layer into the next layer</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -890,6 +1059,9 @@
      </item>
      <item>
       <widget class="QTreeView" name="layersView">
+       <property name="toolTip">
+        <string>Active layer list. Checked rows are visible and the selected row is editable.</string>
+       </property>
        <property name="horizontalScrollBarPolicy">
         <enum>Qt::ScrollBarAlwaysOff</enum>
        </property>
@@ -1462,6 +1634,9 @@
    <property name="text">
     <string>&amp;Box select</string>
    </property>
+   <property name="toolTip">
+    <string>Select items with a rectangular marquee</string>
+   </property>
   </action>
   <action name="actionLassoSelectMode">
    <property name="checkable">
@@ -1474,6 +1649,9 @@
    <property name="text">
     <string>Lass&amp;o select</string>
    </property>
+   <property name="toolTip">
+    <string>Select items with a freeform lasso</string>
+   </property>
   </action>
   <action name="actionLineSelectMode">
    <property name="checkable">
@@ -1485,6 +1663,9 @@
    </property>
    <property name="text">
     <string>Line select</string>
+   </property>
+   <property name="toolTip">
+    <string>Select items that intersect a drawn line</string>
    </property>
   </action>
   <action name="actionGridNone">
@@ -1528,6 +1709,9 @@
    <property name="text">
     <string>Square grid</string>
    </property>
+   <property name="toolTip">
+    <string>Use square chart guidelines</string>
+   </property>
   </action>
   <action name="actionGridRound">
    <property name="checkable">
@@ -1540,6 +1724,9 @@
    <property name="text">
     <string>Round grid</string>
    </property>
+   <property name="toolTip">
+    <string>Use round chart guidelines</string>
+   </property>
   </action>
   <action name="actionGridTriangle">
    <property name="checkable">
@@ -1550,7 +1737,10 @@
      <normaloff>:/images/grid_triangle.svg</normaloff>:/images/grid_triangle.svg</iconset>
    </property>
    <property name="text">
-    <string>Triangular gid</string>
+    <string>Triangular grid</string>
+   </property>
+   <property name="toolTip">
+    <string>Use triangular chart guidelines</string>
    </property>
   </action>
   <action name="actionNextSelectMode">

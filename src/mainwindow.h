@@ -205,6 +205,9 @@ private:
     void setupRecentFiles();
     void updateMenuItems();
     void updateGridSnapActionState();
+    void updateEditorContextBar();
+    void setSelectedSelectMode(Scene::SelectMode mode);
+    QString currentLayerContextLabel() const;
     
     QSortFilterProxyModel *mProxyModel;
     void setupStitchPalette();

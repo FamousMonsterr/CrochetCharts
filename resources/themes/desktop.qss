@@ -8,6 +8,29 @@ QWidget#centralWidget {
     background: #eef1f5;
 }
 
+QWidget#editorContextBar {
+    margin: 10px 14px 2px 14px;
+    padding: 6px 10px;
+    border-radius: 14px;
+}
+
+QLabel[contextRole="caption"] {
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0 2px 0 8px;
+}
+
+QLabel[contextRole="value"] {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    border-radius: 999px;
+    color: #111827;
+    padding: 5px 12px;
+    font-weight: 600;
+}
+
 QMenuBar,
 QToolBar {
     background: rgba(248, 250, 252, 0.92);

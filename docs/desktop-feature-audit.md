@@ -61,6 +61,11 @@ Date: `2026-03-24`
   - switching or editing layers now refreshes grouping availability instead of leaving stale action state behind
   - cross-layer grouping now surfaces a readable reason instead of degrading into an unclear no-op
   - group / ungroup undo-redo paths now keep layer-gated selectability rules intact
+- Fixed in the current shell slice:
+  - the desktop shell now shows persistent chart / mode / select / grid / layer / selection context instead of relying only on transient status-bar messages
+  - selection-mode actions now re-synchronize on tab switch
+  - icon-only selection, grid, and layer controls now expose clearer tooltips
+  - the layers dock no longer hides its own visibility/name headers
 - Still requiring explicit manual regression:
   - move-mode drag and click behavior on dense charts
   - `Ctrl` additive selection

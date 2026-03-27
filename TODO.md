@@ -64,6 +64,11 @@
 - [ ] Improve discoverability of edit modes and selection modes
 - [ ] Clarify destructive actions and selection-dependent controls
 - [ ] Continue the shell modernization with explicit editing affordances for move/select/layer workflows
+- [ ] Finish shell discoverability pass:
+  - [x] persistent editor context bar for chart / mode / select / grid / layer / selection
+  - [x] selection-mode sync on tab switch
+  - [x] hover help for icon-only select / grid / layer controls
+  - [ ] targeted visual pass for the remaining legacy docks and iconography
 
 ## Phase 5. Shared Core Extraction
 - [ ] Identify pure model/domain logic that can move out of widget classes

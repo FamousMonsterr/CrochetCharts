@@ -120,6 +120,17 @@
   - `src/scene.h`
   - `src/mainwindow.cpp`
 
+## Latest Shell Slice
+- On `2026-03-27`, the main desktop shell received a persistent editor context bar:
+  - current chart, edit mode, selection mode, grid state, active layer, and selection count are now always visible above the work area
+  - selection-mode state now re-synchronizes on tab switch instead of potentially lying after switching charts
+  - icon-only selection, grid, and layer controls now have clearer hover help
+  - the layers dock now exposes its header and reads more like an explicit control surface instead of a blind icon strip
+- This slice is centered in:
+  - `src/mainwindow.ui`
+  - `src/mainwindow.cpp`
+  - `resources/themes/desktop.qss`
+
 ## Current Audit Emphasis
 - Remaining desktop regression focus is now concentrated on:
   - mouse click consistency across selection, move, stitch, and indicator flows
