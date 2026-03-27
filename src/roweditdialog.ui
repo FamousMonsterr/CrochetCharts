@@ -11,20 +11,64 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Row Editor</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="margin">
-    <number>0</number>
+    <number>10</number>
    </property>
+   <property name="spacing">
+    <number>10</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="rowEditSummaryCard">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <property name="margin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="rowEditSummaryTitle">
+        <property name="rowEditRole" stdset="0">
+         <string notr="true">title</string>
+        </property>
+        <property name="text">
+         <string>Rows</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="rowEditSummaryHint">
+        <property name="rowEditRole" stdset="0">
+         <string notr="true">hint</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>Create rows from the current selection, reorder them, and preview the generated row text.</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item>
     <widget class="QGroupBox" name="createRows">
      <property name="title">
-      <string>Edit Rows</string>
+      <string>Row Editor</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <property name="margin">
-       <number>2</number>
+       <number>8</number>
+      </property>
+      <property name="horizontalSpacing">
+       <number>8</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>8</number>
       </property>
       <item row="2" column="3">
        <spacer name="horizontalSpacer_2">
@@ -91,8 +135,11 @@
       </item>
       <item row="2" column="6">
        <widget class="QPushButton" name="updateRow">
+        <property name="toolTip">
+         <string>Replace the selected row with the stitches currently selected in the chart.</string>
+        </property>
         <property name="text">
-         <string>Update Row</string>
+         <string>Update From Selection</string>
         </property>
        </widget>
       </item>
@@ -101,7 +148,7 @@
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Row Text:</string>
+           <string>Selected Row Text</string>
           </property>
          </widget>
         </item>
@@ -116,8 +163,11 @@
       </item>
       <item row="2" column="0" colspan="2">
        <widget class="QToolButton" name="addRow">
+        <property name="toolTip">
+         <string>Create a new row from the current selection.</string>
+        </property>
         <property name="text">
-         <string>+</string>
+         <string>Add Row</string>
         </property>
         <property name="icon">
          <iconset resource="../crochet.qrc">
@@ -133,8 +183,11 @@
       </item>
       <item row="2" column="2">
        <widget class="QToolButton" name="removeRow">
+        <property name="toolTip">
+         <string>Remove the currently selected row.</string>
+        </property>
         <property name="text">
-         <string>-</string>
+         <string>Remove</string>
         </property>
         <property name="icon">
          <iconset resource="../crochet.qrc">
@@ -150,8 +203,11 @@
       </item>
       <item row="2" column="4">
        <widget class="QToolButton" name="moveUp">
+        <property name="toolTip">
+         <string>Move the selected row up.</string>
+        </property>
         <property name="text">
-         <string>/\</string>
+         <string>Up</string>
         </property>
         <property name="icon">
          <iconset resource="../crochet.qrc">
@@ -167,8 +223,11 @@
       </item>
       <item row="2" column="5">
        <widget class="QToolButton" name="moveDown">
+        <property name="toolTip">
+         <string>Move the selected row down.</string>
+        </property>
         <property name="text">
-         <string>\/</string>
+         <string>Down</string>
         </property>
         <property name="icon">
          <iconset resource="../crochet.qrc">

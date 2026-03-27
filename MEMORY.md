@@ -180,6 +180,15 @@
   - `src/stitchlibraryui.cpp`
   - `resources/themes/desktop.qss`
 
+## Latest Row-Edit Slice
+- On `2026-03-27`, `RowEditDialog` received a small shell cleanup:
+  - the widget now has an explicit summary card instead of opening as an unlabeled mini-form
+  - preview and update affordances now explain that they operate on the currently selected row and current chart selection
+  - add/remove/move row controls now use readable text labels with tooltips instead of raw symbol-only button text
+- This slice is centered in:
+  - `src/roweditdialog.ui`
+  - `resources/themes/desktop.qss`
+
 ## Latest Properties Slice
 - On `2026-03-27`, `PropertiesDock` received the first real structure pass instead of reading like a raw legacy form:
   - the dock now shows a persistent summary card describing the current canvas or selection context

@@ -86,6 +86,10 @@ Date: `2026-03-24`
   - the set-details toggle is now explicit instead of relying on the old `More >>` wording
   - the stitch filter row now uses a readable `Clear` affordance instead of an opaque `...` button
   - the side action rail now reads more like an intentional control surface
+- Fixed in the current row-edit slice:
+  - `RowEditDialog` now opens with a summary card instead of an unlabeled mini-form
+  - row preview and update actions now read more clearly
+  - add/remove/move controls now use readable text labels with tooltips instead of raw symbol-only button text
 - Still requiring explicit manual regression:
   - move-mode drag and click behavior on dense charts
   - `Ctrl` additive selection
@@ -97,6 +101,7 @@ Date: `2026-03-24`
   - visual regression of the rebuilt `RowsDock` alignment controls and button sizing on macOS
   - visual regression of the new `SettingsUi` summary card and tab-shell spacing on macOS
   - visual regression of the updated `StitchLibraryUi` summary card, detail toggle, and action-rail layout on macOS
+  - visual regression of the updated `RowEditDialog` summary and action-button sizing on macOS
 
 ## Manual QA Checklist
 - Switch between `Move Edit`, `Stitch Edit`, and `Indicator Edit`; confirm cursor and click behavior make the active mode obvious.

@@ -16,7 +16,8 @@ QWidget#editorContextBar {
 
 QWidget#propertiesSummaryCard,
 QWidget#settingsSummaryCard,
-QWidget#librarySummaryCard {
+QWidget#librarySummaryCard,
+QWidget#rowEditSummaryCard {
     background: rgba(255, 255, 255, 0.90);
     border: 1px solid rgba(15, 23, 42, 0.10);
     border-radius: 14px;
@@ -273,4 +274,14 @@ QDialog#StitchLibraryDialog QLabel[libraryRole="section"] {
     font-weight: 700;
     text-transform: uppercase;
     padding: 2px 2px 0 2px;
+}
+
+QWidget#RowEditDialog QLabel[rowEditRole="title"] {
+    color: #111827;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+QWidget#RowEditDialog QLabel[rowEditRole="hint"] {
+    color: #6b7280;
 }

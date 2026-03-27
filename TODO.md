@@ -75,6 +75,7 @@
   - [x] properties dock summary and clearer action affordances
   - [x] settings dialog summary card and readable folder-picker affordance
   - [x] stitch library summary shell and readable details/filter affordances
+  - [x] row editor summary shell and readable row-action labels
   - [ ] targeted visual pass for the remaining legacy docks and iconography
 
 ## Phase 5. Shared Core Extraction
