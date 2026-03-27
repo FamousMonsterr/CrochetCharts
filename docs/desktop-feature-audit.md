@@ -65,12 +65,14 @@ Date: `2026-03-24`
   - switching or editing layers now refreshes grouping availability instead of leaving stale action state behind
   - cross-layer grouping now surfaces a readable reason instead of degrading into an unclear no-op
   - group / ungroup undo-redo paths now keep layer-gated selectability rules intact
+  - scene/view drag handling now uses left-button bitmask checks instead of exact equality, reducing inconsistent move/select/autoscroll behavior under modifier-assisted drags
 - Fixed in the current shell slice:
   - the desktop shell now shows persistent chart / mode / select / grid / layer / selection context instead of relying only on transient status-bar messages
   - selection-mode actions now re-synchronize on tab switch
   - icon-only selection, grid, and layer controls now expose clearer tooltips
   - the layers dock no longer hides its own visibility/name headers
   - align/distribute and copy/mirror/rotate docks now expose their selection prerequisites directly instead of reading like always-on controls
+  - `New Chart Options` now exposes a live summary card so chart style, template, and granny-square base behavior are visible before creation
 - Fixed in the current properties slice:
   - `PropertiesDock` now exposes a persistent summary card so the panel explains whether it is editing the canvas, a stitch, a group, an image, or a mixed selection
   - section titles now adapt to the active object type instead of leaving anonymous group boxes
@@ -92,6 +94,7 @@ Date: `2026-03-24`
   - add/remove/move controls now use readable text labels with tooltips instead of raw symbol-only button text
 - Still requiring explicit manual regression:
   - move-mode drag and click behavior on dense charts
+  - mixed-button or modifier-assisted drag paths in move/color/indicator/select modes
   - `Ctrl` additive selection
   - indicator paste undo
   - mixed-property handling for non-cell multi-selection

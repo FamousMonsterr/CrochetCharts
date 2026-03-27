@@ -39,6 +39,7 @@
   - [x] sanitize bundled plugin install names so shell-launched synced app copies do not fall back to Homebrew Qt
 - [x] Add a dedicated `Move Edit` mode and user-facing snap-to-grid toggle
 - [x] Make grouping layer-aware at the menu/action-state level
+- [x] Normalize left-button drag detection across scene/view interaction paths
 - [ ] Verify move-mode cursor feedback, snap toggle behavior, and layer-grouping paths by manual regression
 
 ## Phase 3. Desktop UI Foundation
@@ -52,7 +53,7 @@
   - [ ] form controls
 - [ ] Apply the theme first to:
   - [x] main window shell
-  - [ ] new chart dialog
+  - [x] new chart dialog
   - [x] properties dock
   - [x] align dock
   - [x] mirror dock

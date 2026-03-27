@@ -215,6 +215,25 @@
   - layer-aware grouping and transform behavior under real user sequences
   - more modern, more explicit affordances in `MainWindow` and `PropertiesDock`
 
+## Latest Mouse Consistency Slice
+- On `2026-03-27`, pointer interaction handling was tightened again for editor consistency:
+  - legacy exact-button comparisons in `Scene` now use bitmask checks, so drag/select behavior no longer depends on the left button being the only pressed button in the event state
+  - `Move Edit`, `Color Edit`, `Indicator Edit`, and the shared selection-band path now treat left-button drags consistently under modifier usage and mixed input states
+  - `ChartView` edge auto-scroll now also keys off left-button presence rather than exact equality, reducing missed auto-scroll during real drag sequences
+- This slice is centered in:
+  - `src/scene.cpp`
+  - `src/chartview.cpp`
+
+## Latest New-Chart Slice
+- On `2026-03-27`, the `New Chart Options` shell received a bounded clarity pass:
+  - the flow now shows a persistent summary card instead of forcing the user to mentally assemble chart style, template, preset, and base behavior from scattered controls
+  - the summary updates live for custom charts and for `Granny Square` parameters including preset, start type, rounds, and corner arches
+  - this keeps the new granny-square template readable without changing the existing file format or document-creation flow
+- This slice is centered in:
+  - `src/mainwindow.cpp`
+  - `src/mainwindow.h`
+  - `resources/themes/desktop.qss`
+
 ## macOS Launch Reliability
 - A shell-launched app on this Mac can inherit Homebrew Qt environment contamination from terminal or VSCode shells.
 - This causes mixed bundle/Homebrew Qt frameworks before `main()` and can abort in platform plugin initialization.

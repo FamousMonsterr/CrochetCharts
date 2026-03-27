@@ -53,9 +53,11 @@
 
 #include <QActionGroup>
 #include <QCloseEvent>
+#include <QLabel>
 #include <QUndoStack>
 #include <QUndoView>
 #include <QTimer>
+#include <QVBoxLayout>
 
 #include <QSortFilterProxyModel>
 #include <QDesktopServices>
@@ -133,7 +135,9 @@ MainWindow::MainWindow(QStringList fileNames, QWidget* parent)
     mEditMode(9),
     mStitch("ch"),
     mFgColor(QColor(Qt::black)),
-    mBgColor(QColor(Qt::white))
+    mBgColor(QColor(Qt::white)),
+    mNewChartSummaryTitle(0),
+    mNewChartSummaryHint(0)
 {
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     ui->setupUi(this);
@@ -300,6 +304,26 @@ void MainWindow::setApplicationTitle()
 
 void MainWindow::setupNewTabDialog()
 {
+    if(!mNewChartSummaryTitle || !mNewChartSummaryHint) {
+        QWidget *summaryCard = new QWidget(ui->centralWidget);
+        summaryCard->setObjectName("newChartSummaryCard");
+
+        QVBoxLayout *summaryLayout = new QVBoxLayout(summaryCard);
+        summaryLayout->setContentsMargins(12, 10, 12, 10);
+        summaryLayout->setSpacing(4);
+
+        mNewChartSummaryTitle = new QLabel(summaryCard);
+        mNewChartSummaryTitle->setObjectName("newChartSummaryTitle");
+
+        mNewChartSummaryHint = new QLabel(summaryCard);
+        mNewChartSummaryHint->setObjectName("newChartSummaryHint");
+        mNewChartSummaryHint->setWordWrap(true);
+
+        summaryLayout->addWidget(mNewChartSummaryTitle);
+        summaryLayout->addWidget(mNewChartSummaryHint);
+        ui->dialogLayout->insertWidget(0, summaryCard);
+    }
+
     int rows = Settings::inst()->value("rowCount").toInt();
     int stitches = Settings::inst()->value("stitchCount").toInt();
     QString defSt = Settings::inst()->value("defaultStitch").toString();
@@ -334,9 +358,19 @@ void MainWindow::setupNewTabDialog()
     connect(ui->chartStyle, SIGNAL(currentIndexChanged(QString)), SLOT(newChartUpdateStyle(QString)));
     connect(ui->chartTemplate, SIGNAL(currentIndexChanged(int)), SLOT(newChartUpdateTemplate(int)));
     connect(ui->grannyPreset, SIGNAL(currentIndexChanged(int)), SLOT(newGrannyPresetChanged(int)));
+    connect(ui->grannyStartType, SIGNAL(currentIndexChanged(int)), SLOT(updateNewChartSummary()));
+    connect(ui->grannyCornerArches, SIGNAL(valueChanged(int)), SLOT(updateNewChartSummary()));
+    connect(ui->rows, SIGNAL(valueChanged(int)), SLOT(updateNewChartSummary()));
+    connect(ui->stitches, SIGNAL(valueChanged(int)), SLOT(updateNewChartSummary()));
+    connect(ui->increaseBy, SIGNAL(valueChanged(int)), SLOT(updateNewChartSummary()));
+    connect(ui->rowSpacing, SIGNAL(currentIndexChanged(int)), SLOT(updateNewChartSummary()));
+    connect(ui->defaultStitch, SIGNAL(currentIndexChanged(int)), SLOT(updateNewChartSummary()));
+    connect(ui->chartTitle, SIGNAL(textChanged(QString)), SLOT(updateNewChartSummary()));
     
     connect(ui->newDocBttnBox, SIGNAL(accepted()), this, SLOT(newChart()));
-    connect(ui->newDocBttnBox, SIGNAL(rejected()), ui->newDocument, SLOT(hide()));   
+    connect(ui->newDocBttnBox, SIGNAL(rejected()), ui->newDocument, SLOT(hide()));
+
+    updateNewChartSummary();
 }
 
 void MainWindow::newChartUpdateStyle(QString style)
@@ -380,12 +414,15 @@ void MainWindow::newChartUpdateStyle(QString style)
         ui->increaseBy->setVisible(false);
         ui->increaseByLbl->setVisible(false);
     }
+
+    updateNewChartSummary();
 }
 
 void MainWindow::newChartUpdateTemplate(int templateIndex)
 {
     Q_UNUSED(templateIndex);
     applyChartTemplatePreset(currentChartTemplateKey());
+    updateNewChartSummary();
 }
 
 void MainWindow::newGrannyPresetChanged(int presetIndex)
@@ -393,6 +430,7 @@ void MainWindow::newGrannyPresetChanged(int presetIndex)
     Q_UNUSED(presetIndex);
     if(currentChartTemplateKey() == "granny_square")
         applyGrannyPreset(currentGrannyPresetKey());
+    updateNewChartSummary();
 }
 
 void MainWindow::propertiesUpdate(QString property, QVariant newValue)
@@ -1632,6 +1670,63 @@ QString MainWindow::currentGrannyStartTypeKey() const
     return ui->grannyStartType->itemData(ui->grannyStartType->currentIndex()).toString();
 }
 
+void MainWindow::updateNewChartSummary()
+{
+    if(!mNewChartSummaryTitle || !mNewChartSummaryHint)
+        return;
+
+    const QString title = ui->chartTitle->text().trimmed().isEmpty()
+        ? nextChartName()
+        : ui->chartTitle->text().trimmed();
+    const QString style = ui->chartStyle->currentText();
+    const QString templateKey = currentChartTemplateKey();
+    const QString stitch = ui->defaultStitch->currentText();
+    const QString spacing = ui->rowSpacing->currentText();
+
+    QString summaryTitle;
+    QStringList summaryParts;
+
+    if(templateKey == "granny_square") {
+        summaryTitle = tr("Granny Square template");
+        summaryParts
+            << tr("Title: %1").arg(title)
+            << tr("Preset: %1").arg(ui->grannyPreset->currentText())
+            << tr("Start: %1").arg(ui->grannyStartType->currentText())
+            << tr("Rounds: %1").arg(ui->rows->value())
+            << tr("Corner arches: %1").arg(ui->grannyCornerArches->value())
+            << tr("Base: round guidelines with chart center and snap angle");
+        if(!stitch.isEmpty())
+            summaryParts << tr("Default stitch: %1").arg(stitch);
+    } else if(style == tr("Blank")) {
+        summaryTitle = tr("Blank chart");
+        summaryParts
+            << tr("Title: %1").arg(title)
+            << tr("Starts without guides so you can draw freely");
+    } else if(style == tr("Rounds")) {
+        summaryTitle = tr("Round chart");
+        summaryParts
+            << tr("Title: %1").arg(title)
+            << tr("Rounds: %1").arg(ui->rows->value())
+            << tr("Starting stitches: %1").arg(ui->stitches->value())
+            << tr("Increase by: %1").arg(ui->increaseBy->value())
+            << tr("Spacing: %1").arg(spacing);
+        if(!stitch.isEmpty())
+            summaryParts << tr("Default stitch: %1").arg(stitch);
+    } else {
+        summaryTitle = tr("Row chart");
+        summaryParts
+            << tr("Title: %1").arg(title)
+            << tr("Rows: %1").arg(ui->rows->value())
+            << tr("Stitches: %1").arg(ui->stitches->value())
+            << tr("Spacing: %1").arg(spacing);
+        if(!stitch.isEmpty())
+            summaryParts << tr("Default stitch: %1").arg(stitch);
+    }
+
+    mNewChartSummaryTitle->setText(summaryTitle);
+    mNewChartSummaryHint->setText(summaryParts.join(tr(" • ")));
+}
+
 void MainWindow::setGrannyTemplateControlsVisible(bool visible)
 {
     ui->grannyPresetLbl->setVisible(visible);
@@ -1710,6 +1805,8 @@ void MainWindow::applyGrannyPreset(const QString& presetKey)
         if(spacingIndex >= 0)
             ui->rowSpacing->setCurrentIndex(spacingIndex);
     }
+
+    updateNewChartSummary();
 }
 
 void MainWindow::applyChartTemplateToTab(CrochetTab* tab, const QString& templateKey,

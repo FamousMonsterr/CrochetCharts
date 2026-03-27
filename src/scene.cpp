@@ -735,7 +735,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *e)
             break;
     }		
 
-    if(e->buttons() != Qt::LeftButton)
+    if(!(e->buttons() & Qt::LeftButton))
         return;
 
     if(selectedItems().count() <= 0 || (e->modifiers() & Qt::ControlModifier)) {
@@ -938,7 +938,7 @@ void Scene::snapGraphicsItemToGrid(QGraphicsItem& item)
 
 void Scene::moveModeMouseMove(QGraphicsSceneMouseEvent *e)
 {
-    if(e->buttons() != Qt::LeftButton)
+    if(!(e->buttons() & Qt::LeftButton))
         return;
 
     if(!mCurItem)
@@ -1107,7 +1107,7 @@ void Scene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *e)
 
 void Scene::colorModeMouseMove(QGraphicsSceneMouseEvent *e)
 {
-    if(e->buttons() != Qt::LeftButton)
+    if(!(e->buttons() & Qt::LeftButton))
         return;
 
     if(!mCurItem || mCurItem->type() != Cell::Type)
@@ -1140,7 +1140,7 @@ void Scene::colorModeMouseRelease(QGraphicsSceneMouseEvent *e)
 
 void Scene::indicatorModeMouseMove(QGraphicsSceneMouseEvent *e)
 {
-    if(e->buttons() != Qt::LeftButton)
+    if(!(e->buttons() & Qt::LeftButton))
         return;
 
     if(!mCurItem)

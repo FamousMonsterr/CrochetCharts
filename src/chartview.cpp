@@ -63,7 +63,7 @@ void ChartView::mouseMoveEvent(QMouseEvent* event)
     int deltaX = 0;
     int deltaY = 0;
 
-    if(event->buttons() == Qt::LeftButton) {
+    if(event->buttons() & Qt::LeftButton) {
 
         if(event->pos().x() < 5) {
             int diff = horizontalScrollBar()->value() - horizontalScrollBar()->minimum();

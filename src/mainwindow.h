@@ -43,6 +43,7 @@ class CrochetTab;
 class QPrinter;
 class QPainter;
 class QActionGroup;
+class QLabel;
 
 namespace Ui {
     class MainWindow;
@@ -83,6 +84,7 @@ private:
 protected slots:
     void updatePatternStitches();
     void updatePatternColors();
+    void updateNewChartSummary();
 
     void tabChanged(int newTab);
     
@@ -297,6 +299,8 @@ private:
     QString mStitch;
     QColor mFgColor;
     QColor mBgColor;
+    QLabel *mNewChartSummaryTitle;
+    QLabel *mNewChartSummaryHint;
 };
 
 #endif // MAINWINDOW_H
