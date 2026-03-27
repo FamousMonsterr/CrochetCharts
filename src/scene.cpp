@@ -150,6 +150,11 @@ bool isDirectSelectionNoise(QGraphicsItem *item)
     }
 }
 
+bool shouldLiveSnapSelection(const QList<QGraphicsItem*> &items)
+{
+    return items.count() == 1 && items.first() && items.first()->type() != QGraphicsEllipseItem::Type;
+}
+
 }
 
 Guidelines::Guidelines()
@@ -816,6 +821,11 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *e)
             }
         } else if (mMoving) {
             QGraphicsScene::mouseMoveEvent(e);
+            if(mSnapTo) {
+                const QList<QGraphicsItem*> movingItems = selectedItems();
+                if(shouldLiveSnapSelection(movingItems))
+                    snapGraphicsItemToGrid(*movingItems.first());
+            }
             if(selectedItems().contains(mCenterSymbol)) {
                 updateGuidelines();
             }

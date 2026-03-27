@@ -657,6 +657,7 @@
     </property>
     <addaction name="actionGroup"/>
     <addaction name="actionUngroup"/>
+    <addaction name="actionLockSelection"/>
     <addaction name="separator"/>
     <addaction name="actionShowAlignDock"/>
     <addaction name="actionShowMirrorDock"/>
@@ -960,6 +961,7 @@
   </attribute>
   <addaction name="actionStitchMode"/>
    <addaction name="actionMoveMode"/>
+   <addaction name="actionLockSelection"/>
   <addaction name="actionColorMode"/>
   <addaction name="actionAngleMode"/>
   <addaction name="actionStretchMode"/>
@@ -1372,6 +1374,17 @@
    </property>
    <property name="shortcut">
     <string>M</string>
+   </property>
+  </action>
+  <action name="actionLockSelection">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fix Selection</string>
+   </property>
+   <property name="toolTip">
+    <string>Fix the selected items so mouse drags do not move them</string>
    </property>
   </action>
   <action name="actionShowMainToolbar">

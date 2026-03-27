@@ -215,6 +215,23 @@
   - layer-aware grouping and transform behavior under real user sequences
   - more modern, more explicit affordances in `MainWindow` and `PropertiesDock`
 
+## Latest Editor Input Slice
+- On `2026-03-27`, the next editor-input pass closed three high-friction interaction gaps:
+  - single-item drag in `Move Edit` now snaps live while moving, so a stitch that is already on the grid visibly steps to the next snapped position instead of feeling stuck until release
+  - `Fix Selection` now exists as an explicit toolbar/menu action for stitches, indicators, images, and groups; fixed items remain selectable but cannot be moved by mouse drag
+  - fixed selections are intentionally blocked from `Group` in the first version so lock semantics are not silently discarded by creating a new movable group
+  - chart zoom now works from a physical mouse wheel without requiring `Ctrl`, while macOS trackpad pinch is handled through `QNativeGestureEvent` in `ChartView`
+  - two-finger trackpad scroll is still preserved as scrolling rather than being collapsed into zoom
+- Current scope boundary:
+  - selection fixation is runtime-only in this slice and is not yet serialized into `file_v1` / `file_v2`
+- This slice is centered in:
+  - `src/chartview.cpp`
+  - `src/chartview.h`
+  - `src/scene.cpp`
+  - `src/mainwindow.cpp`
+  - `src/mainwindow.h`
+  - `src/mainwindow.ui`
+
 ## Latest Mouse Consistency Slice
 - On `2026-03-27`, pointer interaction handling was tightened again for editor consistency:
   - legacy exact-button comparisons in `Scene` now use bitmask checks, so drag/select behavior no longer depends on the left button being the only pressed button in the event state

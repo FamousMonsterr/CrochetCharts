@@ -40,7 +40,11 @@
 - [x] Add a dedicated `Move Edit` mode and user-facing snap-to-grid toggle
 - [x] Make grouping layer-aware at the menu/action-state level
 - [x] Normalize left-button drag detection across scene/view interaction paths
-- [ ] Verify move-mode cursor feedback, snap toggle behavior, and layer-grouping paths by manual regression
+- [x] Add live snapped dragging for single-item move interactions
+- [x] Add an explicit runtime `Fix Selection` action for mouse-move protection
+- [x] Support mouse-wheel zoom and macOS trackpad pinch zoom in `ChartView`
+- [ ] Verify move-mode cursor feedback, snap toggle behavior, selection fixation, pinch zoom, and layer-grouping paths by manual regression
+- [ ] Decide whether selection fixation should be serialized into `file_v1` / `file_v2` after runtime UX is validated
 
 ## Phase 3. Desktop UI Foundation
 - [ ] Introduce a shared Qt theme layer:

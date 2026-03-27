@@ -66,6 +66,11 @@ Date: `2026-03-24`
   - cross-layer grouping now surfaces a readable reason instead of degrading into an unclear no-op
   - group / ungroup undo-redo paths now keep layer-gated selectability rules intact
   - scene/view drag handling now uses left-button bitmask checks instead of exact equality, reducing inconsistent move/select/autoscroll behavior under modifier-assisted drags
+  - single-item drag now snaps live while moving, so already-snapped stitches no longer feel immovable until mouse release
+  - `Fix Selection` now exists as an explicit action for stitches, indicators, chart images, and groups; fixed items stay selectable but no longer move under direct mouse drag
+  - locked selections are intentionally blocked from `Group` in this first version so grouping does not silently discard the fixed-state intent
+  - chart zoom now works from a physical mouse wheel without requiring `Ctrl`, while macOS trackpad pinch is handled through `QNativeGestureEvent` in `ChartView`
+  - two-finger trackpad scroll remains scroll instead of being converted into zoom
 - Fixed in the current shell slice:
   - the desktop shell now shows persistent chart / mode / select / grid / layer / selection context instead of relying only on transient status-bar messages
   - selection-mode actions now re-synchronize on tab switch
@@ -98,12 +103,16 @@ Date: `2026-03-24`
   - add/remove/move controls now use readable text labels with tooltips instead of raw symbol-only button text
 - Still requiring explicit manual regression:
   - move-mode drag and click behavior on dense charts
+  - fixed-selection toggle behavior across stitches, indicators, images, and groups
+  - grouping refusal and tooltip/status feedback for fixed selections
   - mixed-button or modifier-assisted drag paths in move/color/indicator/select modes
   - `Ctrl` additive selection
   - indicator paste undo
   - mixed-property handling for non-cell multi-selection
   - group / ungroup enablement and warning coverage across layer changes
   - directional copy / mirror with mixed selections containing indicators or chart center
+  - mouse-wheel zoom with a physical wheel versus two-finger trackpad scroll
+  - macOS pinch zoom behavior and zoom-slider synchronization
   - visual regression of the new `PropertiesDock` summary and swatch-button presentation on macOS
   - visual regression of the rebuilt `RowsDock` alignment controls and button sizing on macOS
   - visual regression of the new `SettingsUi` summary card and tab-shell spacing on macOS
@@ -113,6 +122,9 @@ Date: `2026-03-24`
 ## Manual QA Checklist
 - Switch between `Move Edit`, `Stitch Edit`, and `Indicator Edit`; confirm cursor and click behavior make the active mode obvious.
 - Turn `Snap to grid` on and off in square, round, triangle, and no-grid charts; confirm the action availability and actual placement match the toggle state.
+- Place a stitch on the grid, reselect it, and drag it in `Move Edit`; confirm it visibly steps between snapped positions before mouse release.
+- Select stitches, indicators, images, and groups; toggle `Fix Selection` on and off and confirm they stay selectable while mouse drag is disabled/enabled.
+- Try grouping a fixed selection and confirm the action is disabled or reports that fixed items must be unlocked first.
 - Select a layer, then change layer visibility and confirm `Group` / `Ungroup` action state updates immediately.
 - Try grouping items from one layer, then from multiple layers after changing active layer state; confirm the UI reports the constraint clearly.
 - Select several stitches, rotate them, then run `Undo` and `Redo` repeatedly.
@@ -121,7 +133,8 @@ Date: `2026-03-24`
 - In selection modes, add to selection with `Ctrl` and verify previous selection is preserved.
 - Paste a selection containing an indicator, then run `Undo`.
 - In color edit mode, drag across multiple cells and confirm color paint behavior matches intent.
-- Test wheel zoom with `Ctrl`, `Alt`, and `Shift` separately.
+- Test mouse-wheel zoom without modifiers, then confirm `Ctrl+wheel` still works.
+- On macOS, test trackpad pinch in/out and confirm the chart zooms while two-finger scroll still pans the view.
 
 ## Files Under Highest Scrutiny
 - `src/mainwindow.cpp`

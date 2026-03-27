@@ -156,9 +156,10 @@ private slots:
 	void changeSelectMode(QAction* action);
 	void nextSelectMode();
 	void setSelectedGridMode(QString mode);
-	void changeGridMode(QAction* action);
+    void changeGridMode(QAction* action);
 	void nextGridMode();
     void toggleSnapToGrid(bool state);
+    void toggleSelectionLock(bool state);
 
     void helpCrochetHelp();
     void helpAbout();

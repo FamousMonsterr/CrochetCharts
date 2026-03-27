@@ -21,18 +21,35 @@
 #include "chartview.h"
 #include "settings.h"
 
-#include <QWheelEvent>
 #include <QDebug>
+#include <QGestureEvent>
+#include <QNativeGestureEvent>
 #include <QPainter>
+#include <QPinchGesture>
 #include <QScrollBar>
+#include <QWheelEvent>
+
+namespace {
+
+bool isTrackpadScrollEvent(const QWheelEvent *event)
+{
+    if(!event)
+        return false;
+
+    return !event->pixelDelta().isNull() || event->phase() != Qt::NoScrollPhase;
+}
+
+}
 
 ChartView::ChartView(QWidget* parent)
     : QGraphicsView(parent)
 	
 {
-	setAcceptDrops(true);
+    setAcceptDrops(true);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     setResizeAnchor(QGraphicsView::AnchorViewCenter);
+    viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
+    viewport()->grabGesture(Qt::PinchGesture);
 
     const bool lowGraphicsMode = Settings::inst()->value("lowGraphicsMode").toBool();
     if (lowGraphicsMode) {
@@ -51,6 +68,35 @@ ChartView::ChartView(QWidget* parent)
 
 ChartView::~ChartView()
 {
+}
+
+bool ChartView::viewportEvent(QEvent *event)
+{
+    if(!event)
+        return false;
+
+    if(event->type() == QEvent::NativeGesture) {
+        QNativeGestureEvent *gestureEvent = static_cast<QNativeGestureEvent*>(event);
+        if(gestureEvent->gestureType() == Qt::ZoomNativeGesture) {
+            applyZoomFactor(1.0 + gestureEvent->value());
+            gestureEvent->accept();
+            return true;
+        }
+    } else if(event->type() == QEvent::Gesture) {
+        QGestureEvent *gestureEvent = static_cast<QGestureEvent*>(event);
+        if(QGesture *gesture = gestureEvent->gesture(Qt::PinchGesture)) {
+            QPinchGesture *pinchGesture = static_cast<QPinchGesture*>(gesture);
+            const qreal lastFactor = pinchGesture->lastScaleFactor();
+            const qreal scaleFactor = pinchGesture->scaleFactor();
+            if(lastFactor > 0.0 && scaleFactor > 0.0) {
+                applyZoomFactor(scaleFactor / lastFactor);
+                gestureEvent->accept(gesture);
+                return true;
+            }
+        }
+    }
+
+    return QGraphicsView::viewportEvent(event);
 }
 
 void ChartView::mousePressEvent(QMouseEvent* event)
@@ -121,22 +167,25 @@ void ChartView::mouseReleaseEvent(QMouseEvent* event)
 
 void ChartView::wheelEvent(QWheelEvent* event)
 {
-    if (event->modifiers() & Qt::ControlModifier)
+    if((event->modifiers() & Qt::ControlModifier) || !isTrackpadScrollEvent(event)) {
         zoom(event->angleDelta().y());
-    else
-        QGraphicsView::wheelEvent(event);
+        event->accept();
+        return;
+    }
+
+    QGraphicsView::wheelEvent(event);
 }
 
 void ChartView::zoomIn()
 {
     zoomLevel((transform().m11()*100) + 5);
-    emit zoomLevelChanged(transform().m11()*100);
+    emitZoomLevel();
 }
 
 void ChartView::zoomOut()
 {
     zoomLevel((transform().m11()*100) - 5);
-    emit zoomLevelChanged(transform().m11()*100);
+    emitZoomLevel();
 }
 
 void ChartView::zoom(int mouseDelta)
@@ -144,7 +193,7 @@ void ChartView::zoom(int mouseDelta)
     double scroll = mouseDelta / 120;
     int delta = 5 * scroll;
     zoomLevel((transform().m11()*100) + delta);
-    emit zoomLevelChanged(transform().m11()*100);
+    emitZoomLevel();
 }
 
 void ChartView::zoomLevel(int percent)
@@ -154,4 +203,18 @@ void ChartView::zoomLevel(int percent)
         pcent = 0.01;
     qreal diff = pcent / transform().m11();
     scale(diff, diff);
+}
+
+void ChartView::emitZoomLevel()
+{
+    emit zoomLevelChanged(qRound(transform().m11() * 100.0));
+}
+
+void ChartView::applyZoomFactor(qreal factor)
+{
+    if(factor <= 0.0)
+        factor = 0.1;
+
+    zoomLevel(qRound(transform().m11() * factor * 100.0));
+    emitZoomLevel();
 }

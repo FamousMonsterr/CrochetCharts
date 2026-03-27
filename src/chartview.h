@@ -22,6 +22,7 @@
 #define CHARTVIEW_H
 
 #include <QGraphicsView>
+#include <QEvent>
 
 /**
  * The default view on the ChartScene.
@@ -51,12 +52,15 @@ signals:
     void zoomLevelChanged(int percent);
 
 protected:
+    bool viewportEvent(QEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     void mousePressEvent(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* event);
     void wheelEvent(QWheelEvent* event);
     
 private:
+    void emitZoomLevel();
+    void applyZoomFactor(qreal factor);
 
 };
 

@@ -67,6 +67,58 @@
 
 namespace {
 
+const int LockedItemDataRole = Qt::UserRole + 91;
+
+bool itemSupportsSelectionLock(QGraphicsItem *item)
+{
+    if(!item)
+        return false;
+
+    switch(item->type()) {
+    case Cell::Type:
+    case Indicator::Type:
+    case ItemGroup::Type:
+    case ChartImage::Type:
+        return true;
+    default:
+        return false;
+    }
+}
+
+bool isSelectionItemLocked(QGraphicsItem *item)
+{
+    return itemSupportsSelectionLock(item) && item->data(LockedItemDataRole).toBool();
+}
+
+void setSelectionItemLocked(QGraphicsItem *item, bool locked)
+{
+    if(!itemSupportsSelectionLock(item))
+        return;
+
+    item->setData(LockedItemDataRole, locked);
+    item->setFlag(QGraphicsItem::ItemIsMovable, !locked);
+}
+
+int lockableSelectionCount(const QList<QGraphicsItem*> &items)
+{
+    int count = 0;
+    foreach(QGraphicsItem *item, items) {
+        if(itemSupportsSelectionLock(item))
+            ++count;
+    }
+    return count;
+}
+
+int lockedSelectionCount(const QList<QGraphicsItem*> &items)
+{
+    int count = 0;
+    foreach(QGraphicsItem *item, items) {
+        if(isSelectionItemLocked(item))
+            ++count;
+    }
+    return count;
+}
+
 int groupableSelectionCount(const QList<QGraphicsItem*> &items)
 {
     int count = 0;
@@ -742,6 +794,8 @@ void MainWindow::setupMenus()
 
     connect(ui->actionGroup, SIGNAL(triggered()), SLOT(group()));
     connect(ui->actionUngroup, SIGNAL(triggered()), SLOT(ungroup()));
+    connect(ui->actionLockSelection, SIGNAL(toggled(bool)), SLOT(toggleSelectionLock(bool)));
+    ui->actionLockSelection->setIcon(QIcon::fromTheme("object-locked"));
 
     connect(ui->actionReplaceStitch, SIGNAL(triggered()), SLOT(stitchesReplaceStitch()));
     connect(ui->actionColorReplacer, SIGNAL(triggered()), SLOT(stitchesReplaceColor()));
@@ -1241,6 +1295,38 @@ void MainWindow::toggleSnapToGrid(bool state)
     if(statusBar())
         statusBar()->showMessage(state ? tr("Snap to grid enabled") : tr("Snap to grid disabled"), 2500);
 }
+
+void MainWindow::toggleSelectionLock(bool state)
+{
+    CrochetTab *tab = requireCurrentTab(tr("Fix Selection"));
+    if(!tab)
+        return;
+
+    const QList<QGraphicsItem*> selection = tab->scene()->selectedItems();
+    int updatedItems = 0;
+    foreach(QGraphicsItem *item, selection) {
+        if(!itemSupportsSelectionLock(item))
+            continue;
+        setSelectionItemLocked(item, state);
+        ++updatedItems;
+    }
+
+    if(updatedItems <= 0) {
+        ui->actionLockSelection->blockSignals(true);
+        ui->actionLockSelection->setChecked(false);
+        ui->actionLockSelection->blockSignals(false);
+        notifyUnavailableAction(tr("Fix Selection"), tr("selection does not contain movable chart items"));
+        return;
+    }
+
+    updateSelectionDependentActions();
+    updateEditorContextBar();
+    if(statusBar()) {
+        statusBar()->showMessage(state
+            ? tr("Selection fixed in place")
+            : tr("Selection unlocked"), 2500);
+    }
+}
 	
 void MainWindow::toolsOptions()
 {
@@ -1481,6 +1567,8 @@ void MainWindow::updateSelectionDependentActions()
     int selectedCount = 0;
     int selectedGroups = 0;
     int groupableCount = 0;
+    int lockableCount = 0;
+    int lockedCount = 0;
     QSet<unsigned int> selectedLayers;
 
     CrochetTab *tab = curCrochetTab();
@@ -1488,6 +1576,8 @@ void MainWindow::updateSelectionDependentActions()
         const QList<QGraphicsItem*> selection = tab->scene()->selectedItems();
         selectedCount = selection.count();
         groupableCount = groupableSelectionCount(selection);
+        lockableCount = lockableSelectionCount(selection);
+        lockedCount = lockedSelectionCount(selection);
         selectedLayers = selectionLayers(selection);
         foreach(QGraphicsItem *item, selection) {
             if(item && item->type() == ItemGroup::Type)
@@ -1495,18 +1585,35 @@ void MainWindow::updateSelectionDependentActions()
         }
     }
 
+    const bool hasLockedSelection = lockedCount > 0;
     const bool canGroupSelection = hasTab() && curCrochetTab() && selectedCount > 1
-        && groupableCount > 1 && selectedLayers.count() <= 1;
+        && groupableCount > 1 && selectedLayers.count() <= 1 && !hasLockedSelection;
 
     ui->actionGroup->setEnabled(canGroupSelection);
     ui->actionUngroup->setEnabled(hasTab() && curCrochetTab() && selectedGroups > 0);
+    ui->actionLockSelection->setEnabled(hasTab() && curCrochetTab() && lockableCount > 0);
+    ui->actionLockSelection->blockSignals(true);
+    ui->actionLockSelection->setChecked(lockableCount > 0 && lockedCount == lockableCount);
+    ui->actionLockSelection->blockSignals(false);
 
     QString groupToolTip = tr("Group the selected items");
-    if(selectedLayers.count() > 1)
+    if(hasLockedSelection)
+        groupToolTip = tr("Unlock fixed items before grouping");
+    else if(selectedLayers.count() > 1)
         groupToolTip = tr("Grouping is limited to items from the same layer");
     else if(groupableCount <= 1)
-        groupToolTip = tr("Select at least two movable items to create a group");
+        groupToolTip = tr("Select at least two items to create a group");
     ui->actionGroup->setToolTip(groupToolTip);
+
+    QString lockToolTip = tr("Fix the selected items so mouse drags do not move them");
+    if(lockableCount <= 0)
+        lockToolTip = tr("Select stitches, indicators, images, or groups to fix them in place");
+    else if(lockedCount == lockableCount)
+        lockToolTip = tr("Allow the selected items to move again");
+    else if(lockedCount > 0)
+        lockToolTip = tr("Some selected items are already fixed; toggle to unify the whole selection");
+    ui->actionLockSelection->setToolTip(lockToolTip);
+
     if(mAlignDock)
         mAlignDock->setSelectionState(selectedCount > 1);
     if(mMirrorDock)
@@ -2516,6 +2623,10 @@ void MainWindow::group()
         notifyUnavailableAction(tr("Group"), tr("select at least two non-center items"));
         return;
     }
+    if(lockedSelectionCount(selection) > 0) {
+        notifyUnavailableAction(tr("Group"), tr("unlock fixed items before grouping"));
+        return;
+    }
     if(selectionLayers(selection).count() > 1) {
         notifyUnavailableAction(tr("Group"), tr("selected items are on different layers"));
         return;
@@ -2612,11 +2723,19 @@ void MainWindow::updateEditorContextBar()
 
     QString selectionLabel = tr("Empty");
     if(scene) {
-        const int count = scene->selectedItems().count();
+        const QList<QGraphicsItem*> selection = scene->selectedItems();
+        const int count = selection.count();
         if(count == 1)
             selectionLabel = tr("1 item");
         else if(count > 1)
             selectionLabel = tr("%1 items").arg(count);
+
+        const int lockedCount = lockedSelectionCount(selection);
+        const int lockableCount = lockableSelectionCount(selection);
+        if(lockableCount > 0 && lockedCount == lockableCount)
+            selectionLabel += tr(" • Fixed");
+        else if(lockedCount > 0)
+            selectionLabel += tr(" • %1 fixed").arg(lockedCount);
     }
     ui->contextSelectionValue->setText(selectionLabel);
 }
