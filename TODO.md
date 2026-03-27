@@ -68,6 +68,7 @@
   - [x] persistent editor context bar for chart / mode / select / grid / layer / selection
   - [x] selection-mode sync on tab switch
   - [x] hover help for icon-only select / grid / layer controls
+  - [x] align/mirror dock gating based on actual selection requirements
   - [ ] targeted visual pass for the remaining legacy docks and iconography
 
 ## Phase 5. Shared Core Extraction

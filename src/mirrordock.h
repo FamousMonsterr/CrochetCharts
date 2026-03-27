@@ -35,6 +35,9 @@ public:
     explicit MirrorDock(QWidget *parent = 0);
     ~MirrorDock();
 
+public slots:
+    void setSelectionState(bool hasSelection);
+
 signals:
     void mirror(int direction);
     void rotate(qreal degrees);

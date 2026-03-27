@@ -1469,6 +1469,10 @@ void MainWindow::updateSelectionDependentActions()
     else if(groupableCount <= 1)
         groupToolTip = tr("Select at least two movable items to create a group");
     ui->actionGroup->setToolTip(groupToolTip);
+    if(mAlignDock)
+        mAlignDock->setSelectionState(selectedCount > 1);
+    if(mMirrorDock)
+        mMirrorDock->setSelectionState(groupableCount > 0);
     updateEditorContextBar();
 }
 

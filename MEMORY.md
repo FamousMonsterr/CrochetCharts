@@ -131,6 +131,19 @@
   - `src/mainwindow.cpp`
   - `resources/themes/desktop.qss`
 
+## Latest Dock Slice
+- On `2026-03-27`, `AlignDock` and `MirrorDock` were made more honest about selection requirements:
+  - both docks now show an explicit hint instead of presenting all operations as always available
+  - align/distribute actions disable until at least two items are selected
+  - copy/mirror/rotate actions disable until there is an actionable selection
+  - the dock enable-state is now driven from the same selection refresh pass that updates `Group` / `Ungroup`
+- This slice is centered in:
+  - `src/aligndock.ui`
+  - `src/aligndock.cpp`
+  - `src/mirrordock.ui`
+  - `src/mirrordock.cpp`
+  - `src/mainwindow.cpp`
+
 ## Current Audit Emphasis
 - Remaining desktop regression focus is now concentrated on:
   - mouse click consistency across selection, move, stitch, and indicator flows

@@ -16,6 +16,16 @@
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
+     <widget class="QLabel" name="selectionHint">
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Select 2 or more items to align or distribute them.</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QGroupBox" name="groupBox_2">
       <property name="title">
        <string>Align</string>

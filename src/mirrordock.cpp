@@ -68,6 +68,7 @@ MirrorDock::MirrorDock(QWidget *parent) :
     connect(ui->rotateCustom, SIGNAL(clicked()), SLOT(rotateCustom()));
 
     connect(ui->rotateBttn, SIGNAL(clicked()), SLOT(genRotate()));
+    setSelectionState(false);
 }
 
 MirrorDock::~MirrorDock()
@@ -128,4 +129,14 @@ void MirrorDock::rotateCustom()
     } else {
         ui->rotateCustomWidgets->show();
     }
+}
+
+void MirrorDock::setSelectionState(bool hasSelection)
+{
+    ui->groupBox_2->setEnabled(hasSelection);
+    ui->groupBox->setEnabled(hasSelection);
+    ui->groupBox_3->setEnabled(hasSelection);
+    ui->selectionHint->setText(hasSelection
+        ? tr("Copy, mirror, and rotate actions are ready for the current selection.")
+        : tr("Select items to copy, mirror, or rotate them."));
 }

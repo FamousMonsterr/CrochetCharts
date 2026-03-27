@@ -64,6 +64,7 @@ AlignDock::AlignDock(QWidget *parent) :
 
     ui->alignToPath->setVisible(false);
     ui->distributeToPath->setVisible(false);
+    setSelectionState(false);
 }
 
 AlignDock::~AlignDock()
@@ -118,4 +119,13 @@ void AlignDock::generateDistribution()
 
     emit distribute(style);
     
+}
+
+void AlignDock::setSelectionState(bool hasMultiSelection)
+{
+    ui->groupBox_2->setEnabled(hasMultiSelection);
+    ui->groupBox->setEnabled(hasMultiSelection);
+    ui->selectionHint->setText(hasMultiSelection
+        ? tr("Align and distribute actions are ready for the current selection.")
+        : tr("Select 2 or more items to align or distribute them."));
 }

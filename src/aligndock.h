@@ -35,6 +35,9 @@ public:
     explicit AlignDock(QWidget *parent = 0);
     ~AlignDock();
 
+public slots:
+    void setSelectionState(bool hasMultiSelection);
+
 signals:
     /**
      * alignment:

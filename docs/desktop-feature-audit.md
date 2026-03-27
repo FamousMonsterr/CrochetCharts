@@ -66,6 +66,7 @@ Date: `2026-03-24`
   - selection-mode actions now re-synchronize on tab switch
   - icon-only selection, grid, and layer controls now expose clearer tooltips
   - the layers dock no longer hides its own visibility/name headers
+  - align/distribute and copy/mirror/rotate docks now expose their selection prerequisites directly instead of reading like always-on controls
 - Still requiring explicit manual regression:
   - move-mode drag and click behavior on dense charts
   - `Ctrl` additive selection
