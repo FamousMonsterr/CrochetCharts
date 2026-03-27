@@ -81,6 +81,11 @@ Date: `2026-03-24`
   - `SettingsUi` now opens with a tab summary card that explains the active configuration section
   - the summary updates on tab switch for `Application`, `Charts`, `Legends`, and `Tools`
   - the default-folder picker now uses a readable `Choose...` button instead of an opaque `...` affordance
+- Fixed in the current library slice:
+  - `StitchLibraryUi` now exposes a summary card for the active stitch set instead of starting as a blind table/form split
+  - the set-details toggle is now explicit instead of relying on the old `More >>` wording
+  - the stitch filter row now uses a readable `Clear` affordance instead of an opaque `...` button
+  - the side action rail now reads more like an intentional control surface
 - Still requiring explicit manual regression:
   - move-mode drag and click behavior on dense charts
   - `Ctrl` additive selection
@@ -91,6 +96,7 @@ Date: `2026-03-24`
   - visual regression of the new `PropertiesDock` summary and swatch-button presentation on macOS
   - visual regression of the rebuilt `RowsDock` alignment controls and button sizing on macOS
   - visual regression of the new `SettingsUi` summary card and tab-shell spacing on macOS
+  - visual regression of the updated `StitchLibraryUi` summary card, detail toggle, and action-rail layout on macOS
 
 ## Manual QA Checklist
 - Switch between `Move Edit`, `Stitch Edit`, and `Indicator Edit`; confirm cursor and click behavior make the active mode obvious.

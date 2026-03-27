@@ -68,6 +68,7 @@ StitchLibraryUi::StitchLibraryUi(QWidget* parent)
     ui->listView->hideColumn(4);
 
     ui->propertiesBox->setVisible(false);
+    updatePropertiesToggle();
     connect(ui->moreBttn, SIGNAL(clicked()), SLOT(hideProperties()));
     connect(ui->printSet, SIGNAL(clicked()), SLOT(printStitchSet()));
 
@@ -101,6 +102,7 @@ StitchLibraryUi::StitchLibraryUi(QWidget* parent)
     connect(ui->clearBttn, SIGNAL(clicked()), SLOT(clearStitchFilter()));
 
     setButtonStates(master);
+    updateLibrarySummary(master);
 }
 
 StitchLibraryUi::~StitchLibraryUi()
@@ -145,6 +147,7 @@ void StitchLibraryUi::changeStitchSet(QString setName)
 
     setupPropertiesBox();
     setButtonStates(set);
+    updateLibrarySummary(set);
 
 }
 
@@ -157,6 +160,30 @@ void StitchLibraryUi::setButtonStates(StitchSet *set)
     ui->moreBttn->setEnabled(state);
     ui->propertiesBox->setEnabled(state);
     ui->addSelected->setEnabled(state);
+    updatePropertiesToggle();
+}
+
+void StitchLibraryUi::updateLibrarySummary(StitchSet *set)
+{
+    if(!set)
+        return;
+
+    ui->librarySummaryTitle->setText(set->name());
+
+    QString hint;
+    if(set == StitchLibrary::inst()->masterStitchSet()) {
+        hint = tr("Master stitch library. Browse symbols here, promote stitches into charts, and create a custom set to edit metadata or add private stitches.");
+    } else {
+        hint = tr("Custom stitch set. Edit set details, manage stitches, and import or export this set as a reusable file.");
+    }
+
+    ui->librarySummaryHint->setText(hint);
+}
+
+void StitchLibraryUi::updatePropertiesToggle()
+{
+    const bool visible = ui->propertiesBox->isVisible();
+    ui->moreBttn->setText(visible ? tr("Hide Details") : tr("Show Details"));
 }
 
 void StitchLibraryUi::resetLibrary()
@@ -335,13 +362,8 @@ void StitchLibraryUi::setupPropertiesBox()
 
 void StitchLibraryUi::hideProperties()
 {
-    if(ui->moreBttn->text() == tr("&More >>")) {
-        ui->moreBttn->setText(tr("&Less <<"));
-        ui->propertiesBox->setVisible(true);
-    } else {
-        ui->moreBttn->setText(tr("&More >>"));
-        ui->propertiesBox->setVisible(false);
-    }
+    ui->propertiesBox->setVisible(!ui->propertiesBox->isVisible());
+    updatePropertiesToggle();
 }
 
 void StitchLibraryUi::printStitchSet()

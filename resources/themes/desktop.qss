@@ -15,7 +15,8 @@ QWidget#editorContextBar {
 }
 
 QWidget#propertiesSummaryCard,
-QWidget#settingsSummaryCard {
+QWidget#settingsSummaryCard,
+QWidget#librarySummaryCard {
     background: rgba(255, 255, 255, 0.90);
     border: 1px solid rgba(15, 23, 42, 0.10);
     border-radius: 14px;
@@ -254,4 +255,22 @@ QDialog#SettingsDialog QLabel[settingsRole="title"] {
 
 QDialog#SettingsDialog QLabel[settingsRole="hint"] {
     color: #6b7280;
+}
+
+QDialog#StitchLibraryDialog QLabel[libraryRole="title"] {
+    color: #111827;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+QDialog#StitchLibraryDialog QLabel[libraryRole="hint"] {
+    color: #6b7280;
+}
+
+QDialog#StitchLibraryDialog QLabel[libraryRole="section"] {
+    color: #4b5563;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 2px 0 2px;
 }

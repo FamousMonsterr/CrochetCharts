@@ -168,6 +168,18 @@
   - `src/settingsui.cpp`
   - `resources/themes/desktop.qss`
 
+## Latest Library Slice
+- On `2026-03-27`, `StitchLibraryUi` received the same shell-modernization treatment:
+  - the dialog now opens with a summary card for the active stitch set instead of dropping directly into the old table/form split
+  - the summary updates as the user switches between the master set and custom sets
+  - the old `More >>` affordance was replaced by a clear details toggle for stitch-set metadata
+  - the filter row now uses a readable `Clear` affordance instead of an opaque `...` button
+  - the action rail now reads more like an explicit control surface instead of a blind button stack
+- This slice is centered in:
+  - `src/stitchlibrary.ui`
+  - `src/stitchlibraryui.cpp`
+  - `resources/themes/desktop.qss`
+
 ## Latest Properties Slice
 - On `2026-03-27`, `PropertiesDock` received the first real structure pass instead of reading like a raw legacy form:
   - the dock now shows a persistent summary card describing the current canvas or selection context

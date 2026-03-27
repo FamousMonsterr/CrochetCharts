@@ -74,6 +74,8 @@ private:
     QSortFilterProxyModel *mProxyModel;
 
     void setDialogSize();
+    void updateLibrarySummary(StitchSet *set);
+    void updatePropertiesToggle();
 
     /**
      *Set the author, set name, email, url, etc.
