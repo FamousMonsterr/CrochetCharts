@@ -144,6 +144,39 @@
   - `src/mirrordock.cpp`
   - `src/mainwindow.cpp`
 
+## Latest Inspector Slice
+- On `2026-03-27`, the inspector-style docks received another bounded modernization pass:
+  - `PropertiesDock` now shows a summary card that explains the current canvas or selection context instead of opening as a blank legacy form
+  - stitch color/background controls in `PropertiesDock` now read like labeled swatches instead of anonymous icon buttons
+  - destructive and media-path actions in `PropertiesDock` now have clearer labels and tooltips
+  - `RowsDock` now uses explicit text alignment controls for row and stitch alignment instead of tooltip-only empty radio buttons
+  - the dead `Create Rows` checkbox was removed from `RowsDock`; the dock now exposes the two real actions directly as `Create Grid` and `Arrange Selection`
+- This slice is centered in:
+  - `src/propertiesdock.ui`
+  - `src/propertiesdock.cpp`
+  - `src/rowsdock.ui`
+  - `resources/themes/desktop.qss`
+
+## Latest Properties Slice
+- On `2026-03-27`, `PropertiesDock` received the first real structure pass instead of reading like a raw legacy form:
+  - the dock now shows a persistent summary card describing the current canvas or selection context
+  - section titles now adapt to the active selection type instead of leaving anonymous group boxes
+  - destructive and file/color actions now use clearer labels and tooltips
+  - stitch color controls are now styled as explicit swatch buttons with text beside the preview icon
+- This slice is centered in:
+  - `src/propertiesdock.ui`
+  - `src/propertiesdock.cpp`
+  - `resources/themes/desktop.qss`
+
+## Latest Rows Slice
+- On `2026-03-27`, `RowsDock` was also pulled forward from the older raw-form layout:
+  - the dock now has an explicit summary line and grouped sections for grid size, alignment, spacing, and actions
+  - blank radio-button clusters were replaced with labeled tool buttons, making alignment intent readable without relying on tooltips alone
+  - dock-level spacing now matches the newer shell and properties panels
+- This slice is centered in:
+  - `src/rowsdock.ui`
+  - `resources/themes/desktop.qss`
+
 ## Current Audit Emphasis
 - Remaining desktop regression focus is now concentrated on:
   - mouse click consistency across selection, move, stitch, and indicator flows

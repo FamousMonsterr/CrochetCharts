@@ -71,6 +71,12 @@ Date: `2026-03-24`
   - icon-only selection, grid, and layer controls now expose clearer tooltips
   - the layers dock no longer hides its own visibility/name headers
   - align/distribute and copy/mirror/rotate docks now expose their selection prerequisites directly instead of reading like always-on controls
+- Fixed in the current properties slice:
+  - `PropertiesDock` now exposes a persistent summary card so the panel explains whether it is editing the canvas, a stitch, a group, an image, or a mixed selection
+  - section titles now adapt to the active object type instead of leaving anonymous group boxes
+  - color and file actions now use clearer action labels and tooltips, reducing blind icon/button usage in the dock
+  - `RowsDock` now uses explicit text alignment controls instead of blank tooltip-only radio buttons
+  - the dead `Create Rows` checkbox was removed from `RowsDock`, leaving only the two real actions: create a grid or arrange the current selection
 - Still requiring explicit manual regression:
   - move-mode drag and click behavior on dense charts
   - `Ctrl` additive selection
@@ -78,6 +84,8 @@ Date: `2026-03-24`
   - mixed-property handling for non-cell multi-selection
   - group / ungroup enablement and warning coverage across layer changes
   - directional copy / mirror with mixed selections containing indicators or chart center
+  - visual regression of the new `PropertiesDock` summary and swatch-button presentation on macOS
+  - visual regression of the rebuilt `RowsDock` alignment controls and button sizing on macOS
 
 ## Manual QA Checklist
 - Switch between `Move Edit`, `Stitch Edit`, and `Indicator Edit`; confirm cursor and click behavior make the active mode obvious.

@@ -51,11 +51,12 @@
   - [ ] dock chrome
   - [ ] form controls
 - [ ] Apply the theme first to:
-  - [ ] main window shell
+  - [x] main window shell
   - [ ] new chart dialog
-  - [ ] properties dock
-  - [ ] align dock
-  - [ ] mirror dock
+  - [x] properties dock
+  - [x] align dock
+  - [x] mirror dock
+  - [x] rows dock
   - [ ] settings
 - [ ] Replace the most legacy-feeling icons and control layouts
 
@@ -70,6 +71,8 @@
   - [x] selection-mode sync on tab switch
   - [x] hover help for icon-only select / grid / layer controls
   - [x] align/mirror dock gating based on actual selection requirements
+  - [x] rows dock alignment controls made explicit instead of tooltip-only blank radios
+  - [x] properties dock summary and clearer action affordances
   - [ ] targeted visual pass for the remaining legacy docks and iconography
 
 ## Phase 5. Shared Core Extraction

@@ -6,250 +6,334 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>233</width>
-    <height>307</height>
+    <width>300</width>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Rows and Stitches</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="2">
-     <widget class="QLabel" name="label">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>12</number>
+    </property>
+    <property name="topMargin">
+     <number>12</number>
+    </property>
+    <property name="rightMargin">
+     <number>12</number>
+    </property>
+    <property name="bottomMargin">
+     <number>12</number>
+    </property>
+    <property name="spacing">
+     <number>10</number>
+    </property>
+    <item>
+     <widget class="QLabel" name="summaryLabel">
+      <property name="wordWrap">
+       <bool>true</bool>
       </property>
       <property name="text">
-       <string>Rows:</string>
+       <string>Create a grid of new cells or arrange the current selection into rows and stitches.</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="3">
-     <widget class="QLabel" name="label_2">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+    <item>
+     <widget class="QGroupBox" name="gridGroup">
+      <property name="title">
+       <string>Grid Size</string>
       </property>
-      <property name="text">
-       <string>Stitches:</string>
-      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <property name="horizontalSpacing">
+        <number>8</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>8</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="rowsLabel">
+         <property name="text">
+          <string>Rows</string>
+         </property>
+         <property name="buddy">
+          <cstring>rows</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="stitchesLabel">
+         <property name="text">
+          <string>Stitches</string>
+         </property>
+         <property name="buddy">
+          <cstring>stitches</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QSpinBox" name="rows">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>2</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="stitches">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>2</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
-    <item row="3" column="0" rowspan="2">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>Align:</string>
+    <item>
+     <widget class="QGroupBox" name="alignmentGroup">
+      <property name="title">
+       <string>Alignment</string>
       </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <property name="horizontalSpacing">
+        <number>8</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>8</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="rowAlignLabel">
+         <property name="text">
+          <string>Rows</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <layout class="QHBoxLayout" name="rowAlignLayout">
+         <property name="spacing">
+          <number>6</number>
+         </property>
+         <item>
+          <widget class="QToolButton" name="alignTop">
+           <property name="text">
+            <string>Top</string>
+           </property>
+           <property name="toolTip">
+            <string>Align rows to the top edge</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="alignCenterV">
+           <property name="text">
+            <string>Center</string>
+           </property>
+           <property name="toolTip">
+            <string>Align rows to the vertical center</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="alignBottom">
+           <property name="text">
+            <string>Bottom</string>
+           </property>
+           <property name="toolTip">
+            <string>Align rows to the bottom edge</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="stitchAlignLabel">
+         <property name="text">
+          <string>Stitches</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <layout class="QHBoxLayout" name="stitchAlignLayout">
+         <property name="spacing">
+          <number>6</number>
+         </property>
+         <item>
+          <widget class="QToolButton" name="alignLeft">
+           <property name="text">
+            <string>Left</string>
+           </property>
+           <property name="toolTip">
+            <string>Align stitches to the left edge</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="alignCenterH">
+           <property name="text">
+            <string>Center</string>
+           </property>
+           <property name="toolTip">
+            <string>Align stitches to the horizontal center</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="alignRight">
+           <property name="text">
+            <string>Right</string>
+           </property>
+           <property name="toolTip">
+            <string>Align stitches to the right edge</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
     </item>
-    <item row="3" column="1" rowspan="2">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QRadioButton" name="alignTop">
-        <property name="toolTip">
-         <string>Align Top</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="alignCenterV">
-        <property name="toolTip">
-         <string>Align Center Vertical</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="alignBottom">
-        <property name="toolTip">
-         <string>Align Bottom</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="4" column="3">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QRadioButton" name="alignLeft">
-        <property name="toolTip">
-         <string>Align Left</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="alignCenterH">
-        <property name="toolTip">
-         <string>Align Center Horizontal</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="alignRight">
-        <property name="toolTip">
-         <string>Align Right</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="5" column="0" colspan="4">
-     <widget class="QLabel" name="label_7">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
+    <item>
+     <widget class="QGroupBox" name="spacingGroup">
+      <property name="title">
        <string>Spacing</string>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <property name="horizontalSpacing">
+        <number>8</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>8</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="rowSpacingLabel">
+         <property name="text">
+          <string>Row spacing</string>
+         </property>
+         <property name="buddy">
+          <cstring>rowSpacing</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="rowSpacing">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>5</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="stitchSpacingLabel">
+         <property name="text">
+          <string>Stitch spacing</string>
+         </property>
+         <property name="buddy">
+          <cstring>stitchSpacing</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="stitchSpacing">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>5</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
-    <item row="6" column="0" colspan="2">
-     <widget class="QLabel" name="label_6">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+    <item>
+     <layout class="QHBoxLayout" name="buttonLayout">
+      <property name="spacing">
+       <number>8</number>
       </property>
-      <property name="text">
-       <string>Row:</string>
-      </property>
-     </widget>
+      <item>
+       <widget class="QPushButton" name="createGridBttn">
+        <property name="toolTip">
+         <string>Create a new grid of cells</string>
+        </property>
+        <property name="text">
+         <string>Create Grid</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="arrangeBttn">
+        <property name="toolTip">
+         <string>Arrange the selected cells into a grid</string>
+        </property>
+        <property name="text">
+         <string>Arrange Selection</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
-    <item row="6" column="3">
-     <widget class="QLabel" name="label_8">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
-      <property name="text">
-       <string>Stitches:</string>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
       </property>
-     </widget>
-    </item>
-    <item row="7" column="0" colspan="2">
-     <widget class="QSpinBox" name="rowSpacing">
-      <property name="maximum">
-       <number>100</number>
-      </property>
-      <property name="value">
-       <number>5</number>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="3">
-     <widget class="QSpinBox" name="stitchSpacing">
-      <property name="maximum">
-       <number>100</number>
-      </property>
-      <property name="value">
-       <number>5</number>
-      </property>
-     </widget>
-    </item>
-    <item row="8" column="0" colspan="2">
-     <widget class="QCheckBox" name="createGrid">
-      <property name="text">
-       <string>Create Rows</string>
-      </property>
-     </widget>
-    </item>
-    <item row="9" column="0" colspan="2">
-     <widget class="QPushButton" name="createGridBttn">
-      <property name="toolTip">
-       <string>Create a grid with new cells</string>
-      </property>
-      <property name="text">
-       <string>Create</string>
-      </property>
-     </widget>
-    </item>
-    <item row="9" column="3">
-     <widget class="QPushButton" name="arrangeBttn">
-      <property name="toolTip">
-       <string>Arrange the selected cells into a grid</string>
-      </property>
-      <property name="text">
-       <string>Arrange</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QSpinBox" name="rows">
-      <property name="minimum">
-       <number>1</number>
-      </property>
-      <property name="maximum">
-       <number>100</number>
-      </property>
-      <property name="value">
-       <number>2</number>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="3">
-     <widget class="QSpinBox" name="stitches">
-      <property name="minimum">
-       <number>1</number>
-      </property>
-      <property name="maximum">
-       <number>100</number>
-      </property>
-      <property name="value">
-       <number>2</number>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="3">
-     <widget class="QLabel" name="label_5">
-      <property name="text">
-       <string>Align:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2">
-     <widget class="QLabel" name="label_3">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>x</string>
-      </property>
-     </widget>
+     </spacer>
     </item>
    </layout>
   </widget>

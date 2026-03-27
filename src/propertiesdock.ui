@@ -16,14 +16,58 @@
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QGridLayout" name="gridLayout_2">
     <property name="margin">
-     <number>0</number>
+     <number>10</number>
+    </property>
+    <property name="spacing">
+     <number>8</number>
     </property>
     <item row="0" column="0">
+     <widget class="QWidget" name="propertiesSummaryCard">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>2</number>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item>
+       <widget class="QLabel" name="propertiesSummaryTitle">
+         <property name="dockRole" stdset="0">
+          <string notr="true">title</string>
+         </property>
+         <property name="text">
+          <string>Properties</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="propertiesSummaryHint">
+         <property name="dockRole" stdset="0">
+          <string notr="true">hint</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Select a chart item to inspect editable properties.</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0">
      <widget class="QGroupBox" name="chartGroup">
       <property name="title">
-       <string/>
-      </property>
+       <string>Canvas</string>
+       </property>
       <layout class="QGridLayout" name="gridLayout_3">
+       <property name="horizontalSpacing">
+        <number>10</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>8</number>
+       </property>
        <item row="0" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
@@ -218,12 +262,18 @@
       </layout>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item row="2" column="0">
      <widget class="QGroupBox" name="itemGroup">
       <property name="title">
-       <string/>
+       <string>Selection</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
+       <property name="horizontalSpacing">
+        <number>10</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>8</number>
+       </property>
        <item row="3" column="1">
         <widget class="QDoubleSpinBox" name="gen_angle">
          <property name="maximum">
@@ -235,9 +285,12 @@
         <widget class="QLineEdit" name="ci_path"/>
        </item>
        <item row="8" column="1">
-        <widget class="QToolButton" name="st_stBgColorBttn">
+       <widget class="QToolButton" name="st_stBgColorBttn">
+         <property name="toolTip">
+          <string>Choose a background color for the selected stitch.</string>
+         </property>
          <property name="text">
-          <string/>
+          <string>Choose...</string>
          </property>
         </widget>
        </item>
@@ -278,9 +331,12 @@
         </widget>
        </item>
        <item row="18" column="1">
-        <widget class="QPushButton" name="gen_deleteItems">
+       <widget class="QPushButton" name="gen_deleteItems">
+         <property name="toolTip">
+          <string>Delete the current selection from the chart.</string>
+         </property>
          <property name="text">
-          <string>Delete Selection</string>
+          <string>Delete Selected Items</string>
          </property>
         </widget>
        </item>
@@ -305,9 +361,12 @@
         </widget>
        </item>
        <item row="7" column="1">
-        <widget class="QToolButton" name="st_stColorBttn">
+       <widget class="QToolButton" name="st_stColorBttn">
+         <property name="toolTip">
+          <string>Choose a stitch color for the selected stitch.</string>
+         </property>
          <property name="text">
-          <string/>
+          <string>Choose...</string>
          </property>
         </widget>
        </item>
@@ -441,7 +500,7 @@
        <item row="15" column="0">
         <widget class="QLabel" name="ci_pathLbl">
          <property name="text">
-          <string>Path to image:</string>
+          <string>Image file:</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -511,9 +570,12 @@
         </widget>
        </item>
        <item row="17" column="1">
-        <widget class="QPushButton" name="ci_openFileBrowser">
+       <widget class="QPushButton" name="ci_openFileBrowser">
+         <property name="toolTip">
+          <string>Choose a new image file for this chart image.</string>
+         </property>
          <property name="text">
-          <string>Open file browser</string>
+          <string>Choose Image...</string>
          </property>
         </widget>
        </item>

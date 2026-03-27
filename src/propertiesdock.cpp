@@ -36,6 +36,7 @@
 #include "colorlistwidget.h"
 #include <qcolordialog.h>
 #include <QFileDialog>
+#include <QStyle>
 
 #include "propertiesdata.h"
 
@@ -50,6 +51,12 @@ PropertiesDock::PropertiesDock(QTabWidget *tabWidget, QWidget *parent) :
     setVisible(false);
     setFloating(true);
     setObjectName("propertiesDock");
+    ui->st_stColorBttn->setProperty("colorSwatch", true);
+    ui->st_stBgColorBttn->setProperty("colorSwatch", true);
+    ui->st_stColorBttn->style()->unpolish(ui->st_stColorBttn);
+    ui->st_stColorBttn->style()->polish(ui->st_stColorBttn);
+    ui->st_stBgColorBttn->style()->unpolish(ui->st_stBgColorBttn);
+    ui->st_stBgColorBttn->style()->polish(ui->st_stBgColorBttn);
 
     ui->rows->setValue(Settings::inst()->value("rowCount").toInt());
     ui->columns->setValue(Settings::inst()->value("stitchCount").toInt());
@@ -164,6 +171,8 @@ void PropertiesDock::clearUi()
 {
     ui->chartGroup->hide();
     ui->itemGroup->hide();
+    setSelectionSummary(tr("No chart selected"),
+                        tr("Open or create a chart to inspect canvas and selection properties."));
 }
 
 void PropertiesDock::setupStitchCombo()
@@ -347,8 +356,7 @@ void PropertiesDock::updateDialogUi()
 
 void PropertiesDock::showUi(PropertiesDock::UiSelection selection, int count)
 {
-
-    Q_UNUSED(count);
+    updateSelectionChrome(selection, count);
 
     //Choose the options to show based on the selection.
     foreach(QObject *obj, ui->itemGroup->children()) {
@@ -393,6 +401,69 @@ void PropertiesDock::showUi(PropertiesDock::UiSelection selection, int count)
         WARN("TODO: make center ui work");
     }*/
 
+}
+
+void PropertiesDock::setSelectionSummary(const QString& title, const QString& hint)
+{
+    ui->propertiesSummaryTitle->setText(title);
+    ui->propertiesSummaryHint->setText(hint);
+}
+
+void PropertiesDock::updateSelectionChrome(PropertiesDock::UiSelection selection, int count)
+{
+    QString title;
+    QString hint;
+    QString groupTitle = tr("Selection");
+
+    switch(selection) {
+    case SceneUi:
+        title = tr("Canvas");
+        hint = tr("Adjust chart center, guideline type, counts, and snap behavior.");
+        break;
+    case CellUi:
+        if(count > 1) {
+            title = tr("%1 stitches").arg(count);
+            hint = tr("Edit shared stitch appearance and transform values for the current selection.");
+            groupTitle = tr("Stitches");
+        } else {
+            title = tr("Stitch");
+            hint = tr("Edit stitch type, colors, and transform values for the selected symbol.");
+            groupTitle = tr("Stitch");
+        }
+        break;
+    case ItemGroupUi:
+        title = tr("Group");
+        hint = tr("Edit the grouped selection as a single positioned object.");
+        groupTitle = tr("Group");
+        break;
+    case CenterUi:
+        title = tr("Chart center");
+        hint = tr("The chart center is selected; canvas controls remain active.");
+        break;
+    case IndicatorUi:
+        title = tr("Indicator");
+        hint = tr("Edit indicator placement and text style.");
+        groupTitle = tr("Indicator");
+        break;
+    case ChartImageUi:
+        title = tr("Chart image");
+        hint = tr("Adjust the reference image path, layer, position, and scale.");
+        groupTitle = tr("Chart image");
+        break;
+    case MixedUi:
+        title = tr("Mixed selection");
+        hint = tr("Only shared transform fields remain editable for %1 selected items.").arg(count);
+        groupTitle = tr("Shared properties");
+        break;
+    default:
+        title = tr("Properties");
+        hint = tr("Select an item to inspect editable properties.");
+        break;
+    }
+
+    ui->chartGroup->setTitle(tr("Canvas"));
+    ui->itemGroup->setTitle(groupTitle);
+    setSelectionSummary(title, hint);
 }
 
 void PropertiesDock::showSingleChartImage()

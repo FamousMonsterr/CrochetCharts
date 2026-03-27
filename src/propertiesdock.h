@@ -92,6 +92,9 @@ private slots:
     void indicatorUpdate();
 
 private:
+    void setSelectionSummary(const QString& title, const QString& hint);
+    void updateSelectionChrome(PropertiesDock::UiSelection selection, int count);
+
     /**
      * showUi - show the user interface based on the selection.
      * Options are show based on their prefix.
