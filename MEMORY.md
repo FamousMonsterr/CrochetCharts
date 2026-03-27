@@ -259,6 +259,17 @@
   - `src/mainwindow.cpp`
   - `resources/themes/desktop.qss`
 
+## Latest Export Slice
+- On `2026-03-27`, `ExportDialog` received a bounded shell-modernization pass:
+  - the dialog now opens with a summary card describing the current export target, format, size, and key toggles instead of presenting a dense unstructured option matrix
+  - the file-format and option labels are more readable, and the primary action now reads as `Export`
+  - stale `uic` z-order noise in `export.ui` was removed so the dialog compiles cleanly without legacy UI warnings
+- This slice is centered in:
+  - `src/export.ui`
+  - `src/exportui.cpp`
+  - `src/exportui.h`
+  - `resources/themes/desktop.qss`
+
 ## Latest Resize Slice
 - On `2026-03-27`, `ResizeUI` received a shell clarity pass:
   - the dock now explains that it edits canvas bounds instead of showing a raw four-field form

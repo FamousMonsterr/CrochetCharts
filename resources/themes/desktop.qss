@@ -19,7 +19,8 @@ QWidget#settingsSummaryCard,
 QWidget#librarySummaryCard,
 QWidget#rowEditSummaryCard,
 QWidget#newChartSummaryCard,
-QWidget#replaceSummaryCard {
+QWidget#replaceSummaryCard,
+QWidget#exportSummaryCard {
     background: rgba(255, 255, 255, 0.90);
     border: 1px solid rgba(15, 23, 42, 0.10);
     border-radius: 14px;

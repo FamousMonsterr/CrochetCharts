@@ -28,6 +28,7 @@
 
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QPushButton>
 
 #include <QPrinter> //for pdf
 #include <QSvgGenerator> //for svg
@@ -47,7 +48,10 @@ ExportUi::ExportUi(QTabWidget* tab, QMap<QString, int>* stitches,
 	  selectionOnly(false)
 {
     ui->setupUi(this);
+    setObjectName("ExportDialog");
     ui->view->scale(.6, .6);
+    ui->buttonBox->button(QDialogButtonBox::Save)->setText(tr("Export"));
+    ui->buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     //TODO: use later...
     ui->showStitchWrongSide->hide();
@@ -76,6 +80,16 @@ ExportUi::ExportUi(QTabWidget* tab, QMap<QString, int>* stitches,
     connect(ui->width, SIGNAL(valueChanged(int)), SLOT(updateHightFromWidth(int)));
     connect(ui->height, SIGNAL(valueChanged(int)), SLOT(updateWidthFromHeight(int)));
 	connect(ui->headerFooter, SIGNAL(toggled(bool)), SLOT(headerFooterToggled(bool)));
+    connect(ui->width, SIGNAL(valueChanged(int)), SLOT(updateSummary()));
+    connect(ui->height, SIGNAL(valueChanged(int)), SLOT(updateSummary()));
+    connect(ui->resolution, SIGNAL(valueChanged(int)), SLOT(updateSummary()));
+    connect(ui->selectionOnly, SIGNAL(toggled(bool)), SLOT(updateSummary()));
+    connect(ui->pageToChartSize, SIGNAL(toggled(bool)), SLOT(updateSummary()));
+    connect(ui->headerFooter, SIGNAL(toggled(bool)), SLOT(updateSummary()));
+    connect(ui->headerEdit, SIGNAL(textChanged()), SLOT(updateSummary()));
+    connect(ui->footerEdit, SIGNAL(textChanged()), SLOT(updateSummary()));
+
+    updateSummary();
 
 }
 
@@ -231,6 +245,8 @@ void ExportUi::updateExportOptions(QString expType)
 		ui->headerFooterLbl->setVisible(true);
 		if (ui->headerFooter->isChecked()) ui->headerFooterLayout->show();
     }
+
+    updateSummary();
 }
 
 void ExportUi::generateSelectionList(bool showAll)
@@ -284,6 +300,8 @@ void ExportUi::generateSelectionList(bool showAll)
         ui->height->setValue(r.height());
         ui->height->blockSignals(false);
     }
+
+    updateSummary();
 }
 
 void ExportUi::exportData()
@@ -420,6 +438,50 @@ void ExportUi::setSelection(QString selection)
     }
     
     updateChartSizeRatio(selection);
+    updateSummary();
+}
+
+QString ExportUi::exportFormatLabel() const
+{
+    const QString type = ui->fileType->currentText();
+    if(type == "pdf")
+        return tr("PDF");
+    if(type == "svg")
+        return tr("SVG");
+    if(type == "jpeg")
+        return tr("JPEG");
+    if(type == "png")
+        return tr("PNG");
+    if(type == "tiff")
+        return tr("TIFF");
+    if(type == "bmp")
+        return tr("BMP");
+    return type.toUpper();
+}
+
+void ExportUi::updateSummary()
+{
+    QStringList parts;
+    parts << tr("Target: %1").arg(ui->chartSelection->currentText().isEmpty() ? tr("Current chart") : ui->chartSelection->currentText());
+    parts << tr("Format: %1").arg(exportFormatLabel());
+
+    if(ui->width->isVisible() && ui->height->isVisible())
+        parts << tr("Size: %1 x %2 px").arg(ui->width->value()).arg(ui->height->value());
+
+    if(ui->resolution->isVisible())
+        parts << tr("Resolution: %1 dpi").arg(ui->resolution->value());
+
+    if(ui->selectionOnly->isVisible() && ui->selectionOnly->isChecked())
+        parts << tr("Selection only");
+
+    if(ui->pageToChartSize->isVisible() && ui->pageToChartSize->isChecked())
+        parts << tr("Page matched to chart");
+
+    if(ui->headerFooter->isVisible() && ui->headerFooter->isChecked())
+        parts << tr("Header/footer included");
+
+    ui->exportSummaryTitle->setText(tr("Export preview"));
+    ui->exportSummaryHint->setText(parts.join(tr(" • ")));
 }
 
 void ExportUi::exportLegendPdf()

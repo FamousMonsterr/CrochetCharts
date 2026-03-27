@@ -25,6 +25,7 @@
 #include <QTabWidget>
 #include <QGraphicsScene>
 #include <QMap>
+#include <QStringList>
 #include "legends.h"
 
 namespace Ui {
@@ -60,6 +61,7 @@ private slots:
 	void headerFooterToggled(bool status);
     void updateExportOptions(QString expType);
     void setSelection(QString selection);
+    void updateSummary();
 
     void updateColorLegend();
     void updateStitchLegend();
@@ -69,6 +71,7 @@ private slots:
 
 private:
     void generateSelectionList(bool showAll);
+    QString exportFormatLabel() const;
 
     void setupColorLegendOptions();
     void setupStitchLegendOptions();
@@ -101,4 +104,3 @@ private:
 };
 
 #endif //EXPORTUI_H
-
