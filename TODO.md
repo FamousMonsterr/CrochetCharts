@@ -78,6 +78,7 @@
   - [x] stitch library summary shell and readable details/filter affordances
   - [x] row editor summary shell and readable row-action labels
   - [x] resize dock summary and explicit canvas-edge affordances
+  - [x] stitch/color replacement dialogs summary shell and clearer validation feedback
   - [ ] targeted visual pass for the remaining legacy docks and iconography
   - [x] resize dock summary shell and clearer fit-to-content affordance
 

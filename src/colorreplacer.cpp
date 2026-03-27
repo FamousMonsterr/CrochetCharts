@@ -39,6 +39,7 @@ ColorReplacer::ColorReplacer(QList<QString> colorList, QWidget *parent) :
     if(mOriginalColorList.isEmpty()) {
         QPushButton *ok = ui->buttonBox->button(QDialogButtonBox::Ok);
         ok->setEnabled(false);
+        ui->replaceSummaryHint->setText(tr("This chart does not contain any saved colors that can be replaced yet."));
     }
 
     connect(ui->buttonBox, SIGNAL(accepted()), SLOT(accept()));
@@ -50,6 +51,7 @@ ColorReplacer::ColorReplacer(QList<QString> colorList, QWidget *parent) :
     connect(ui->newColor, SIGNAL(currentIndexChanged(QString)), SLOT(newColorChanged(QString)));
 
     populateColorLists();
+    updateSummary();
 }
 
 ColorReplacer::~ColorReplacer()
@@ -61,10 +63,12 @@ void ColorReplacer::accept()
 {
 
     if(!originalColor.isValid()) {
+        QMessageBox::information(this, tr("Replace color"), tr("Choose the original color to replace."));
         return;
     }
 
     if(!newColor.isValid()) {
+        QMessageBox::information(this, tr("Replace color"), tr("Choose the replacement color."));
         return;
     }
     QDialog::accept();
@@ -80,11 +84,14 @@ void ColorReplacer::setSelection()
     else if(sender() == ui->backgroundOnly)
         selection = 2;
 
+    updateSummary();
+
 }
 
 void ColorReplacer::origColorChanged(QString color)
 {
     originalColor = QColor(color);
+    updateSummary();
 }
 
 void ColorReplacer::newColorChanged(QString color)
@@ -102,10 +109,12 @@ void ColorReplacer::newColorChanged(QString color)
             ui->newColor->setCurrentIndex(0);
             newColor = ui->newColor->currentText();
         }
+        updateSummary();
         return;
     }
 
     newColor = QColor(color);
+    updateSummary();
 }
 
 void ColorReplacer::populateColorLists()
@@ -126,4 +135,26 @@ void ColorReplacer::populateColorLists()
     }
 
     ui->newColor->addItem(tr("More colors..."));
+
+    if(ui->originalColor->count() > 0)
+        originalColor = QColor(ui->originalColor->currentText());
+    if(ui->newColor->count() > 0)
+        newColor = QColor(ui->newColor->currentText());
+}
+
+void ColorReplacer::updateSummary()
+{
+    QString selectionLabel = tr("stitches and background");
+    if(selection == 1)
+        selectionLabel = tr("stitches only");
+    else if(selection == 2)
+        selectionLabel = tr("background only");
+
+    const QString originalLabel = originalColor.isValid() ? originalColor.name() : tr("current color");
+    const QString replacementLabel = newColor.isValid() ? newColor.name() : tr("new color");
+
+    ui->replaceSummaryTitle->setText(tr("Color replacement"));
+    ui->replaceSummaryHint->setText(
+        tr("Replace %1 with %2 for %3.")
+            .arg(originalLabel, replacementLabel, selectionLabel));
 }

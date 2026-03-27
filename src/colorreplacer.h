@@ -52,6 +52,7 @@ private:
     QList<QString> mOriginalColorList;
 
     void populateColorLists();
+    void updateSummary();
 };
 
 #endif // COLORREPLACER_H

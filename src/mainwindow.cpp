@@ -1538,11 +1538,11 @@ void MainWindow::stitchesReplaceStitch()
 		}
     }
 
-    StitchReplacerUi *sr = new StitchReplacerUi(curStitch, mPatternStitches.keys(), this);
+    StitchReplacerUi sr(curStitch, mPatternStitches.keys(), this);
 
-    if(sr->exec() == QDialog::Accepted) {
-        if(!sr->original.isEmpty())
-            tab->replaceStitches(sr->original, sr->replacement);
+    if(sr.exec() == QDialog::Accepted) {
+        if(!sr.original.isEmpty())
+            tab->replaceStitches(sr.original, sr.replacement);
     }
 
 }
@@ -1556,10 +1556,10 @@ void MainWindow::stitchesReplaceColor()
     if(mPatternColors.count() <= 0)
         return;
 
-    ColorReplacer *cr = new ColorReplacer(mPatternColors.keys(), this);
+    ColorReplacer cr(mPatternColors.keys(), this);
 
-    if(cr->exec() == QDialog::Accepted) {
-        tab->replaceColor(cr->originalColor, cr->newColor, cr->selection);
+    if(cr.exec() == QDialog::Accepted) {
+        tab->replaceColor(cr.originalColor, cr.newColor, cr.selection);
     }
 
 }

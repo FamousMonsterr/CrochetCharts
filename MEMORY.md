@@ -245,6 +245,20 @@
   - `src/resizeui.h`
   - `resources/themes/desktop.qss`
 
+## Latest Replacement Slice
+- On `2026-03-27`, the stitch and color replacement dialogs received a bounded modernization pass:
+  - both dialogs now open with an explicit summary card instead of a raw legacy form
+  - replacement intent is clearer through better field labels and live summary text
+  - color replacement now warns the user when required color selections are missing instead of silently doing nothing
+  - replacement dialogs are now stack-allocated from `MainWindow`, removing another small heap-owned dialog path
+- This slice is centered in:
+  - `src/stitchreplacerui.ui`
+  - `src/stitchreplacerui.cpp`
+  - `src/colorreplacer.ui`
+  - `src/colorreplacer.cpp`
+  - `src/mainwindow.cpp`
+  - `resources/themes/desktop.qss`
+
 ## Latest Resize Slice
 - On `2026-03-27`, `ResizeUI` received a shell clarity pass:
   - the dock now explains that it edits canvas bounds instead of showing a raw four-field form

@@ -49,6 +49,7 @@ private:
     Ui::StitchReplacerUi *ui;
 
     void populateStitchLists();
+    void updateSummary();
 
 };
 

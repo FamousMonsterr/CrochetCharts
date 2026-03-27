@@ -35,6 +35,7 @@ StitchReplacerUi::StitchReplacerUi(QString stitch, QList< QString > patternStitc
     if(mOriginalStitchList.isEmpty()) {
         QPushButton *ok = ui->buttonBox->button(QDialogButtonBox::Ok);
         ok->setEnabled(false);
+        ui->replaceSummaryHint->setText(tr("This chart does not contain any stitches that can be replaced yet."));
     }
 
     connect(ui->buttonBox, SIGNAL(accepted()), SLOT(accept()));
@@ -43,6 +44,7 @@ StitchReplacerUi::StitchReplacerUi(QString stitch, QList< QString > patternStitc
     connect(ui->replacementStitch, SIGNAL(currentIndexChanged(QString)), SLOT(updateStitches(QString)));
 
     populateStitchLists();
+    updateSummary();
 
     if(stitch.isEmpty())
         return;
@@ -62,6 +64,8 @@ void StitchReplacerUi::updateStitches(QString newStitch)
     } else { //replacement stitch
         replacement = newStitch;
     }
+
+    updateSummary();
 }
 
 void StitchReplacerUi::populateStitchLists()
@@ -78,4 +82,20 @@ void StitchReplacerUi::populateStitchLists()
 
         ui->replacementStitch->addItem(QIcon(s->file()), stitch);
     }
+
+    if(ui->originalStitch->count() > 0)
+        original = ui->originalStitch->currentText();
+    if(ui->replacementStitch->count() > 0)
+        replacement = ui->replacementStitch->currentText();
+}
+
+void StitchReplacerUi::updateSummary()
+{
+    const QString originalLabel = original.isEmpty() ? tr("current stitch") : original;
+    const QString replacementLabel = replacement.isEmpty() ? tr("new stitch") : replacement;
+
+    ui->replaceSummaryTitle->setText(tr("Stitch replacement"));
+    ui->replaceSummaryHint->setText(
+        tr("Replace %1 with %2 across the current chart.")
+            .arg(originalLabel, replacementLabel));
 }
