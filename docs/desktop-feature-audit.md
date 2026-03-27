@@ -73,6 +73,8 @@ Date: `2026-03-24`
   - the layers dock no longer hides its own visibility/name headers
   - align/distribute and copy/mirror/rotate docks now expose their selection prerequisites directly instead of reading like always-on controls
   - `New Chart Options` now exposes a live summary card so chart style, template, and granny-square base behavior are visible before creation
+  - `ResizeUI` now exposes an explicit canvas summary and disables its controls cleanly when no chart tab is open
+  - `ResizeUI` now explains its canvas-bounds model directly and uses `Fit to Visible Items` wording for its content-clamp action
 - Fixed in the current properties slice:
   - `PropertiesDock` now exposes a persistent summary card so the panel explains whether it is editing the canvas, a stitch, a group, an image, or a mixed selection
   - section titles now adapt to the active object type instead of leaving anonymous group boxes

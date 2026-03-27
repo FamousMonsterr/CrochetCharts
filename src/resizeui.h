@@ -46,7 +46,9 @@ public slots:
 	void updateContent(int index);
 	
 private:
+    void setEmptyState();
 	void setContent(qreal top, qreal bottom, qreal left, qreal right);
+    void updateSummary(qreal top, qreal bottom, qreal left, qreal right);
 	void sendResize();
 	
 private slots:

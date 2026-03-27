@@ -234,6 +234,27 @@
   - `src/mainwindow.h`
   - `resources/themes/desktop.qss`
 
+## Latest Resize Slice
+- On `2026-03-27`, `ResizeUI` received a bounded modernization and clarity pass:
+  - the dock now exposes a more explicit canvas-bounds summary instead of acting like four raw spinboxes with unclear meaning
+  - empty-state handling is now explicit when no chart tab is open, instead of leaving stale resize controls active
+  - edge labels and control sizing now read more clearly, and the resize hint stays aligned with the current immediate-apply behavior
+- This slice is centered in:
+  - `src/resize.ui`
+  - `src/resizeui.cpp`
+  - `src/resizeui.h`
+  - `resources/themes/desktop.qss`
+
+## Latest Resize Slice
+- On `2026-03-27`, `ResizeUI` received a shell clarity pass:
+  - the dock now explains that it edits canvas bounds instead of showing a raw four-field form
+  - a live summary reports the current canvas size, so top/bottom/left/right values are not detached from the resulting working area
+  - `Clamp to Chart` was renamed to `Fit to Visible Items`, matching what the code actually does and reducing ambiguity for users
+- This slice is centered in:
+  - `src/resize.ui`
+  - `src/resizeui.cpp`
+  - `resources/themes/desktop.qss`
+
 ## macOS Launch Reliability
 - A shell-launched app on this Mac can inherit Homebrew Qt environment contamination from terminal or VSCode shells.
 - This causes mixed bundle/Homebrew Qt frameworks before `main()` and can abort in platform plugin initialization.

@@ -205,6 +205,18 @@ QDockWidget#rowsDock QToolButton {
     padding: 0 10px;
 }
 
+QDockWidget#resizeDock QAbstractSpinBox {
+    min-width: 96px;
+}
+
+QDockWidget#resizeDock QPushButton {
+    min-height: 32px;
+}
+
+QDockWidget#ResizeDialog QPushButton {
+    min-height: 32px;
+}
+
 QTabWidget::pane {
     padding-top: 8px;
 }

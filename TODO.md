@@ -77,7 +77,9 @@
   - [x] settings dialog summary card and readable folder-picker affordance
   - [x] stitch library summary shell and readable details/filter affordances
   - [x] row editor summary shell and readable row-action labels
+  - [x] resize dock summary and explicit canvas-edge affordances
   - [ ] targeted visual pass for the remaining legacy docks and iconography
+  - [x] resize dock summary shell and clearer fit-to-content affordance
 
 ## Phase 5. Shared Core Extraction
 - [ ] Identify pure model/domain logic that can move out of widget classes

@@ -11,118 +11,164 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Resi&amp;ze</string>
+   <string>Resize Canvas</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <layout class="QFormLayout" name="formLayout">
-      <item row="0" column="0">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>12</number>
+    </property>
+    <property name="topMargin">
+     <number>12</number>
+    </property>
+    <property name="rightMargin">
+     <number>12</number>
+    </property>
+    <property name="bottomMargin">
+     <number>12</number>
+    </property>
+    <property name="spacing">
+     <number>10</number>
+    </property>
+    <item>
+     <widget class="QLabel" name="summaryLabel">
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Resize the chart canvas by setting top, bottom, left, and right bounds.</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="resizeHintLabel">
+      <property name="dockHint" stdset="0">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Changes apply immediately. Use Fit to Visible Items to wrap the canvas around the current visible chart contents.</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="boundsGroup">
+      <property name="title">
+       <string>Canvas Bounds</string>
+      </property>
+      <layout class="QFormLayout" name="formLayout">
+       <property name="horizontalSpacing">
+        <number>8</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>8</number>
+       </property>
+       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Top:</string>
+          <string>Top Edge</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QSpinBox" name="topBox">
-        <property name="minimum">
-         <number>-999999999</number>
-        </property>
-        <property name="maximum">
-         <number>999999999</number>
-        </property>
-        <property name="singleStep">
-         <number>50</number>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="topBox">
+         <property name="minimum">
+          <number>-999999999</number>
+         </property>
+         <property name="maximum">
+          <number>999999999</number>
+         </property>
+         <property name="singleStep">
+          <number>50</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Bottom:</string>
+          <string>Bottom Edge</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QSpinBox" name="bottomBox">
-        <property name="minimum">
-         <number>-999999999</number>
-        </property>
-        <property name="maximum">
-         <number>999999999</number>
-        </property>
-        <property name="singleStep">
-         <number>50</number>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="bottomBox">
+         <property name="minimum">
+          <number>-999999999</number>
+         </property>
+         <property name="maximum">
+          <number>999999999</number>
+         </property>
+         <property name="singleStep">
+          <number>50</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
        <widget class="QLabel" name="label_3">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
         <property name="text">
-         <string>Left:</string>
+          <string>Left Edge</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QSpinBox" name="leftBox">
-        <property name="minimum">
-         <number>-999999999</number>
-        </property>
-        <property name="maximum">
-         <number>999999999</number>
-        </property>
-        <property name="singleStep">
-         <number>50</number>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="leftBox">
+         <property name="minimum">
+          <number>-999999999</number>
+         </property>
+         <property name="maximum">
+          <number>999999999</number>
+         </property>
+         <property name="singleStep">
+          <number>50</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
        <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>Right:</string>
+          <string>Right Edge</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QSpinBox" name="rightBox">
-        <property name="minimum">
-         <number>-999999999</number>
-        </property>
-        <property name="maximum">
-         <number>999999999</number>
-        </property>
-        <property name="singleStep">
-         <number>50</number>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QPushButton" name="clampButton">
-        <property name="text">
-         <string>Clamp to Chart</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="rightBox">
+         <property name="minimum">
+          <number>-999999999</number>
+         </property>
+         <property name="maximum">
+          <number>999999999</number>
+         </property>
+         <property name="singleStep">
+          <number>50</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="clampButton">
+      <property name="text">
+       <string>Fit to Visible Items</string>
+      </property>
+      <property name="toolTip">
+       <string>Resize the canvas to the bounds of the visible enabled items, with a small safety border.</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

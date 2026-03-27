@@ -22,14 +22,23 @@
 #include "ui_resize.h"
 #include "crochettab.h"
 
+#include <QString>
+
 ResizeUI::ResizeUI(QTabWidget* tabWidget, QWidget* parent)
 	: QDockWidget(parent),
 	mTabWidget(tabWidget),
 	ui(new Ui::ResizeDialog)
 {
     ui->setupUi(this);
+    setObjectName("resizeDock");
     setVisible(false);
     setFloating(true);
+    setToolTip(tr("Resize the chart canvas and fit it to visible items when needed."));
+
+    ui->topBox->setToolTip(tr("Distance from the chart center to the top canvas edge"));
+    ui->bottomBox->setToolTip(tr("Distance from the chart center to the bottom canvas edge"));
+    ui->leftBox->setToolTip(tr("Distance from the chart center to the left canvas edge"));
+    ui->rightBox->setToolTip(tr("Distance from the chart center to the right canvas edge"));
 	
 	connect(this, SIGNAL(visibilityChanged(bool)), SLOT(updateContent()));	
 	connect(ui->topBox, SIGNAL(valueChanged(int)), this, SLOT(valueChanged(int)));
@@ -37,6 +46,7 @@ ResizeUI::ResizeUI(QTabWidget* tabWidget, QWidget* parent)
 	connect(ui->leftBox, SIGNAL(valueChanged(int)), this, SLOT(valueChanged(int)));
 	connect(ui->rightBox, SIGNAL(valueChanged(int)), this, SLOT(valueChanged(int)));
 	connect(ui->clampButton, SIGNAL(pressed()), this, SLOT(clampPressed()));
+    setEmptyState();
 }
 
 ResizeUI::~ResizeUI()
@@ -47,21 +57,33 @@ ResizeUI::~ResizeUI()
 void ResizeUI::updateContent()
 {
 	CrochetTab* currentTab = qobject_cast<CrochetTab*>(mTabWidget->currentWidget());
-	if (currentTab != NULL)
-	{
-		QRectF sceneRect = currentTab->scene()->sceneRect();
-		setContent(-sceneRect.y(), sceneRect.height() + sceneRect.y(), -sceneRect.x(), sceneRect.width() + sceneRect.x());
-	}
+	if (currentTab == NULL) {
+        setEmptyState();
+        return;
+    }
+
+	QRectF sceneRect = currentTab->scene()->sceneRect();
+	setContent(-sceneRect.y(), sceneRect.height() + sceneRect.y(), -sceneRect.x(), sceneRect.width() + sceneRect.x());
 }
 
 void ResizeUI::updateContent(int index)
 {
 	CrochetTab* currentTab = qobject_cast<CrochetTab*>(mTabWidget->widget(index));
-	if (currentTab != NULL)
-	{
-		QRectF sceneRect = currentTab->scene()->sceneRect();
-		setContent(-sceneRect.y(), sceneRect.height() + sceneRect.y(), -sceneRect.x(), sceneRect.width() + sceneRect.x());
-	}
+	if (currentTab == NULL) {
+        setEmptyState();
+        return;
+    }
+
+	QRectF sceneRect = currentTab->scene()->sceneRect();
+	setContent(-sceneRect.y(), sceneRect.height() + sceneRect.y(), -sceneRect.x(), sceneRect.width() + sceneRect.x());
+}
+
+void ResizeUI::setEmptyState()
+{
+    ui->summaryLabel->setText(tr("Canvas bounds are unavailable until a chart tab is open."));
+    ui->resizeHintLabel->setText(tr("Open a chart to edit the canvas edges or fit them to the visible items."));
+    ui->boundsGroup->setEnabled(false);
+    ui->clampButton->setEnabled(false);
 }
 
 void ResizeUI::setContent(qreal top, qreal bottom, qreal left, qreal right)
@@ -78,11 +100,30 @@ void ResizeUI::setContent(qreal top, qreal bottom, qreal left, qreal right)
 	connect(ui->bottomBox, SIGNAL(valueChanged(int)), this, SLOT(valueChanged(int)));
 	connect(ui->leftBox, SIGNAL(valueChanged(int)), this, SLOT(valueChanged(int)));
 	connect(ui->rightBox, SIGNAL(valueChanged(int)), this, SLOT(valueChanged(int)));
+    ui->boundsGroup->setEnabled(true);
+    ui->clampButton->setEnabled(true);
+    ui->resizeHintLabel->setText(tr("Changes apply immediately. Use Fit to Visible Items to wrap the canvas around the current visible chart contents."));
+    updateSummary(top, bottom, left, right);
+}
+
+void ResizeUI::updateSummary(qreal top, qreal bottom, qreal left, qreal right)
+{
+    const qreal width = left + right;
+    const qreal height = top + bottom;
+    ui->summaryLabel->setText(
+        tr("Current canvas: %1 x %2. Top %3 • Bottom %4 • Left %5 • Right %6.")
+            .arg(width)
+            .arg(height)
+            .arg(top)
+            .arg(bottom)
+            .arg(left)
+            .arg(right));
 }
 
 void ResizeUI::valueChanged(int value)
 {
 	Q_UNUSED(value);
+    updateSummary(ui->topBox->value(), ui->bottomBox->value(), ui->leftBox->value(), ui->rightBox->value());
 	sendResize();
 }
 
