@@ -134,6 +134,7 @@ void Settings::setupValueList() {
     mValueList["pasteOnMouseLocation"] = QVariant(true);
 	mValueList["rotateAroundCenter"] = QVariant(true);
 	mValueList["scaleAroundCenter"] = QVariant(true);
+    mValueList["snapToGrid"] = QVariant(true);
 	
     //stitch legend options
     mValueList["stitchLegendColumnCount"] = QVariant(2);

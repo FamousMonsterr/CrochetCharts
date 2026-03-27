@@ -138,6 +138,16 @@ Scene::SelectMode CrochetTab::selectMode() const
 	return mScene->selectMode();
 }
 
+void CrochetTab::setSnapToGrid(bool state)
+{
+    mScene->setSnapToGrid(state);
+}
+
+bool CrochetTab::snapToGrid() const
+{
+    return mScene->snapToGrid();
+}
+
 void CrochetTab::renderChartSelected(QPainter* painter, QRectF rect)
 {
 	

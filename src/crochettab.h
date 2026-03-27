@@ -65,8 +65,10 @@ public:
     void setEditMode(int mode);
     int editMode() const;
 	
-	void setSelectMode(Scene::SelectMode mode);
+    void setSelectMode(Scene::SelectMode mode);
 	Scene::SelectMode selectMode() const;
+    void setSnapToGrid(bool state);
+    bool snapToGrid() const;
 
     void setEditFgColor(QColor color);
     void setEditBgColor(QColor color);

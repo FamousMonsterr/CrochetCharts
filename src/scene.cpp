@@ -54,6 +54,7 @@
 #include "guideline.h"
 
 #include <algorithm>
+#include <QSet>
 
 #ifndef M_PI
 	# define M_PI	3.14159265358979323846
@@ -99,6 +100,54 @@ int unsupportedDirectionalTransformCount(const QList<QGraphicsItem*> &items)
         }
     }
     return count;
+}
+
+bool itemLayerId(QGraphicsItem *item, unsigned int *layerId)
+{
+    if(!item || !layerId)
+        return false;
+
+    switch(item->type()) {
+    case Cell::Type:
+        *layerId = qgraphicsitem_cast<Cell*>(item)->layer();
+        return true;
+    case Indicator::Type:
+        *layerId = qgraphicsitem_cast<Indicator*>(item)->layer();
+        return true;
+    case ItemGroup::Type:
+        *layerId = qgraphicsitem_cast<ItemGroup*>(item)->layer();
+        return true;
+    case ChartImage::Type:
+        *layerId = qgraphicsitem_cast<ChartImage*>(item)->layer();
+        return true;
+    default:
+        return false;
+    }
+}
+
+QSet<unsigned int> selectionLayerIds(const QList<QGraphicsItem*> &items)
+{
+    QSet<unsigned int> layerIds;
+    foreach(QGraphicsItem *item, items) {
+        unsigned int layerId = 0;
+        if(itemLayerId(item, &layerId))
+            layerIds.insert(layerId);
+    }
+    return layerIds;
+}
+
+bool isDirectSelectionNoise(QGraphicsItem *item)
+{
+    if(!item || !item->isVisible())
+        return true;
+
+    switch(item->type()) {
+    case Guideline::Type:
+    case QGraphicsSimpleTextItem::Type:
+        return true;
+    default:
+        return false;
+    }
 }
 
 }
@@ -185,9 +234,9 @@ Scene::Scene(QObject* parent) :
     mMoving(false),
     mIsRubberband(false),
     mHasSelection(false),
-    mSnapTo(false),
+    mSnapTo(Settings::inst()->value("snapToGrid").toBool()),
 	mMultiEdit(false),
-    mMode(Scene::StitchEdit),
+    mMode(Scene::MoveEdit),
     mEditStitch("ch"),
     mEditFgColor(QColor(Qt::black)),
     mEditBgColor(QColor(Qt::white)),
@@ -223,7 +272,7 @@ Scene::~Scene()
 QStringList Scene::modes()
 {
     QStringList modes;
-    modes << tr("Stitch Edit") << tr("Color Edit") << tr("Row Edit")
+    modes << tr("Move Edit") << tr("Stitch Edit") << tr("Color Edit") << tr("Row Edit")
             << tr("Rotation Edit") << tr("Scale Edit") << tr("Indicator Edit");
     return modes;
 }
@@ -263,12 +312,22 @@ QList<ChartLayer*> Scene::layers()
 
 QGraphicsItem* Scene::selectableItemAt(const QPointF& pos)
 {
-	foreach (QGraphicsItem* item, items()) {
-		if (item->sceneBoundingRect().contains(pos) &&
-				(item->flags() & QGraphicsItem::ItemIsSelectable) == QGraphicsItem::ItemIsSelectable)
-			return item;
-	}
-	return NULL;
+    const QList<QGraphicsItem*> hitItems = items(pos, Qt::IntersectsItemShape, Qt::DescendingOrder, QTransform());
+    foreach(QGraphicsItem *item, hitItems) {
+        QGraphicsItem *candidate = item;
+        while(candidate) {
+            if(isDirectSelectionNoise(candidate)) {
+                candidate = candidate->parentItem();
+                continue;
+            }
+            if((candidate->flags() & QGraphicsItem::ItemIsSelectable) == QGraphicsItem::ItemIsSelectable
+                    && candidate->isVisible()) {
+                return candidate;
+            }
+            candidate = candidate->parentItem();
+        }
+    }
+    return NULL;
 }
 
 int Scene::maxColumnCount()
@@ -717,6 +776,9 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *e)
 {
 
     switch(mMode) {
+        case Scene::MoveEdit:
+            moveModeMouseMove(e);
+            break;
         case Scene::StitchEdit:
             stitchModeMouseMove(e);
             break;
@@ -766,6 +828,9 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *e)
     QGraphicsScene::mouseReleaseEvent(e);
 
     switch(mMode) {
+        case Scene::MoveEdit:
+            moveModeMouseRelease(e);
+            break;
         case Scene::StitchEdit:
             stitchModeMouseRelease(e);
             break;
@@ -841,6 +906,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *e)
         updateSceneRect();
 
         mMoving = false;
+        updateViewCursor();
     }
 
     mCurItem = 0;
@@ -849,8 +915,10 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *e)
 
 void Scene::snapGraphicsItemToGrid(QGraphicsItem& item)
 {
-	QPointF centerPos = item.sceneBoundingRect().center();
-	item.setPos(snapPositionToGrid(centerPos) - centerPos + item.pos());
+    if(mSnapTo) {
+        QPointF centerPos = item.sceneBoundingRect().center();
+        item.setPos(snapPositionToGrid(centerPos) - centerPos + item.pos());
+    }
 	
 	//if we need to snap the angle and we are in rounds mode
 	if (mSnapAngle && mGuidelines.type() == "Rounds") {
@@ -866,6 +934,29 @@ void Scene::snapGraphicsItemToGrid(QGraphicsItem& item)
 		ChartItemTools::setRotationPivot(&item, item.boundingRect().center());
 		ChartItemTools::setRotation(&item, (angle * 180/M_PI) + 90);
 	}
+}
+
+void Scene::moveModeMouseMove(QGraphicsSceneMouseEvent *e)
+{
+    if(e->buttons() != Qt::LeftButton)
+        return;
+
+    if(!mCurItem)
+        return;
+
+    if((mCurItem->flags() & QGraphicsItem::ItemIsMovable) != QGraphicsItem::ItemIsMovable)
+        return;
+
+    const qreal diff = (e->buttonDownScenePos(Qt::LeftButton) - e->scenePos()).manhattanLength();
+    if(diff >= QApplication::startDragDistance() && !mMoving) {
+        mMoving = true;
+        updateViewCursor();
+    }
+}
+
+void Scene::moveModeMouseRelease(QGraphicsSceneMouseEvent *e)
+{
+    Q_UNUSED(e);
 }
 
 QPointF Scene::snapPositionToGrid(const QPointF& pos) const
@@ -1085,7 +1176,8 @@ void Scene::indicatorModeMouseRelease(QGraphicsSceneMouseEvent *e)
         //FIXME: dont hard code the offset for the indicator.
         pt = QPointF(pt.x() - 10, pt.y() - 10);
 
-        undoStack()->push(new AddIndicator(this, snapPositionToGrid(pt)));
+        const QPointF indicatorPos = mSnapTo ? snapPositionToGrid(pt) : pt;
+        undoStack()->push(new AddIndicator(this, indicatorPos));
 
     } else {
         if(mCurIndicator)
@@ -3124,6 +3216,10 @@ void Scene::group()
         WARN("Group requested without at least two groupable items. Chart center is ignored.");
         return;
     }
+    if(selectionLayerIds(items).count() > 1) {
+        WARN("Group requested across multiple layers. Grouping is limited to a single layer.");
+        return;
+    }
 
     undoStack()->push(new GroupItems(this, items));
 }
@@ -3133,11 +3229,20 @@ ItemGroup* Scene::group(QList<QGraphicsItem*> items, ItemGroup* g)
 
     //clear selection because we're going to create a new selection.
     clearSelection();
+
+    unsigned int groupLayer = getCurrentLayer()->uid();
+    const QSet<unsigned int> layerIds = selectionLayerIds(items);
+    if(layerIds.count() == 1)
+        groupLayer = *layerIds.constBegin();
 		
     if(!g) {
         g = new ItemGroup(0, this);
-		g->setLayer(getCurrentLayer()->uid());
     }
+    g->setLayer(groupLayer);
+
+    ChartLayer *groupLayerModel = getLayer(groupLayer);
+    const bool groupVisible = groupLayerModel ? groupLayerModel->visible() : true;
+    const bool groupSelectable = groupVisible && mSelectedLayer && mSelectedLayer->uid() == groupLayer;
 
     foreach(QGraphicsItem *i, items) {
 		//dont group the chart center
@@ -3149,10 +3254,11 @@ ItemGroup* Scene::group(QList<QGraphicsItem*> items, ItemGroup* g)
     }
 
     g->setFlag(QGraphicsItem::ItemIsMovable);
-    g->setFlag(QGraphicsItem::ItemIsSelectable);
+    g->setFlag(QGraphicsItem::ItemIsSelectable, groupSelectable);
+    g->setVisible(groupVisible);
     mGroups.append(g);
 
-    g->setSelected(true);
+    g->setSelected(groupSelectable);
 
     return g;
 }
@@ -3181,19 +3287,28 @@ void Scene::ungroup(ItemGroup* group)
 {
 	blockSignals(true);
 	group->setSelected(false);
+    group->setFlag(QGraphicsItem::ItemIsSelectable, false);
     mGroups.removeOne(group);
 	QList<QGraphicsItem*> childs = group->childItems();
     foreach(QGraphicsItem* item, childs) {
         group->removeFromGroup(item);
-        item->setFlag(QGraphicsItem::ItemIsSelectable, true);
-        item->setSelected(true);
+
+        unsigned int layerId = 0;
+        const bool hasLayer = itemLayerId(item, &layerId);
+        ChartLayer *layer = hasLayer ? getLayer(layerId) : 0;
+        const bool isVisible = layer ? layer->visible() : item->isVisible();
+        const bool isSelectable = hasLayer && isVisible && mSelectedLayer && mSelectedLayer->uid() == layerId;
+
+        item->setVisible(isVisible);
+        item->setFlag(QGraphicsItem::ItemIsSelectable, isSelectable);
+        item->setSelected(isSelectable);
     }
 	
 	foreach(QGraphicsItem* item, childs) {
 		ChartItemTools::recalculateTransformations(item);
 	}
 	blockSignals(false);
-	//emit selectionChanged();
+	emit selectionChanged();
 }
 
 void Scene::addToGroup(int groupNumber, QGraphicsItem *i)
@@ -3564,6 +3679,11 @@ void Scene::setSnapAngle(bool state)
 	mSnapAngle = state;
 }
 
+void Scene::setSnapToGrid(bool state)
+{
+    mSnapTo = state;
+}
+
 void Scene::setShowChartCenter(bool state)
 {
 
@@ -3680,6 +3800,7 @@ void Scene::setEditMode(EditMode mode)
     if (mode == Scene::IndicatorEdit)
         state = true;
     highlightIndicators(state);
+    updateViewCursor();
 }
 
 void Scene::setSelectMode(Scene::SelectMode mode)
@@ -3699,6 +3820,38 @@ void Scene::highlightIndicators(bool state)
             i->setTextInteractionFlags(Qt::NoTextInteraction);
         i->highlight = state;
         i->update();
+    }
+}
+
+void Scene::updateViewCursor()
+{
+    Qt::CursorShape cursor = Qt::ArrowCursor;
+
+    switch(mMode) {
+    case Scene::MoveEdit:
+        cursor = mMoving ? Qt::ClosedHandCursor : Qt::OpenHandCursor;
+        break;
+    case Scene::StitchEdit:
+    case Scene::ColorEdit:
+    case Scene::IndicatorEdit:
+    case Scene::RotationEdit:
+        cursor = Qt::CrossCursor;
+        break;
+    case Scene::ScaleEdit:
+        cursor = Qt::SizeFDiagCursor;
+        break;
+    case Scene::RowEdit:
+        cursor = Qt::SizeVerCursor;
+        break;
+    default:
+        break;
+    }
+
+    foreach(QGraphicsView *view, views()) {
+        if(!view)
+            continue;
+        view->setCursor(cursor);
+        view->viewport()->setCursor(cursor);
     }
 }
 

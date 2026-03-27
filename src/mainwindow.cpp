@@ -60,18 +60,77 @@
 #include <QSortFilterProxyModel>
 #include <QDesktopServices>
 #include <QMimeData>
+#include <QSet>
 #include <QStatusBar>
+
+namespace {
+
+int groupableSelectionCount(const QList<QGraphicsItem*> &items)
+{
+    int count = 0;
+    foreach(QGraphicsItem *item, items) {
+        if(item && item->type() != QGraphicsEllipseItem::Type)
+            ++count;
+    }
+    return count;
+}
+
+int selectedGroupCount(const QList<QGraphicsItem*> &items)
+{
+    int count = 0;
+    foreach(QGraphicsItem *item, items) {
+        if(item && item->type() == ItemGroup::Type)
+            ++count;
+    }
+    return count;
+}
+
+bool selectionItemLayer(QGraphicsItem *item, unsigned int *layerId)
+{
+    if(!item || !layerId)
+        return false;
+
+    switch(item->type()) {
+    case Cell::Type:
+        *layerId = qgraphicsitem_cast<Cell*>(item)->layer();
+        return true;
+    case Indicator::Type:
+        *layerId = qgraphicsitem_cast<Indicator*>(item)->layer();
+        return true;
+    case ItemGroup::Type:
+        *layerId = qgraphicsitem_cast<ItemGroup*>(item)->layer();
+        return true;
+    case ChartImage::Type:
+        *layerId = qgraphicsitem_cast<ChartImage*>(item)->layer();
+        return true;
+    default:
+        return false;
+    }
+}
+
+QSet<unsigned int> selectionLayers(const QList<QGraphicsItem*> &items)
+{
+    QSet<unsigned int> layers;
+    foreach(QGraphicsItem *item, items) {
+        unsigned int layerId = 0;
+        if(selectionItemLayer(item, &layerId))
+            layers.insert(layerId);
+    }
+    return layers;
+}
+
+}
 
 MainWindow::MainWindow(QStringList fileNames, QWidget* parent)
     : QMainWindow(parent),
     ui(new Ui::MainWindow),
     mUpdater(0),
-	mResizeUI(0),
+    mResizeUI(0),
     mAlignDock(0),
     mRowsDock(0),
     mMirrorDock(0),
     mPropertiesDock(0),
-    mEditMode(10),
+    mEditMode(9),
     mStitch("ch"),
     mFgColor(QColor(Qt::black)),
     mBgColor(QColor(Qt::white))
@@ -108,6 +167,7 @@ MainWindow::MainWindow(QStringList fileNames, QWidget* parent)
     setupNewTabDialog();
 
     setupMenus();
+    setEditMode(mEditMode);
     updateSelectionDependentActions();
     readSettings();
     ui->newDocument->setProperty("panelSurface", true);
@@ -348,6 +408,10 @@ void MainWindow::reloadLayerContent(QList<ChartLayer*>& layers, ChartLayer* sele
 	CrochetTab* tab = curCrochetTab();
 	if (tab == NULL)
 		return;
+
+    QObject *source = sender();
+    if(source && source != tab)
+        return;
 	
 	QTreeView* view = ui->layersView;
 	QStandardItemModel* model = dynamic_cast<QStandardItemModel*>(view->model());
@@ -358,6 +422,8 @@ void MainWindow::reloadLayerContent(QList<ChartLayer*>& layers, ChartLayer* sele
 		//and connect the signals
 		connect(model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(layerModelChanged(const QModelIndex&)));
 		view->setModel(model);
+        connect(view->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+                this, SLOT(selectLayer(QModelIndex)));
 	}
 	
 	//cleanup previous content
@@ -572,6 +638,7 @@ void MainWindow::setupMenus()
 
     mModeGroup = new QActionGroup(this);
     mModeGroup->addAction(ui->actionStitchMode);
+    mModeGroup->addAction(ui->actionMoveMode);
     mModeGroup->addAction(ui->actionColorMode);
     mModeGroup->addAction(ui->actionAngleMode);
     mModeGroup->addAction(ui->actionStretchMode);
@@ -602,6 +669,8 @@ void MainWindow::setupMenus()
 	connect(mGridGroup, SIGNAL(triggered(QAction*)), mPropertiesDock, SLOT(propertyUpdated()));
 	connect(ui->actionNextGridMode, SIGNAL(triggered()), SLOT(nextGridMode()));
 	connect(ui->actionNextGridMode, SIGNAL(triggered()), mPropertiesDock, SLOT(propertyUpdated()));
+    connect(ui->actionSnapToGrid, SIGNAL(toggled(bool)), SLOT(toggleSnapToGrid(bool)));
+    ui->actionSnapToGrid->setChecked(Settings::inst()->value("snapToGrid").toBool());
 	
 	addAction(ui->actionNextGridMode);
 	
@@ -1045,6 +1114,7 @@ void MainWindow::changeGridMode(QAction* action)
 		else if (action == ui->actionGridTriangle)
 			tab->setGuidelinesType("Triangles");
 	}
+    updateGridSnapActionState();
 }
 
 void MainWindow::setSelectedGridMode(QString gmode) {
@@ -1076,7 +1146,8 @@ void MainWindow::setSelectedGridMode(QString gmode) {
 	ui->actionGridSquare->blockSignals(false);
 	ui->actionGridRound->blockSignals(false);
 	ui->actionGridTriangle->blockSignals(false);
-	
+
+    updateGridSnapActionState();
 }
 
 void MainWindow::nextGridMode()
@@ -1089,6 +1160,21 @@ void MainWindow::nextGridMode()
 		ui->actionGridTriangle->trigger();
 	else if (ui->actionGridTriangle->isChecked())
 		ui->actionGridNone->trigger();
+}
+
+void MainWindow::toggleSnapToGrid(bool state)
+{
+    Settings::inst()->setValue("snapToGrid", state);
+
+    for(int i = 0; i < ui->tabWidget->count(); ++i) {
+        CrochetTab* tab = qobject_cast<CrochetTab*>(ui->tabWidget->widget(i));
+        if(tab)
+            tab->setSnapToGrid(state);
+    }
+
+    updateGridSnapActionState();
+    if(statusBar())
+        statusBar()->showMessage(state ? tr("Snap to grid enabled") : tr("Snap to grid disabled"), 2500);
 }
 	
 void MainWindow::toolsOptions()
@@ -1329,19 +1415,33 @@ void MainWindow::updateSelectionDependentActions()
 {
     int selectedCount = 0;
     int selectedGroups = 0;
+    int groupableCount = 0;
+    QSet<unsigned int> selectedLayers;
 
     CrochetTab *tab = curCrochetTab();
     if(tab && tab->scene()) {
         const QList<QGraphicsItem*> selection = tab->scene()->selectedItems();
         selectedCount = selection.count();
+        groupableCount = groupableSelectionCount(selection);
+        selectedLayers = selectionLayers(selection);
         foreach(QGraphicsItem *item, selection) {
             if(item && item->type() == ItemGroup::Type)
                 ++selectedGroups;
         }
     }
 
-    ui->actionGroup->setEnabled(hasTab() && curCrochetTab() && selectedCount > 1);
+    const bool canGroupSelection = hasTab() && curCrochetTab() && selectedCount > 1
+        && groupableCount > 1 && selectedLayers.count() <= 1;
+
+    ui->actionGroup->setEnabled(canGroupSelection);
     ui->actionUngroup->setEnabled(hasTab() && curCrochetTab() && selectedGroups > 0);
+
+    QString groupToolTip = tr("Group the selected items");
+    if(selectedLayers.count() > 1)
+        groupToolTip = tr("Grouping is limited to items from the same layer");
+    else if(groupableCount <= 1)
+        groupToolTip = tr("Select at least two movable items to create a group");
+    ui->actionGroup->setToolTip(groupToolTip);
 }
 
 void MainWindow::stitchesReplaceStitch()
@@ -1630,12 +1730,23 @@ CrochetTab* MainWindow::createTab(Scene::ChartStyle style)
 	connect(tab->scene(), SIGNAL(sceneRectChanged(const QRectF&)), mResizeUI, SLOT(updateContent()));
 	connect(tab->scene(), SIGNAL(showPropertiesSignal()), SLOT(viewMakePropertiesVisible()));
     connect(tab->scene(), SIGNAL(selectionChanged()), SLOT(updateSelectionDependentActions()));
+    tab->setSnapToGrid(ui->actionSnapToGrid->isChecked());
 
     mUndoGroup.addStack(tab->undoStack());
     
     QApplication::restoreOverrideCursor();
 
     return tab;
+}
+
+void MainWindow::updateGridSnapActionState()
+{
+    CrochetTab* tab = curCrochetTab();
+    const bool hasGrid = tab && tab->scene() && tab->scene()->guidelines().type() != "None";
+    ui->actionSnapToGrid->setEnabled(hasTab() && hasGrid);
+    ui->actionSnapToGrid->setToolTip(hasGrid
+        ? tr("Snap moved and inserted items to the active grid")
+        : tr("Snap to grid requires an active square, round, or triangle guide"));
 }
 
 QString MainWindow::nextChartName(QString baseName)
@@ -1766,15 +1877,18 @@ void MainWindow::menuModesAboutToShow()
 	ui->actionBoxSelectMode->setEnabled(state);
 	ui->actionLassoSelectMode->setEnabled(state);
 	ui->actionLineSelectMode->setEnabled(state);
+    updateGridSnapActionState();
 }
 
 void MainWindow::changeTabMode(QAction* a)
 {
     int mode = -1;
     
-    if(a == ui->actionStitchMode)
+    if(a == ui->actionMoveMode)
+        mode = 9;
+    else if(a == ui->actionStitchMode)
         mode = 10;
-    if(a == ui->actionColorMode)
+    else if(a == ui->actionColorMode)
         mode = 11;
     else if(a == ui->actionCreateRows)
         mode = 12;
@@ -1792,7 +1906,9 @@ void MainWindow::setEditMode(int mode)
 {
     mEditMode = mode;
     
-    if(mode == 10)
+    if(mode == 9)
+        ui->actionMoveMode->setChecked(true);
+    else if(mode == 10)
         ui->actionStitchMode->setChecked(true);
     else if(mode == 11)
         ui->actionColorMode->setChecked(true);
@@ -1813,6 +1929,12 @@ void MainWindow::setEditMode(int mode)
             tab->showRowEditor(state);
         }
     }
+
+    if(statusBar()) {
+        QAction* checkedAction = mModeGroup->checkedAction();
+        if(checkedAction)
+            statusBar()->showMessage(tr("Mode: %1").arg(checkedAction->text()), 2500);
+    }
 }
 
 void MainWindow::menuChartAboutToShow()
@@ -1821,6 +1943,7 @@ void MainWindow::menuChartAboutToShow()
     ui->actionRemoveTab->setEnabled(state);
     ui->actionEditName->setEnabled(state);
     ui->actionShowChartCenter->setEnabled(state);
+    updateGridSnapActionState();
 
     CrochetTab* tab = curCrochetTab();
     if(tab) {
@@ -1916,16 +2039,23 @@ void MainWindow::tabChanged(int newTab)
 {
     if(newTab == -1) {
         updateSelectionDependentActions();
+        updateGridSnapActionState();
         return;
     }
 
     CrochetTab* tab = qobject_cast<CrochetTab*>(ui->tabWidget->widget(newTab));
     if(!tab) {
         updateSelectionDependentActions();
+        updateGridSnapActionState();
         return;
     }
     
     mUndoGroup.setActiveStack(tab->undoStack());
+    setSelectedGridMode(tab->scene()->guidelines().type());
+    ui->actionSnapToGrid->blockSignals(true);
+    ui->actionSnapToGrid->setChecked(tab->snapToGrid());
+    ui->actionSnapToGrid->blockSignals(false);
+    updateGridSnapActionState();
     updateSelectionDependentActions();
 }
 
@@ -1999,10 +2129,9 @@ void MainWindow::mergeLayer()
 	ChartLayer* from = static_cast<ChartLayer*>(itemfrom->data(Qt::UserRole+5).value<void*>());
 	
 	//and then we fetch the next item
-	QList<QStandardItem*> nextRow = model->takeRow(view->selectionModel()->currentIndex().row()+1);
-	if (nextRow.count() == 0)
+    QStandardItem* itemto = model->item(view->selectionModel()->currentIndex().row() + 1, 0);
+	if (itemto == NULL)
 		return;
-	QStandardItem* itemto = nextRow.first();
 	ChartLayer* to = static_cast<ChartLayer*>(itemto->data(Qt::UserRole+5).value<void*>());
 	
 	//and call the function
@@ -2023,8 +2152,12 @@ void MainWindow::selectLayer(const QModelIndex& index)
 	ChartLayer* layer = static_cast<ChartLayer*>(item->data(Qt::UserRole+5).value<void*>());
 		
 	CrochetTab* tab = curCrochetTab();
-	if (tab != NULL)
+	if (tab != NULL) {
 		tab->selectLayer(layer->uid());
+        updateSelectionDependentActions();
+        if(statusBar())
+            statusBar()->showMessage(tr("Active layer: %1").arg(layer->name()), 2500);
+    }
 }
 
 void MainWindow::layerModelChanged(const QModelIndex& index)
@@ -2045,7 +2178,16 @@ void MainWindow::layerModelChanged(const QModelIndex& index)
 	layer->setName(name);
 	layer->setVisible(checked);
 	
-	curCrochetTab()->editedLayer(layer);
+    CrochetTab* tab = curCrochetTab();
+    if(!tab)
+        return;
+
+	tab->editedLayer(layer);
+    updateSelectionDependentActions();
+    if(statusBar()) {
+        const QString visibility = checked ? tr("visible") : tr("hidden");
+        statusBar()->showMessage(tr("Layer %1 is now %2").arg(layer->name(), visibility), 2500);
+    }
 }
 
 void MainWindow::updatePatternStitches()
@@ -2224,13 +2366,43 @@ void MainWindow::insertImage()
 void MainWindow::group()
 {
     CrochetTab* tab = requireCurrentTab(tr("Group"));
-    if(tab) tab->group();
+    if(!tab)
+        return;
+
+    const QList<QGraphicsItem*> selection = tab->scene()->selectedItems();
+    if(selection.count() <= 1) {
+        notifyUnavailableAction(tr("Group"), tr("select at least two items"));
+        return;
+    }
+    if(groupableSelectionCount(selection) <= 1) {
+        notifyUnavailableAction(tr("Group"), tr("select at least two non-center items"));
+        return;
+    }
+    if(selectionLayers(selection).count() > 1) {
+        notifyUnavailableAction(tr("Group"), tr("selected items are on different layers"));
+        return;
+    }
+
+    tab->group();
 }
 
 void MainWindow::ungroup()
 {
     CrochetTab* tab = requireCurrentTab(tr("Ungroup"));
-    if(tab) tab->ungroup();
+    if(!tab)
+        return;
+
+    const QList<QGraphicsItem*> selection = tab->scene()->selectedItems();
+    if(selection.isEmpty()) {
+        notifyUnavailableAction(tr("Ungroup"), tr("nothing is selected"));
+        return;
+    }
+    if(selectedGroupCount(selection) <= 0) {
+        notifyUnavailableAction(tr("Ungroup"), tr("selection does not contain a group"));
+        return;
+    }
+
+    tab->ungroup();
 
 }
 

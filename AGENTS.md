@@ -15,6 +15,17 @@ This repository now uses explicit workstreams so the desktop product can be stab
   - extract shared document/core boundaries
   - only then expand into online and Android delivery
 
+## Sub-Agent Workflow
+- Use sub-agents for bounded micro-tasks:
+  - behavior audits
+  - code-path tracing
+  - architecture spikes
+  - disjoint implementation slices
+- Prefer explorer-style sub-agents before editing shared desktop behavior when a path is risky or unclear.
+- Close completed sub-agent threads and open fresh ones for new micro-slices instead of leaving stale sessions hanging.
+- Record sub-agent conclusions back into `MEMORY.md`, `TODO.md`, and the relevant audit doc before moving to the next slice.
+- Main Integrator keeps final responsibility for merge quality, verification, and push decisions.
+
 ## Agent Roles
 
 ### 1. Main Integrator

@@ -56,10 +56,12 @@ if(APPLE)
         HINTS /usr/local/opt/qt@5/bin /opt/homebrew/opt/qt@5/bin
     )
 
+    set(MACOS_BUNDLE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.app")
+
     if(MACDEPLOYQT_EXECUTABLE)
         add_custom_target(bundle_macos
             COMMAND "${CMAKE_SOURCE_DIR}/utils/prepare_macos_bundle.sh"
-                    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.app"
+                    "${MACOS_BUNDLE_PATH}"
                     "${MACDEPLOYQT_EXECUTABLE}"
             DEPENDS ${EXE_NAME}
             USES_TERMINAL
@@ -73,17 +75,23 @@ if(APPLE)
         set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS "APPLE_APP_STORE=1")
     endif()
 
-    install(CODE "
-        execute_process(
-            COMMAND \"/usr/bin/macdeployqt\"
-            \"@CMAKE_CURRENT_BINARY_DIR@/@PROJECT_NAME@.app/\"
-            WORKING_DIRECTORY \"@CMAKE_BINARY_DIR@\"
-            OUTPUT_VARIABLE _output)
-        file(COPY \"@CMAKE_SOURCE_DIR@/images/@PROJECT_MACOSX_ICON@\"
-            DESTINATION \"@CMAKE_CURRENT_BINARY_DIR@/@PROJECT_NAME@.app/Contents/Resources\") 
-        file(COPY \"@CMAKE_CURRENT_BINARY_DIR@/@PROJECT_NAME@.app\" 
-            DESTINATION \"@CMAKE_BINARY_DIR@/_CPack_Packages/Darwin/@CPACK_GENERATOR@/@PROJECT_NAME@-@VERSION_SHORT@\")
-    " COMPONENT Runtime)
+    if(MACDEPLOYQT_EXECUTABLE)
+        install(CODE "
+            execute_process(
+                COMMAND \"${CMAKE_SOURCE_DIR}/utils/prepare_macos_bundle.sh\"
+                        \"${MACOS_BUNDLE_PATH}\"
+                        \"${MACDEPLOYQT_EXECUTABLE}\"
+                WORKING_DIRECTORY \"${CMAKE_BINARY_DIR}\"
+                RESULT_VARIABLE _bundle_result)
+            if(NOT _bundle_result EQUAL 0)
+                message(FATAL_ERROR \"prepare_macos_bundle.sh failed with exit code \${_bundle_result}\")
+            endif()
+            file(COPY \"@CMAKE_SOURCE_DIR@/images/@PROJECT_MACOSX_ICON@\"
+                DESTINATION \"@CMAKE_CURRENT_BINARY_DIR@/@PROJECT_NAME@.app/Contents/Resources\")
+            file(COPY \"@CMAKE_CURRENT_BINARY_DIR@/@PROJECT_NAME@.app\"
+                DESTINATION \"@CMAKE_BINARY_DIR@/_CPack_Packages/Darwin/@CPACK_GENERATOR@/@PROJECT_NAME@-@VERSION_SHORT@\")
+        " COMPONENT Runtime)
+    endif()
 
 else()
 

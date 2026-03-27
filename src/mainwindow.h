@@ -156,6 +156,7 @@ private slots:
 	void setSelectedGridMode(QString mode);
 	void changeGridMode(QAction* action);
 	void nextGridMode();
+    void toggleSnapToGrid(bool state);
 
     void helpCrochetHelp();
     void helpAbout();
@@ -203,6 +204,7 @@ private:
     void setupMenus();
     void setupRecentFiles();
     void updateMenuItems();
+    void updateGridSnapActionState();
     
     QSortFilterProxyModel *mProxyModel;
     void setupStitchPalette();

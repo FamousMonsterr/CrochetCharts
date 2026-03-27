@@ -54,6 +54,7 @@ void TestSettings::setSettings_data()
     QTest::newRow("check for updates") << "checkForUpdates" << QVariant(true) << QVariant(false);
     QTest::newRow("max files") << "maxRecentFiles" << QVariant(5) << QVariant(10);
     QTest::newRow("default stitch") << "defaultStitch" << QVariant("ch") << QVariant("dc");
+    QTest::newRow("snap to grid") << "snapToGrid" << QVariant(true) << QVariant(false);
 
 }
 

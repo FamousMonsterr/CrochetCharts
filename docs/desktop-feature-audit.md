@@ -29,19 +29,12 @@ Date: `2026-03-24`
 - mixed chart properties for regular cell selections
 
 ### Suspicious
-- copy / cut / paste around indicator undo
 - box / lasso / line selection with modifier keys
-- selectable item hit testing
 - color edit drag behavior
-- wheel zoom modifier handling
-- mixed properties for non-cell multi-selection
-- menu enablement for group / ungroup
+- move-mode click/drag consistency on real documents
+- layer change side-effects on selection and transform actions
 
 ### Probably Broken or Not Implemented
-- `RowsDock -> Arrange` for selected items
-- `RowsDock` vertical alignment mapping
-- multi-select rotate / scale undo flow
-- `Color Edit` checked-state sync
 - align to path / distribute to path
 
 ## P0 Fix Targets
@@ -62,14 +55,25 @@ Date: `2026-03-24`
   - `Group` / `Ungroup` menu enablement now reflects selection state in `src/mainwindow.cpp`
   - `Group` / `Ungroup` action state now updates live on selection change and tab change
   - invalid chart-image path edits now surface an error instead of silently failing in `src/ChartImage.cpp`
+- Fixed in the current interaction slice:
+  - `Move Edit` is now exposed as a first-class mode with explicit cursor feedback during idle and drag states
+  - `Snap to grid` now has an explicit toggle, on/off feedback, and disabled-state explanation when no grid guide is active
+  - switching or editing layers now refreshes grouping availability instead of leaving stale action state behind
+  - cross-layer grouping now surfaces a readable reason instead of degrading into an unclear no-op
+  - group / ungroup undo-redo paths now keep layer-gated selectability rules intact
 - Still requiring explicit manual regression:
+  - move-mode drag and click behavior on dense charts
   - `Ctrl` additive selection
   - indicator paste undo
   - mixed-property handling for non-cell multi-selection
-  - group / ungroup enablement and warning coverage
+  - group / ungroup enablement and warning coverage across layer changes
   - directional copy / mirror with mixed selections containing indicators or chart center
 
 ## Manual QA Checklist
+- Switch between `Move Edit`, `Stitch Edit`, and `Indicator Edit`; confirm cursor and click behavior make the active mode obvious.
+- Turn `Snap to grid` on and off in square, round, triangle, and no-grid charts; confirm the action availability and actual placement match the toggle state.
+- Select a layer, then change layer visibility and confirm `Group` / `Ungroup` action state updates immediately.
+- Try grouping items from one layer, then from multiple layers after changing active layer state; confirm the UI reports the constraint clearly.
 - Select several stitches, rotate them, then run `Undo` and `Redo` repeatedly.
 - Select several stitches, scale them, then run `Undo` and `Redo` repeatedly.
 - Open `RowsDock`, try `Arrange`, confirm selected items really move into a grid.

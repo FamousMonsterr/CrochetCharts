@@ -116,6 +116,7 @@ class Scene : public QGraphicsScene
 public:
 
     enum EditMode {
+        MoveEdit = 9,
         StitchEdit = 10, //place stitches on the chart.
         ColorEdit = 11,       //place colors behind stitches.
         RowEdit = 12,
@@ -235,6 +236,8 @@ public:
 	QPointF snapPositionToRounds(const QPointF& pos) const;
 	QPointF snapPositionToTriangles(const QPointF& pos) const;
 	void snapGraphicsItemToGrid(QGraphicsItem& item);
+    void setSnapToGrid(bool state);
+    bool snapToGrid() const { return mSnapTo; }
 	
 public slots:    
 	void showProperties();
@@ -419,6 +422,10 @@ protected:
 
     void indicatorModeMouseMove(QGraphicsSceneMouseEvent *e);
     void indicatorModeMouseRelease(QGraphicsSceneMouseEvent *e);
+
+    void moveModeMouseMove(QGraphicsSceneMouseEvent *e);
+    void moveModeMouseRelease(QGraphicsSceneMouseEvent *e);
+    void updateViewCursor();
 
     void angleModeMousePress(QGraphicsSceneMouseEvent *e);
     void angleModeMouseMove(QGraphicsSceneMouseEvent *e);

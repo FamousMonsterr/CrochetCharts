@@ -36,6 +36,9 @@
   - [x] indicator paste undo path
   - [x] mixed non-cell properties behavior
   - [x] harden macOS shell launch against mixed Homebrew/bundle Qt runtime loading
+- [x] Add a dedicated `Move Edit` mode and user-facing snap-to-grid toggle
+- [x] Make grouping layer-aware at the menu/action-state level
+- [ ] Verify move-mode cursor feedback, snap toggle behavior, and layer-grouping paths by manual regression
 
 ## Phase 3. Desktop UI Foundation
 - [ ] Introduce a shared Qt theme layer:
@@ -60,6 +63,7 @@
 - [ ] Make backdrop/guideline configuration clearer and less fragile
 - [ ] Improve discoverability of edit modes and selection modes
 - [ ] Clarify destructive actions and selection-dependent controls
+- [ ] Continue the shell modernization with explicit editing affordances for move/select/layer workflows
 
 ## Phase 5. Shared Core Extraction
 - [ ] Identify pure model/domain logic that can move out of widget classes

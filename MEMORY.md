@@ -108,6 +108,24 @@
   - deeper `PropertiesDock` and `MainWindow` UI modernization
   - expanding the restored test entry point toward selection-transform and file-flow coverage
 
+## Latest Interaction Slice
+- On `2026-03-27`, the editor interaction layer was tightened further:
+  - `Move Edit` now has explicit cursor feedback instead of reading like the generic default arrow
+  - `Snap to grid` now reports clear on/off state in the status bar and explains when it is unavailable because no guide is active
+  - layer selection and layer visibility edits now refresh selection-dependent action state immediately
+  - `Group` / `Ungroup` entry points now surface readable reasons when the action is unavailable, including cross-layer grouping
+  - grouping / ungrouping now respects active-layer selectability rules instead of making foreign-layer items selectable on undo/redo paths
+- This slice is centered in:
+  - `src/scene.cpp`
+  - `src/scene.h`
+  - `src/mainwindow.cpp`
+
+## Current Audit Emphasis
+- Remaining desktop regression focus is now concentrated on:
+  - mouse click consistency across selection, move, stitch, and indicator flows
+  - layer-aware grouping and transform behavior under real user sequences
+  - more modern, more explicit affordances in `MainWindow` and `PropertiesDock`
+
 ## macOS Launch Reliability
 - A shell-launched app on this Mac can inherit Homebrew Qt environment contamination from terminal or VSCode shells.
 - This causes mixed bundle/Homebrew Qt frameworks before `main()` and can abort in platform plugin initialization.

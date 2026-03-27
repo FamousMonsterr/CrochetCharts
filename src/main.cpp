@@ -24,6 +24,7 @@
 
 #include <QDebug>
 #include <QDir>
+#include <QFileInfo>
 #include <QLocale>
 #include <QTranslator>
 
@@ -35,8 +36,82 @@
 
 #include "errorhandler.h"
 
+#ifdef Q_OS_MAC
+#include <mach-o/dyld.h>
+#include <unistd.h>
+#endif
+
+#ifdef Q_OS_MAC
+namespace {
+
+QString currentExecutablePath()
+{
+    uint32_t size = 0;
+    _NSGetExecutablePath(0, &size);
+    QByteArray buffer;
+    buffer.resize(static_cast<int>(size));
+    if(_NSGetExecutablePath(buffer.data(), &size) != 0)
+        return QString();
+
+    return QFileInfo(QString::fromLocal8Bit(buffer.constData())).canonicalFilePath();
+}
+
+void sanitizeMacQtRuntime(char *argv[])
+{
+    const bool alreadySanitized = qEnvironmentVariableIsSet("CROCHETCHARTS_QT_ENV_SANITIZED");
+
+    const char *dyldVars[] = {
+        "DYLD_FRAMEWORK_PATH",
+        "DYLD_LIBRARY_PATH",
+        "DYLD_INSERT_LIBRARIES",
+        "DYLD_FALLBACK_FRAMEWORK_PATH",
+        "DYLD_FALLBACK_LIBRARY_PATH"
+    };
+
+    const char *qtVars[] = {
+        "QT_PLUGIN_PATH",
+        "QT_QPA_PLATFORM_PLUGIN_PATH"
+    };
+
+    bool needsRelaunch = false;
+    for(size_t i = 0; i < sizeof(dyldVars) / sizeof(dyldVars[0]); ++i) {
+        if(qEnvironmentVariableIsSet(dyldVars[i]))
+            needsRelaunch = true;
+        qunsetenv(dyldVars[i]);
+    }
+
+    for(size_t i = 0; i < sizeof(qtVars) / sizeof(qtVars[0]); ++i)
+        qunsetenv(qtVars[i]);
+
+    const QString executablePath = currentExecutablePath();
+    QFileInfo executableInfo(executablePath);
+    QDir macOsDir = executableInfo.dir();
+    if(macOsDir.dirName() == "MacOS") {
+        QDir contentsDir = macOsDir;
+        if(contentsDir.cdUp() && contentsDir.dirName() == "Contents") {
+            const QString pluginsPath = contentsDir.absoluteFilePath("PlugIns");
+            const QString platformPluginsPath = pluginsPath + "/platforms";
+            qputenv("QT_PLUGIN_PATH", QFile::encodeName(pluginsPath));
+            qputenv("QT_QPA_PLATFORM_PLUGIN_PATH", QFile::encodeName(platformPluginsPath));
+        }
+    }
+
+    if(!needsRelaunch || alreadySanitized)
+        return;
+
+    qputenv("CROCHETCHARTS_QT_ENV_SANITIZED", "1");
+    execv(executablePath.toLocal8Bit().constData(), argv);
+    fprintf(stderr, "Failed to relaunch CrochetCharts with a sanitized Qt runtime environment.\n");
+}
+
+} // namespace
+#endif
+
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_MAC
+    sanitizeMacQtRuntime(argv);
+#endif
     qInstallMessageHandler(errorHandler);
     Application a(argc, argv);
 

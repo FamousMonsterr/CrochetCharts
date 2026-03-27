@@ -473,10 +473,11 @@
     <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuModes">
-    <property name="title">
-     <string>&amp;Modes</string>
-    </property>
-    <addaction name="actionStitchMode"/>
+   <property name="title">
+    <string>&amp;Modes</string>
+   </property>
+   <addaction name="actionStitchMode"/>
+    <addaction name="actionMoveMode"/>
     <addaction name="actionColorMode"/>
     <addaction name="actionAngleMode"/>
     <addaction name="actionStretchMode"/>
@@ -486,6 +487,12 @@
     <addaction name="actionBoxSelectMode"/>
     <addaction name="actionLassoSelectMode"/>
     <addaction name="actionLineSelectMode"/>
+    <addaction name="separator"/>
+    <addaction name="actionSnapToGrid"/>
+    <addaction name="actionGridNone"/>
+    <addaction name="actionGridSquare"/>
+    <addaction name="actionGridRound"/>
+    <addaction name="actionGridTriangle"/>
    </widget>
    <widget class="QMenu" name="menuStitches">
     <property name="title">
@@ -791,15 +798,16 @@
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="actionStitchMode"/>
-   <addaction name="actionColorMode"/>
-   <addaction name="actionAngleMode"/>
-   <addaction name="actionStretchMode"/>
-   <addaction name="actionCreateRows"/>
-   <addaction name="actionIndicatorMode"/>
+  <attribute name="toolBarBreak">
+   <bool>false</bool>
+  </attribute>
+  <addaction name="actionStitchMode"/>
+   <addaction name="actionMoveMode"/>
+  <addaction name="actionColorMode"/>
+  <addaction name="actionAngleMode"/>
+  <addaction name="actionStretchMode"/>
+  <addaction name="actionCreateRows"/>
+  <addaction name="actionIndicatorMode"/>
    <addaction name="separator"/>
    <addaction name="actionShowResizeDock"/>
    <addaction name="actionShowAlignDock"/>
@@ -809,6 +817,7 @@
    <addaction name="actionLassoSelectMode"/>
    <addaction name="actionLineSelectMode"/>
    <addaction name="separator"/>
+   <addaction name="actionSnapToGrid"/>
    <addaction name="actionGridNone"/>
    <addaction name="actionGridSquare"/>
    <addaction name="actionGridRound"/>
@@ -1175,6 +1184,24 @@
     <string>D</string>
    </property>
   </action>
+  <action name="actionMoveMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../crochet.qrc">
+     <normaloff>:/images/position_stitch.svg</normaloff>:/images/position_stitch.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Move Edit</string>
+   </property>
+   <property name="toolTip">
+    <string>Move selected items without creating or replacing stitches</string>
+   </property>
+   <property name="shortcut">
+    <string>M</string>
+   </property>
+  </action>
   <action name="actionShowMainToolbar">
    <property name="checkable">
     <bool>true</bool>
@@ -1473,6 +1500,21 @@
    </property>
    <property name="toolTip">
     <string>No grid</string>
+   </property>
+  </action>
+  <action name="actionSnapToGrid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../crochet.qrc">
+     <normaloff>:/images/grid_square.svg</normaloff>:/images/grid_square.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Snap to grid</string>
+   </property>
+   <property name="toolTip">
+    <string>Snap moved and inserted items to the active grid</string>
    </property>
   </action>
   <action name="actionGridSquare">
