@@ -55,6 +55,10 @@ Date: `2026-03-24`
   - `Group` / `Ungroup` menu enablement now reflects selection state in `src/mainwindow.cpp`
   - `Group` / `Ungroup` action state now updates live on selection change and tab change
   - invalid chart-image path edits now surface an error instead of silently failing in `src/ChartImage.cpp`
+- Fixed in the latest packaging slice:
+  - bundle plugins now have bundled relative install IDs instead of leaking `/usr/local/opt/qt@5/plugins/...` origins into shipped macOS copies
+  - Homebrew Qt plugin/framework references found in packaged binaries are now rewritten to bundled `PlugIns` / `Frameworks` paths during `bundle_macos`
+  - the packaging script itself is quiet again under `zsh`, so release logs are readable and regressions are easier to spot
 - Fixed in the current interaction slice:
   - `Move Edit` is now exposed as a first-class mode with explicit cursor feedback during idle and drag states
   - `Snap to grid` now has an explicit toggle, on/off feedback, and disabled-state explanation when no grid guide is active

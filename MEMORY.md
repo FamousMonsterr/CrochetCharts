@@ -155,6 +155,14 @@
 - This causes mixed bundle/Homebrew Qt frameworks before `main()` and can abort in platform plugin initialization.
 - The repo now includes `utils/prepare_macos_bundle.sh` and a `bundle_macos` target to deploy the app and install a sanitized launcher script that clears `DYLD_*` and `QT_*` before execing the real Qt binary.
 
+## Latest Packaging Slice
+- On `2026-03-27`, macOS bundle sanitization was tightened again after a fresh crash log from a synced user-space app copy:
+  - the fatal stack still matched the pre-main mixed-Qt startup failure in `QGuiApplicationPrivate::createPlatformIntegration()`
+  - bundle plugin binaries still carried Homebrew-origin install IDs such as `/usr/local/opt/qt@5/plugins/...`, which made shell-launched copies vulnerable to loading mixed Qt components even with the sanitized launcher in place
+  - `utils/prepare_macos_bundle.sh` now rewrites Homebrew Qt plugin/framework references back to bundled `@executable_path/../PlugIns/...` and `@executable_path/../Frameworks/...`
+  - plugin install IDs inside `Contents/PlugIns` are now normalized to bundled relative paths as part of packaging
+  - the bundle packaging script now runs quietly again under `zsh` via `setopt typesetsilent`
+
 ## Latest Reliability Slice
 - On `2026-03-25`, launch reliability and silent-action diagnostics were extended:
   - macOS bundles can now be wrapped with `bundle_macos` so direct shell launch does not mix bundled Qt with Homebrew Qt

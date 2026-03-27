@@ -36,6 +36,7 @@
   - [x] indicator paste undo path
   - [x] mixed non-cell properties behavior
   - [x] harden macOS shell launch against mixed Homebrew/bundle Qt runtime loading
+  - [x] sanitize bundled plugin install names so shell-launched synced app copies do not fall back to Homebrew Qt
 - [x] Add a dedicated `Move Edit` mode and user-facing snap-to-grid toggle
 - [x] Make grouping layer-aware at the menu/action-state level
 - [ ] Verify move-mode cursor feedback, snap toggle behavior, and layer-grouping paths by manual regression
